@@ -20,12 +20,10 @@ public class Consignors implements Iterable<Consignor> {
         this.consignors = ArgumentExceptionHelper.throwIfNullOrEmpty(consignors, "consignors");
     }
 
-    @SuppressWarnings("unused")
     public Consignors(Consignor... consignors) {
         this(Set.of(consignors));
     }
 
-    @SuppressWarnings("unused")
     public static Consignors fromResources() {
         return XmlMarshaller.unmarshalResourceSilently("consignors.xml", ConsignorListDTO.class).toDomain();
     }

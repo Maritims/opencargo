@@ -37,8 +37,8 @@ public final class Rejection {
     @Override
     public String toString() {
         return "Rejection{" +
-                "product=" + product +
-                ", reason='" + reason + '\'' +
+                "product=" + getProduct() +
+                ", reason='" + getReason() + '\'' +
                 '}';
     }
 }

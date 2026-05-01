@@ -18,16 +18,6 @@ public abstract class ScalarRuleBase extends RuleBase implements ScalarRule {
     }
 
     @Override
-    public BigDecimal getMin() {
-        return min;
-    }
-
-    @Override
-    public BigDecimal getMax() {
-        return max;
-    }
-
-    @Override
     public EvaluationResult evaluate(Query query) {
         ArgumentExceptionHelper.throwIfNull(query, "query");
 

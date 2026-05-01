@@ -6,7 +6,6 @@ import no.clueless.opencargo.util.ArgumentExceptionHelper;
 
 import java.util.Objects;
 
-@SuppressWarnings("unused")
 public final class Address {
     private final String      addressLine1;
     private final String      addressLine2;

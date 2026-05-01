@@ -22,7 +22,6 @@ public class CountryConstraintDTO implements DTO<CountryConstraint> {
         return countryCode;
     }
 
-    @SuppressWarnings("unused")
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
@@ -33,7 +32,6 @@ public class CountryConstraintDTO implements DTO<CountryConstraint> {
         return items;
     }
 
-    @SuppressWarnings("unused")
     public void setPostalCodeConstraints(List<PostalCodeConstraintDTO> items) {
         this.items = items;
     }

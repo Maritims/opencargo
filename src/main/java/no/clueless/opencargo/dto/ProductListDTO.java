@@ -24,7 +24,6 @@ public class ProductListDTO implements DTO<Products> {
         return products;
     }
 
-    @SuppressWarnings("unused")
     public void setProducts(List<ProductDTO> products) {
         this.products = ArgumentExceptionHelper.throwIfNull(products, "products");
     }

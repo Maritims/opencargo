@@ -17,10 +17,6 @@ public final class EvaluationResult {
         return new EvaluationResult(true, "Criteria met.");
     }
 
-    public static EvaluationResult satisfied(String reason) {
-        return new EvaluationResult(true, reason);
-    }
-
     public static EvaluationResult unsatisfied(String reason) {
         return new EvaluationResult(false, reason);
     }

@@ -5,7 +5,7 @@ import no.clueless.opencargo.util.ArgumentExceptionHelper;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public final class Cargo {
+public class Cargo {
     private final BigDecimal weight;
     private final BigDecimal width;
     private final BigDecimal length;

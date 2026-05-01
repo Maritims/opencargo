@@ -22,7 +22,6 @@ public class GeographyRuleDTO extends RuleDTO {
         return countryConstraints;
     }
 
-    @SuppressWarnings("unused")
     public void setCountryConstraints(List<CountryConstraintDTO> items) {
         this.countryConstraints = items;
     }

@@ -18,7 +18,6 @@ public final class CountryConstraint {
         this.postalCodeConstraints = postalCodeConstraints == null ? Collections.emptySet() : postalCodeConstraints;
     }
 
-    @SuppressWarnings("unused")
     public CountryConstraint(CountryCode countryCode) {
         this(countryCode, Collections.emptySet());
     }
@@ -27,7 +26,6 @@ public final class CountryConstraint {
         return countryCode;
     }
 
-    @SuppressWarnings("unused")
     public Set<PostalCodeConstraint> getPostalCodeConstraints() {
         return postalCodeConstraints;
     }

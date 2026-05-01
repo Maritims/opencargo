@@ -25,7 +25,7 @@ public class ConsignorListDTO implements DTO<Consignors> {
     }
 
     public void setConsignors(List<ConsignorDTO> items) {
-        this.items = ArgumentExceptionHelper.throwIfNullOrEmpty(items, "consignors");;
+        this.items = ArgumentExceptionHelper.throwIfNullOrEmpty(items, "consignors");
     }
 
     @Override

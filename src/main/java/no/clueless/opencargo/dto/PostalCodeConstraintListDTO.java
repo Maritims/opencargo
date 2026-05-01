@@ -17,7 +17,6 @@ public class PostalCodeConstraintListDTO {
         return postalCodeConstraints;
     }
 
-    @SuppressWarnings("unused")
     public void setPostalCodeConstraints(List<PostalCodeConstraintDTO> postalCodeConstraints) {
         this.postalCodeConstraints = postalCodeConstraints;
     }

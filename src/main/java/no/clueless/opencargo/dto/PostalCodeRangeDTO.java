@@ -19,12 +19,20 @@ public class PostalCodeRangeDTO extends PostalCodeConstraintDTO {
         return start;
     }
 
+    public void setStart(String start) {
+        this.start = start;
+    }
+
     public String getEnd() {
         return end;
     }
 
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
     @Override
     public PostalCodeConstraint toDomain() {
-        return new PostalCodeRange(new PostalCode(start), new PostalCode(end));
+        return new PostalCodeRange(new PostalCode(getStart()), new PostalCode(getEnd()));
     }
 }

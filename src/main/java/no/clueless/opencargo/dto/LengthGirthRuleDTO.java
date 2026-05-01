@@ -9,7 +9,6 @@ import no.clueless.opencargo.rules.Rule;
 
 import java.math.BigDecimal;
 
-@SuppressWarnings("unused")
 @XmlRootElement(name = "lengthGirthRule")
 @XmlType(name = "lengthGirthRule")
 @XmlAccessorType(XmlAccessType.PROPERTY)
