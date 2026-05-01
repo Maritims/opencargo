@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<products>
+    <product>
+        <id>1</id>
+        <consignorId>1</consignorId>
+        <number>5800</number>
+        <name>Pakke til hentested</name>
+    </product>
+    <product>
+        <id>2</id>
+        <consignorId>1</consignorId>
+        <number>0344</number>
+        <name>Pakkeboks</name>
+    </product>
+    <!--<product>
+        <id>2</id>
+        <consignorId>1</consignorId>
+        <number>5600</number>
+        <name>På Døren</name>
+    </product>
+    <product>
+        <id>3</id>
+        <consignorId>1</consignorId>
+        <number>5000</number>
+        <name>Bedriftspakke</name>
+    </product>
+    <product>
+        <id>4</id>
+        <consignorId>1</consignorId>
+        <number>4850</number>
+        <name>Bedriftspakke ekspress over natten</name>
+    </product>
+    <product>
+        <id>5</id>
+        <consignorId>1</consignorId>
+        <number>5100</number>
+        <name>Stykkgods</name>
+    </product>
+    <product>
+        <id>6</id>
+        <consignorId>1</consignorId>
+        <number>5300</number>
+        <name>Stykk- og partigods</name>
+    </product>-->
+</products>

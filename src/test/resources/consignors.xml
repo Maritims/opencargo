@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<consignors>
+    <consignor>
+        <id>1</id>
+        <number>postennorgeas</number>
+        <name>Posten Norge AS</name>
+    </consignor>
+    <consignor>
+        <id>2</id>
+        <number>postnord</number>
+        <name>PostNord AS</name>
+    </consignor>
+</consignors>

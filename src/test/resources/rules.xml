@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rules>
+    <!-- region Pakke til hentested -->
+    <geographyRule>
+        <name>Pakke til hentested og Pakkeboks er kun tilgjengelig i Norge</name>
+        <number>1</number>
+        <consignorId>1</consignorId>
+        <productIds>
+            <productId>1</productId>
+            <productId>2</productId>
+        </productIds>
+        <countryConstraints>
+            <countryConstraint>
+                <countryCode>no</countryCode>
+            </countryConstraint>
+        </countryConstraints>
+    </geographyRule>
+    <weightRule>
+        <name>Pakke til hentested har en maksimum vekt på 35 kilo</name>
+        <number>2</number>
+        <consignorId>1</consignorId>
+        <productIds>
+            <productId>1</productId>
+        </productIds>
+        <max>35.0</max>
+    </weightRule>
+    <weightRule>
+        <name>Pakkeboks har en maskimumvekt på 10 kilo</name>
+        <number>3</number>
+        <consignorId>1</consignorId>
+        <productIds>
+            <productId>2</productId>
+        </productIds>
+        <max>10.0</max>
+    </weightRule>
+    <minDimensionsRule>
+        <name>Pakke til hentested har minimumsmål 15 x 10 x 1 cm</name>
+        <number>4</number>
+        <consignorId>1</consignorId>
+        <productIds>
+            <productId>1</productId>
+            <productId>2</productId>
+        </productIds>
+        <minWidth>15.0</minWidth>
+        <minLength>10.0</minLength>
+        <minHeight>1.0</minHeight>
+    </minDimensionsRule>
+    <lengthGirthRule>
+        <name>Pakke til hentested kan enten være maksimalt 240 cm lang, eller ha en maks lengde + omkrets på 360 cm</name>
+        <number>5</number>
+        <consignorId>1</consignorId>
+        <productIds>
+            <productId>1</productId>
+            <productId>2</productId>
+        </productIds>
+        <maxLength>240.0</maxLength>
+        <maxLengthAndGirth>360.0</maxLengthAndGirth>
+    </lengthGirthRule>
+    <!-- endregion -->
+</rules>
