@@ -4,9 +4,35 @@
 
     <xs:complexType name="PricingRuleDTO" abstract="true">
         <xs:complexContent>
-            <xs:extension base="IdentifiableEntityDTO">
+            <xs:extension base="IdentifiableEntityDTO"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GeographicPricingRuleDTO">
+        <xs:complexContent>
+            <xs:extension base="PricingRuleDTO">
                 <xs:sequence>
-                    <xs:element name="price" type="PositiveDecimalDTO"/>
+                    <xs:element name="countrySpecification" type="CountrySpecificationDTO"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ProductRequirementRuleDTO">
+        <xs:complexContent>
+            <xs:extension base="PricingRuleDTO">
+                <xs:sequence>
+                    <xs:element name="product" type="IdentifiableEntityDTO"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="WeightLimitRuleDTO">
+        <xs:complexContent>
+            <xs:extension base="PricingRuleDTO">
+                <xs:sequence>
+                    <xs:element name="maxWeight" type="PositiveDecimalDTO"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -14,7 +40,9 @@
 
     <xs:complexType name="PricingRuleListDTO">
         <xs:choice maxOccurs="unbounded">
-            <xs:element name="pricingRule" type="PricingRuleDTO"/>
+            <xs:element name="geographicPricingRule" type="GeographicPricingRuleDTO"/>
+            <xs:element name="productRequirementRule" type="ProductRequirementRuleDTO"/>
+            <xs:element name="weightLimitRule" type="WeightLimitRuleDTO"/>
         </xs:choice>
     </xs:complexType>
 
@@ -28,9 +56,20 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <xs:complexType name="GeographicSurchargeDTO">
+        <xs:complexContent>
+            <xs:extension base="PriceModifierDTO">
+                <xs:sequence>
+                    <xs:element name="percentage" type="PositiveDecimalDTO"/>
+                    <xs:element name="countrySpecification" type="CountrySpecificationDTO"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
     <xs:complexType name="PriceModifierListDTO">
         <xs:choice maxOccurs="unbounded">
-            <xs:element name="priceModifier" type="PriceModifierDTO"/>
+            <xs:element name="geographicSurcharge" type="GeographicSurchargeDTO"/>
         </xs:choice>
     </xs:complexType>
 
@@ -39,10 +78,10 @@
             <xs:extension base="IdentifiableEntityDTO">
                 <xs:sequence>
                     <xs:element name="name" type="xs:string"/>
-                    <xs:element name="pricingRules" type="PricingRuleListDTO"/>
-                    <xs:element name="priceModifiers" type="PriceModifierListDTO"/>
                     <xs:element name="basePrice" type="xs:decimal"/>
                     <xs:element name="priority" type="xs:int"/>
+                    <xs:element name="pricingRules" type="PricingRuleListDTO"/>
+                    <xs:element name="priceModifiers" type="PriceModifierListDTO" minOccurs="0"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -50,9 +89,9 @@
 
     <xs:complexType name="PricingPolicyListDTO">
         <xs:choice maxOccurs="unbounded">
-            <xs:element name="policy" type="PricingPolicyDTO"/>
+            <xs:element name="pricingPolicy" type="PricingPolicyDTO"/>
         </xs:choice>
     </xs:complexType>
 
-    <xs:element name="policies" type="PricingPolicyListDTO"/>
+    <xs:element name="pricingPolicies" type="PricingPolicyListDTO"/>
 </xs:schema>

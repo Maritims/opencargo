@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<policies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="../../main/xsd/pricing.xsd">
-    <policy id="1">
+<pricingPolicies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="../../main/xsd/pricing.xsd">
+    <pricingPolicy id="1">
         <name>Foo bar</name>
-        <priority>1</priority>
         <basePrice>135.0</basePrice>
+        <priority>1</priority>
         <pricingRules>
-            <pricingRule>
-                <price>200.0</price>
-            </pricingRule>
+            <geographicPricingRule id="1">
+                <countrySpecification>
+                    <countryCode>NO</countryCode>
+                </countrySpecification>
+            </geographicPricingRule>
+            <weightLimitRule id="2">
+                <maxWeight>35.0</maxWeight>
+            </weightLimitRule>
+            <productRequirementRule id="3">
+                <product id="3"/>
+            </productRequirementRule>
         </pricingRules>
         <priceModifiers>
-            <priceModifier>
-                <name>Det er litt dyrere av og til</name>
-            </priceModifier>
+            <geographicSurcharge id="1">
+                <name>Tillegg for transport til Svalbard</name>
+                <percentage>15.0</percentage>
+                <countrySpecification>
+                    <countryCode>NO</countryCode>
+                    <postalCodeSpecification xsi:type="PostalCodeRangeSpecificationDTO" minInclusive="9170" maxInclusive="9178"/>
+                </countrySpecification>
+            </geographicSurcharge>
         </priceModifiers>
-    </policy>
-</policies>
+    </pricingPolicy>
+</pricingPolicies>

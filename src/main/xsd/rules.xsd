@@ -2,25 +2,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common.xsd"/>
 
-    <xs:simpleType name="CountryCodeDTO">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[A-Z]{2}"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="PostalCodeDTO">
-        <xs:restriction base="xs:string">
-            <xs:minLength value="1"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="PriorityDTO">
-        <xs:restriction base="xs:int">
-            <xs:minInclusive value="0"/>
-            <xs:maxInclusive value="1000"/>
-        </xs:restriction>
-    </xs:simpleType>
-
     <xs:complexType name="TargetDTO">
         <xs:choice maxOccurs="unbounded">
             <xs:element name="consignor" type="IdentifiableEntityDTO"/>
@@ -73,34 +54,6 @@
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="PostalCodeSpecificationDTO" abstract="true"/>
-
-    <xs:complexType name="PostalCodeRangeSpecificationDTO">
-        <xs:complexContent>
-            <xs:extension base="PostalCodeSpecificationDTO">
-                <xs:attribute name="minInclusive" type="PostalCodeDTO" use="required"/>
-                <xs:attribute name="maxInclusive" type="PostalCodeDTO" use="required"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="PostalCodeSetSpecificationDTO">
-        <xs:complexContent>
-            <xs:extension base="PostalCodeSpecificationDTO">
-                <xs:sequence>
-                    <xs:element name="postalCode" type="PostalCodeDTO" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="CountrySpecificationDTO">
-        <xs:sequence>
-            <xs:element name="countryCode" type="CountryCodeDTO" minOccurs="0"/>
-            <xs:element name="postalCodeSpecification" type="PostalCodeSpecificationDTO" maxOccurs="unbounded"/>
-        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="GeographyRuleDTO">
