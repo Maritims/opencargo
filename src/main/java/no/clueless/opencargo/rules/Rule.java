@@ -1,6 +1,7 @@
 package no.clueless.opencargo.rules;
 
 import jakarta.annotation.Nonnull;
+import no.clueless.opencargo.EvaluationResult;
 import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.bindings.RuleListDTO;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;

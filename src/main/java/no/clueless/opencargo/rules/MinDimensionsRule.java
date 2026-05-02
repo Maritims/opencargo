@@ -1,5 +1,6 @@
 package no.clueless.opencargo.rules;
 
+import no.clueless.opencargo.EvaluationResult;
 import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 

@@ -8,12 +8,6 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="PositiveDecimalDTO">
-        <xs:restriction base="xs:decimal">
-            <xs:minExclusive value="0"/>
-        </xs:restriction>
-    </xs:simpleType>
-
     <xs:simpleType name="PostalCodeDTO">
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>

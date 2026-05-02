@@ -1,4 +1,4 @@
-package no.clueless.opencargo.rules;
+package no.clueless.opencargo;
 
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 

@@ -2,14 +2,14 @@
 
 # OpenCargo
 
-This project attempts to determine the applicability of freight products based on rules configured within the system,
+This project attempts to determine the applicability of freight products based on pricingRules configured within the system,
 and a productQuery from a consumer.
 
 ## What does it do?
 
 These are the things OpenCargo CAN do for you.
 
-- OpenCargo helps you determine the most suitable freight product for a consumer based on the rules you configure.
+- OpenCargo helps you determine the most suitable freight product for a consumer based on the pricingRules you configure.
 
 ## What does it not do?
 
@@ -35,7 +35,7 @@ There are various domain entities within this system.
   represented as products. A consignor does not concern itself with the products it provides, that is the responsibility
   of the product registry.
 - `Product`: A product represents a freight service provided by a consignor. The product doesn ot concern itself with
-  its applicability based on a consumer's productQuery, that is the concern of the rules registry.
+  its applicability based on a consumer's productQuery, that is the concern of the pricingRules registry.
 - `Address`: An address represents a geographical location to which cargo should be delivered.
 - `Query`: A productQuery is submitted by a consumer with the consumer's cargo to be delivered and the consumer's address to
   which the cargo should be delivered.
@@ -43,14 +43,14 @@ There are various domain entities within this system.
 
 ### Rules
 
-There are many different types of rules. A rule can consider geography, dimensions, monetary value or anything you may
+There are many different types of pricingRules. A rule can consider geography, dimensions, monetary value or anything you may
 find relevant. However, some of what you may be able to imagine might not be implemented yet.
 
-#### Types of rules
+#### Types of pricingRules
 
 - `Geography`: Uses country codes and/or postal codes to determine whether a productQuery's delivery address is relevant.
-- `Width`, `Length` and `Height`: Either of these rules can be applied to require a minimum and/or maximum value for the
-  corresponding cargo dimension. These rules must not be confused as being one combined rule. They are separate rules:
+- `Width`, `Length` and `Height`: Either of these pricingRules can be applied to require a minimum and/or maximum value for the
+  corresponding cargo dimension. These pricingRules must not be confused as being one combined rule. They are separate pricingRules:
   width, length, height.
 - `LengthGirth`: Determine whether the cargo exceeds either a maximum length or a maximum combined length and girth.
 - `MinDimensions`: Determine whether the cargo meets the required minimum dimensions. This rule supports rotation so

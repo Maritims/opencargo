@@ -1,5 +1,6 @@
 package no.clueless.opencargo.domain;
 
+import com.sun.istack.NotNull;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 
 import java.util.*;
@@ -9,6 +10,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Products implements Iterable<Product> {
     private final Map<String, Product> productsByNumber;
@@ -27,6 +29,10 @@ public class Products implements Iterable<Product> {
     @Override
     public Iterator<Product> iterator() {
         return productsByNumber.values().iterator();
+    }
+
+    public Stream<Product> stream() {
+        return productsByNumber.values().stream();
     }
 
     public int size() {

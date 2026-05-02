@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:import schemaLocation="common.xsd"/>
+
+    <xs:complexType name="PricingRuleDTO" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="IdentifiableEntityDTO">
+                <xs:sequence>
+                    <xs:element name="price" type="PositiveDecimal"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PricingRuleListDTO">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="pricingRule" type="PricingRuleDTO"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="PriceModifierDTO" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="IdentifiableEntityDTO">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PriceModifierListDTO">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="priceModifier" type="PriceModifierDTO"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="PricingPolicyDTO">
+        <xs:complexContent>
+            <xs:extension base="IdentifiableEntityDTO">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="pricingRules" type="PricingRuleListDTO"/>
+                    <xs:element name="priceModifiers" type="PriceModifierListDTO"/>
+                    <xs:element name="basePrice" type="xs:decimal"/>
+                    <xs:element name="priority" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PricingPolicyListDTO">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="policy" type="PricingPolicyDTO"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:element name="policies" type="PricingPolicyListDTO"/>
+</xs:schema>

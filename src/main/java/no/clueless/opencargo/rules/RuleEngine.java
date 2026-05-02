@@ -1,7 +1,8 @@
 package no.clueless.opencargo.rules;
 
+import no.clueless.opencargo.EvaluationResult;
 import no.clueless.opencargo.ProductQuery;
-import no.clueless.opencargo.applicability.ProductApplicabilityReport;
+import no.clueless.opencargo.applicability.ApplicabilityReports;
 import no.clueless.opencargo.applicability.Rejection;
 import no.clueless.opencargo.applicability.Rejections;
 import no.clueless.opencargo.domain.Product;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public final class RuleEngine {
     private static final Logger   log = LoggerFactory.getLogger(RuleEngine.class);
@@ -40,20 +40,20 @@ public final class RuleEngine {
                 .orElse(EvaluationResult.satisfied());
     }
 
-    public ProductApplicabilityReport resolve(ProductQuery productQuery) {
+    public ApplicabilityReports<Product> resolve(ProductQuery productQuery) {
         ArgumentExceptionHelper.throwIfNull(productQuery, "query");
-        Set<Product>   applicableProducts = new HashSet<>();
-        Set<Rejection> rejections         = new HashSet<>();
+        var applicableProducts = new HashSet<Product>();
+        var rejections         = new HashSet<Rejection<Product>>();
 
         for (Product product : products) {
             EvaluationResult evaluationResult = evaluateProduct(productQuery, product);
             if (evaluationResult.isSatisfied()) {
                 applicableProducts.add(product);
             } else {
-                rejections.add(new Rejection(product, evaluationResult.getReason()));
+                rejections.add(new Rejection<>(product, evaluationResult.getReason()));
             }
         }
 
-        return new ProductApplicabilityReport(applicableProducts.isEmpty() ? null : new Products(applicableProducts), rejections.isEmpty() ? null : new Rejections(rejections));
+        return new ApplicabilityReports<>(applicableProducts.isEmpty() ? null : new Products(applicableProducts), rejections.isEmpty() ? null : new Rejections<>(rejections));
     }
 }

@@ -2,8 +2,9 @@ package no.clueless.opencargo.rules;
 
 import no.clueless.opencargo.Address;
 import no.clueless.opencargo.Cargo;
+import no.clueless.opencargo.EvaluationResult;
 import no.clueless.opencargo.ProductQuery;
-import no.clueless.opencargo.applicability.ProductApplicabilityReport;
+import no.clueless.opencargo.applicability.ApplicabilityReports;
 import no.clueless.opencargo.applicability.Rejection;
 import no.clueless.opencargo.applicability.Rejections;
 import no.clueless.opencargo.bindings.ProductListDTO;
@@ -144,7 +145,7 @@ class RuleEngineTest {
         var products = new Products(product);
         var sut      = spy(new RuleEngine(products, mock(Rules.class)));
         var query    = mock(ProductQuery.class);
-        var expected = new ProductApplicabilityReport(products, null);
+        var expected = new ApplicabilityReports<>(products, null);
 
         var actual = sut.resolve(query);
 
@@ -165,7 +166,7 @@ class RuleEngineTest {
         var rules    = new Rules(rule);
         var sut      = spy(new RuleEngine(products, rules));
         var query    = mock(ProductQuery.class);
-        var expected = new ProductApplicabilityReport(null, new Rejections(Set.of(new Rejection(product, "foo bar"))));
+        var expected = new ApplicabilityReports<>(null, new Rejections<>(Set.of(new Rejection<>(product, "foo bar"))));
 
         var actual = sut.resolve(query);
 
@@ -189,10 +190,10 @@ class RuleEngineTest {
         var sut          = new RuleEngine(products, rules);
         var pakkeboks    = products.findByNumber("0344").orElseThrow(() -> new RuntimeException("A product with the number 0344 was not found"));
         var servicepakke = products.findByNumber("5800").orElseThrow(() -> new RuntimeException("A product with the number 5800 was not found"));
-        var expected = new ProductApplicabilityReport(null, new Rejections(
-                new Rejection(servicepakke, "Service not available in country: SE"),
-                new Rejection(pakkeboks, "Service not available in country: SE")
-        ));
+        var expected = new ApplicabilityReports<>(null, new Rejections<>(Set.of(
+                new Rejection<>(servicepakke, "Service not available in country: SE"),
+                new Rejection<>(pakkeboks, "Service not available in country: SE")
+        )));
 
         var actual = sut.resolve(query);
 
@@ -216,7 +217,7 @@ class RuleEngineTest {
         var sut          = new RuleEngine(products, rules);
         var pakkeboks    = products.findByNumber("0344").orElseThrow(() -> new RuntimeException("A product with the number 0344 was not found"));
         var servicepakke = products.findByNumber("5800").orElseThrow(() -> new RuntimeException("A product with the number 5800 was not found"));
-        var expected     = new ProductApplicabilityReport(new Products(pakkeboks, servicepakke), null);
+        var expected     = new ApplicabilityReports<>(new Products(pakkeboks, servicepakke), null);
 
         var actual = sut.resolve(query);
 
@@ -240,7 +241,7 @@ class RuleEngineTest {
         var sut          = new RuleEngine(products, rules);
         var pakkeboks    = products.findByNumber("0344").orElseThrow(() -> new RuntimeException("A product with the number 0344 was not found"));
         var servicepakke = products.findByNumber("5800").orElseThrow(() -> new RuntimeException("A product with the number 5800 was not found"));
-        var expected     = new ProductApplicabilityReport(new Products(servicepakke), new Rejections(new Rejection(pakkeboks, "The value 11.0 is greater than the maximum value of 10.0")));
+        var expected     = new ApplicabilityReports<>(new Products(servicepakke), new Rejections<>(Set.of(new Rejection<>(pakkeboks, "The value 11.0 is greater than the maximum value of 10.0"))));
 
         var actual = sut.resolve(query);
 
@@ -259,15 +260,15 @@ class RuleEngineTest {
                 .stream()
                 .map(productDTO -> new Product(productDTO.getId(), productDTO.getConsignorId(), productDTO.getNumber(), productDTO.getName()))
                 .collect(Products.collector());
-        var ruleListDTO    = XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class);
-        var rules          = RulesMapper.getInstance().mapToRules(ruleListDTO);
+        var ruleListDTO  = XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class);
+        var rules        = RulesMapper.getInstance().mapToRules(ruleListDTO);
         var sut          = new RuleEngine(products, rules);
         var pakkeboks    = products.findByNumber("0344").orElseThrow(() -> new RuntimeException("A product with the number 0344 was not found"));
         var servicepakke = products.findByNumber("5800").orElseThrow(() -> new RuntimeException("A product with the number 5800 was not found"));
-        var expected = new ProductApplicabilityReport(null, new Rejections(
-                new Rejection(pakkeboks, "Package is too small on at least one axis"),
-                new Rejection(servicepakke, "Package is too small on at least one axis")
-        ));
+        var expected = new ApplicabilityReports<>(null, new Rejections<>(Set.of(
+                new Rejection<>(pakkeboks, "Package is too small on at least one axis"),
+                new Rejection<>(servicepakke, "Package is too small on at least one axis")
+        )));
 
         var actual = sut.resolve(query);
 

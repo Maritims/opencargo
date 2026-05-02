@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<policies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../main/xsd/pricing.xsd">
+    <policy id="1">
+        <name>Foo bar</name>
+        <priority>1</priority>
+        <basePrice>135.0</basePrice>
+        <pricingRules>
+            <pricingRule>
+                <price>200.0</price>
+            </pricingRule>
+        </pricingRules>
+        <priceModifiers>
+            <priceModifier>
+                <name>Det er litt dyrere av og til</name>
+            </priceModifier>
+        </priceModifiers>
+    </policy>
+</policies>

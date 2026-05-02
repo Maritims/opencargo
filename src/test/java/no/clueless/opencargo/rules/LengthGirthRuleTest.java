@@ -1,6 +1,7 @@
 package no.clueless.opencargo.rules;
 
 import no.clueless.opencargo.Cargo;
+import no.clueless.opencargo.EvaluationResult;
 import no.clueless.opencargo.ProductQuery;
 import org.junit.jupiter.api.Test;
 

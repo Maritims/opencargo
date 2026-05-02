@@ -5,27 +5,28 @@ import no.clueless.opencargo.util.ArgumentExceptionHelper;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
-public class Rejections implements Iterable<Rejection> {
-    private final Set<Rejection> rejections;
+public class Rejections<T> implements Iterable<Rejection<T>> {
+    private final Set<Rejection<T>> rejections;
 
-    public Rejections(Set<Rejection> rejections) {
+    public Rejections(Set<Rejection<T>> rejections) {
         this.rejections = ArgumentExceptionHelper.throwIfNullOrEmpty(rejections, "rejections");
     }
 
-    public Rejections(Rejection... rejections) {
-        this(Set.of(rejections));
+    @Override
+    public Iterator<Rejection<T>> iterator() {
+        return rejections.iterator();
     }
 
-    @Override
-    public Iterator<Rejection> iterator() {
-        return rejections.iterator();
+    public Stream<Rejection<T>> stream() {
+        return rejections.stream();
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Rejections that = (Rejections) o;
+        Rejections<?> that = (Rejections<?>) o;
         return Objects.equals(rejections, that.rejections);
     }
 

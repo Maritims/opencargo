@@ -1,5 +1,6 @@
 package no.clueless.opencargo.rules;
 
+import no.clueless.opencargo.EvaluationResult;
 import no.clueless.opencargo.domain.geography.CountrySpecifications;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 import no.clueless.opencargo.ProductQuery;

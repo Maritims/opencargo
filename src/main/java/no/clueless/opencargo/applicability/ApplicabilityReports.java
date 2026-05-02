@@ -1,14 +1,12 @@
 package no.clueless.opencargo.applicability;
 
-import no.clueless.opencargo.domain.Products;
-
 import java.util.Objects;
 
-public final class ProductApplicabilityReport {
-    private final Products   applicabilityReports;
-    private final Rejections rejections;
+public final class ApplicabilityReports<T> {
+    private final Iterable<T>   applicabilityReports;
+    private final Rejections<T> rejections;
 
-    public ProductApplicabilityReport(Products applicabilityReports, Rejections rejections) {
+    public ApplicabilityReports(Iterable<T> applicabilityReports, Rejections<T> rejections) {
         if (applicabilityReports == null && rejections == null) {
             throw new IllegalArgumentException("applicabilityReports and rejections cannot both be null at the same time");
         }
@@ -16,18 +14,22 @@ public final class ProductApplicabilityReport {
         this.rejections           = rejections;
     }
 
-    public Products getApplicabilityReports() {
+    public Iterable<T> getApplicabilityReports() {
         return applicabilityReports;
     }
 
-    public Rejections getRejections() {
+    public Rejections<T> getRejections() {
         return rejections;
+    }
+
+    public boolean isApplicable() {
+        return rejections == null && applicabilityReports != null;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        ProductApplicabilityReport that = (ProductApplicabilityReport) o;
+        ApplicabilityReports<?> that = (ApplicabilityReports<?>) o;
         return Objects.equals(applicabilityReports, that.applicabilityReports) && Objects.equals(rejections, that.rejections);
     }
 
@@ -38,7 +40,7 @@ public final class ProductApplicabilityReport {
 
     @Override
     public String toString() {
-        return "ProductApplicabilityReport{" +
+        return "ApplicabilityReports{" +
                 "applicabilityReports=" + applicabilityReports +
                 ", rejections=" + rejections +
                 '}';

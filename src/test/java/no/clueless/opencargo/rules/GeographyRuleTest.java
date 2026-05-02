@@ -2,6 +2,7 @@ package no.clueless.opencargo.rules;
 
 import no.clueless.opencargo.Address;
 import no.clueless.opencargo.Cargo;
+import no.clueless.opencargo.EvaluationResult;
 import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.domain.geography.*;
 import org.junit.jupiter.api.Test;
