@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:import schemaLocation="common.xsd"/>
+
+    <xs:complexType name="ConsignorDTO">
+        <xs:complexContent>
+            <xs:extension base="IdentifiableEntityDTO">
+                <xs:sequence>
+                    <xs:element name="number" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ConsignorListDTO">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="consignor" type="ConsignorDTO"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:element name="consignors" type="ConsignorListDTO"/>
+</xs:schema>

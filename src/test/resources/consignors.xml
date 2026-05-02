@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<consignors>
-    <consignor>
-        <id>1</id>
+<consignors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="../../main/xsd/consignors.xsd">
+    <consignor id="1">
         <number>postennorgeas</number>
         <name>Posten Norge AS</name>
     </consignor>
-    <consignor>
-        <id>2</id>
+    <consignor id="2">
         <number>postnord</number>
         <name>PostNord AS</name>
     </consignor>
