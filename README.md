@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/Maritims/opencargo/actions/workflows/maven.yml/badge.svg)](https://github.com/Maritims/opencargo/actions/workflows/maven.yml)
+
 # OpenCargo
 
 This project attempts to determine the applicability of freight products based on rules configured within the system,
