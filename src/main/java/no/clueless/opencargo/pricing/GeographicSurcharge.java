@@ -2,7 +2,7 @@ package no.clueless.opencargo.pricing;
 
 import no.clueless.opencargo.PricingQuery;
 import no.clueless.opencargo.domain.geography.CountrySpecification;
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

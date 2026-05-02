@@ -1,6 +1,8 @@
 package no.clueless.opencargo;
 
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.domain.cargo.Address;
+import no.clueless.opencargo.domain.cargo.Cargo;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.util.Objects;
 

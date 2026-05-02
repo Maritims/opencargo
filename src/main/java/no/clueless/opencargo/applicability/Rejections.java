@@ -1,6 +1,6 @@
 package no.clueless.opencargo.applicability;
 
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.util.Iterator;
 import java.util.Objects;

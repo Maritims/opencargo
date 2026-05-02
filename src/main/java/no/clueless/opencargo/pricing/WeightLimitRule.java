@@ -1,8 +1,9 @@
 package no.clueless.opencargo.pricing;
 
-import no.clueless.opencargo.EvaluationResult;
+import no.clueless.opencargo.applicability.EvaluationResult;
 import no.clueless.opencargo.PricingQuery;
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.bindings.WeightLimitRuleDTO;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -45,5 +46,10 @@ public class WeightLimitRule implements PricingRule {
         return "WeightLimitRule{" +
                 "maxWeight=" + maxWeight +
                 '}';
+    }
+
+    public static WeightLimitRule from(WeightLimitRuleDTO dto) {
+        ArgumentExceptionHelper.throwIfNull(dto, "dto");
+        return new WeightLimitRule(dto.getMaxWeight());
     }
 }

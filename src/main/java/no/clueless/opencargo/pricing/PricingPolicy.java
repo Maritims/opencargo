@@ -4,7 +4,7 @@ import no.clueless.opencargo.PricingQuery;
 import no.clueless.opencargo.applicability.ApplicabilityReports;
 import no.clueless.opencargo.applicability.Rejection;
 import no.clueless.opencargo.applicability.Rejections;
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

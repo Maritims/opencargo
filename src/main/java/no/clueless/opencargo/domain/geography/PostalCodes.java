@@ -1,6 +1,7 @@
 package no.clueless.opencargo.domain.geography;
 
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.bindings.PostalCodeSetSpecificationDTO;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -60,5 +61,12 @@ public class PostalCodes implements Iterable<PostalCode>, PostalCodeSpecificatio
                 return Set.of(Characteristics.UNORDERED);
             }
         };
+    }
+
+    public static PostalCodes from(PostalCodeSetSpecificationDTO dto) {
+        return ArgumentExceptionHelper.throwIfNull(dto, "dto")
+                .getPostalCode()
+                .stream()
+                .collect(PostalCodes.collector());
     }
 }

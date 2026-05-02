@@ -1,7 +1,7 @@
 package no.clueless.opencargo.pricing;
 
-import no.clueless.opencargo.Address;
-import no.clueless.opencargo.Cargo;
+import no.clueless.opencargo.domain.cargo.Address;
+import no.clueless.opencargo.domain.cargo.Cargo;
 import no.clueless.opencargo.PricingQuery;
 import no.clueless.opencargo.domain.geography.*;
 import org.junit.jupiter.api.BeforeEach;

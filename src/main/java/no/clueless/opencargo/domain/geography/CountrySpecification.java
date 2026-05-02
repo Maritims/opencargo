@@ -1,10 +1,12 @@
 package no.clueless.opencargo.domain.geography;
 
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.bindings.CountrySpecificationDTO;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class CountrySpecification {
     private final CountryCode                  countryCode;
@@ -61,5 +63,13 @@ public final class CountrySpecification {
                 "countryCode=" + countryCode +
                 ", postalCodeConstraints=" + postalCodeSpecifications +
                 '}';
+    }
+
+    public static CountrySpecification from(CountrySpecificationDTO dto) {
+        ArgumentExceptionHelper.throwIfNull(dto, "dto");
+        return new CountrySpecification(new CountryCode(dto.getCountryCode()), dto.getPostalCodeSpecification()
+                .stream()
+                .map(PostalCodeSpecification::from)
+                .collect(Collectors.toSet()));
     }
 }

@@ -1,7 +1,10 @@
 package no.clueless.opencargo.pricing;
 
 import no.clueless.opencargo.PricingQuery;
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.pricing.breakdown.PriceBreakdown;
+import no.clueless.opencargo.pricing.breakdown.PriceComponent;
+import no.clueless.opencargo.pricing.breakdown.PriceComponentType;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.util.Comparator;
 import java.util.stream.Stream;

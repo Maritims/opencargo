@@ -1,8 +1,9 @@
 package no.clueless.opencargo.pricing;
 
-import no.clueless.opencargo.EvaluationResult;
+import no.clueless.opencargo.applicability.EvaluationResult;
 import no.clueless.opencargo.PricingQuery;
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.bindings.ProductRequirementRuleDTO;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.util.Objects;
 
@@ -44,5 +45,10 @@ public class ProductRequirementRule implements PricingRule {
         return "ProductRequirementRule{" +
                 "requiredProductId=" + requiredProductId +
                 '}';
+    }
+
+    public static ProductRequirementRule from(ProductRequirementRuleDTO dto) {
+        ArgumentExceptionHelper.throwIfNull(dto, "dto");
+        return new ProductRequirementRule(dto.getProduct().getId());
     }
 }

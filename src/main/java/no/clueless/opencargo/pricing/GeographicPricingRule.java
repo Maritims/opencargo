@@ -1,9 +1,10 @@
 package no.clueless.opencargo.pricing;
 
-import no.clueless.opencargo.EvaluationResult;
+import no.clueless.opencargo.applicability.EvaluationResult;
 import no.clueless.opencargo.PricingQuery;
+import no.clueless.opencargo.bindings.GeographicPricingRuleDTO;
 import no.clueless.opencargo.domain.geography.CountrySpecification;
-import no.clueless.opencargo.util.ArgumentExceptionHelper;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import java.util.Objects;
 
@@ -44,5 +45,10 @@ public class GeographicPricingRule implements PricingRule {
         return "GeographicPricingRule{" +
                 "countrySpecification=" + countrySpecification +
                 '}';
+    }
+
+    public static GeographicPricingRule from(GeographicPricingRuleDTO dto) {
+        ArgumentExceptionHelper.throwIfNull(dto, "dto");
+        return new GeographicPricingRule(CountrySpecification.from(dto.getCountrySpecification()));
     }
 }
