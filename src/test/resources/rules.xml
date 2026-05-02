@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rules>
-    <!-- region Pakke til hentested -->
-    <geographyRule>
-        <name>Pakke til hentested og Pakkeboks er kun tilgjengelig i Norge</name>
+<rules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../main/xsd/rules.xsd">
+    <geographyRule id="1">
         <number>1</number>
-        <consignorId>1</consignorId>
-        <productIds>
-            <productId>1</productId>
-            <productId>2</productId>
-        </productIds>
-        <countryConstraints>
-            <countryConstraint>
-                <countryCode>no</countryCode>
-            </countryConstraint>
-        </countryConstraints>
+        <name>Posten Norge er kun tilgjengelig i Norge</name>
+        <priority>0</priority>
+        <targets>
+            <product id="1"/>
+            <product id="2"/>
+        </targets>
+        <countrySpecification>
+            <countryCode>NO</countryCode>
+            <postalCodeSpecification xsi:type="PostalCodeRangeSpecificationDTO" minInclusive="0001" maxInclusive="9999"/>
+            <postalCodeSpecification xsi:type="PostalCodeSetSpecificationDTO">
+                <postalCode>3261</postalCode>
+            </postalCodeSpecification>
+        </countrySpecification>
     </geographyRule>
-    <weightRule>
-        <name>Pakke til hentested har en maksimum vekt på 35 kilo</name>
+    <weightRule id="2">
         <number>2</number>
-        <consignorId>1</consignorId>
-        <productIds>
-            <productId>1</productId>
-        </productIds>
-        <max>35.0</max>
+        <name>Pakke til hentested har en maksimum vekt på 35 kilo</name>
+        <priority>0</priority>
+        <targets>
+            <product id="1"/>
+        </targets>
+        <maxExclusive>35.0</maxExclusive>
     </weightRule>
-    <weightRule>
-        <name>Pakkeboks har en maskimumvekt på 10 kilo</name>
+    <weightRule id="3">
         <number>3</number>
-        <consignorId>1</consignorId>
-        <productIds>
-            <productId>2</productId>
-        </productIds>
-        <max>10.0</max>
+        <name>Pakkeboks har en maskimumvekt på 10 kilo</name>
+        <priority>0</priority>
+        <targets>
+            <product id="2"/>
+        </targets>
+        <maxExclusive>10.0</maxExclusive>
     </weightRule>
-    <minDimensionsRule>
-        <name>Pakke til hentested har minimumsmål 15 x 10 x 1 cm</name>
+    <minDimensionsRule id="3">
         <number>4</number>
-        <consignorId>1</consignorId>
-        <productIds>
-            <productId>1</productId>
-            <productId>2</productId>
-        </productIds>
+        <name>Pakke til hentested har minimumsmål 15 x 10 x 1 cm</name>
+        <priority>0</priority>
+        <targets>
+            <product id="1"/>
+            <product id="2"/>
+        </targets>
         <minWidth>15.0</minWidth>
         <minLength>10.0</minLength>
         <minHeight>1.0</minHeight>
     </minDimensionsRule>
-    <lengthGirthRule>
-        <name>Pakke til hentested kan enten være maksimalt 240 cm lang, eller ha en maks lengde + omkrets på 360 cm</name>
+    <lengthOrGirthRule id="4">
         <number>5</number>
-        <consignorId>1</consignorId>
-        <productIds>
-            <productId>1</productId>
-            <productId>2</productId>
-        </productIds>
+        <name>Pakke til hentested kan enten være maksimalt 240 cm lang, eller ha en maks lengde + omkrets på 360 cm</name>
+        <priority>0</priority>
+        <targets>
+            <product id="1"/>
+            <product id="2"/>
+        </targets>
         <maxLength>240.0</maxLength>
-        <maxLengthAndGirth>360.0</maxLengthAndGirth>
-    </lengthGirthRule>
-    <!-- endregion -->
+        <maxLengthAndGirthCombined>360.0</maxLengthAndGirthCombined>
+    </lengthOrGirthRule>
 </rules>

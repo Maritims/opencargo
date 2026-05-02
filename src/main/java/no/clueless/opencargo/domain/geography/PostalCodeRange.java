@@ -2,7 +2,7 @@ package no.clueless.opencargo.domain.geography;
 
 import java.util.Objects;
 
-public class PostalCodeRange implements PostalCodeConstraint {
+public class PostalCodeRange implements PostalCodeSpecification {
     private final PostalCode start;
     private final PostalCode end;
 
@@ -14,7 +14,7 @@ public class PostalCodeRange implements PostalCodeConstraint {
             throw new IllegalArgumentException("end must not be null");
         }
         if (start.compareTo(end) > 0) {
-            throw new IllegalArgumentException("start must be less than end");
+            throw new IllegalArgumentException("start must be less than end, but start was " + start + " and end was " + end);
         }
         this.start = start;
         this.end = end;

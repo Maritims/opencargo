@@ -1,8 +1,6 @@
 package no.clueless.opencargo.rules;
 
-import no.clueless.opencargo.dto.RuleListDTO;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
-import no.clueless.opencargo.util.XmlMarshaller;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -28,10 +26,6 @@ public class Rules implements Iterable<Rule> {
 
     public Rules(Rule... rules) {
         this(Set.of(rules));
-    }
-
-    public static Rules fromResources() {
-        return XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class).toDomain();
     }
 
     @Override

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:import schemaLocation="common.xsd"/>
+
+    <xs:simpleType name="CountryCodeDTO">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PositiveDecimalDTO">
+        <xs:restriction base="xs:decimal">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PostalCodeDTO">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PriorityDTO">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="TargetDTO">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="consignor" type="IdentifiableEntityDTO"/>
+            <xs:element name="product" type="IdentifiableEntityDTO"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="RuleBaseDTO" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="IdentifiableEntityDTO">
+                <xs:sequence>
+                    <xs:element name="number" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="priority" type="PriorityDTO"/>
+                    <xs:element name="targets" type="TargetDTO"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RangeRuleDTO">
+        <xs:complexContent>
+            <xs:extension base="RuleBaseDTO">
+                <xs:sequence>
+                    <xs:element name="minInclusive" type="xs:decimal" minOccurs="0"/>
+                    <xs:element name="maxExclusive" type="xs:decimal" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LengthOrGirthRuleDTO">
+        <xs:complexContent>
+            <xs:extension base="RuleBaseDTO">
+                <xs:sequence>
+                    <xs:element name="maxLength" type="xs:decimal" minOccurs="0"/>
+                    <xs:element name="maxLengthAndGirthCombined" type="xs:decimal" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MinDimensionsRuleDTO">
+        <xs:complexContent>
+            <xs:extension base="RuleBaseDTO">
+                <xs:sequence>
+                    <xs:element name="minWidth" type="PositiveDecimalDTO" minOccurs="0"/>
+                    <xs:element name="minLength" type="PositiveDecimalDTO" minOccurs="0"/>
+                    <xs:element name="minHeight" type="PositiveDecimalDTO" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PostalCodeSpecificationDTO" abstract="true"/>
+
+    <xs:complexType name="PostalCodeRangeSpecificationDTO">
+        <xs:complexContent>
+            <xs:extension base="PostalCodeSpecificationDTO">
+                <xs:attribute name="minInclusive" type="PostalCodeDTO" use="required"/>
+                <xs:attribute name="maxInclusive" type="PostalCodeDTO" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PostalCodeSetSpecificationDTO">
+        <xs:complexContent>
+            <xs:extension base="PostalCodeSpecificationDTO">
+                <xs:sequence>
+                    <xs:element name="postalCode" type="PostalCodeDTO" maxOccurs="unbounded" minOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CountrySpecificationDTO">
+        <xs:sequence>
+            <xs:element name="countryCode" type="CountryCodeDTO" minOccurs="0"/>
+            <xs:element name="postalCodeSpecification" type="PostalCodeSpecificationDTO" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GeographyRuleDTO">
+        <xs:complexContent>
+            <xs:extension base="RuleBaseDTO">
+                <xs:sequence>
+                    <xs:element name="countrySpecification" type="CountrySpecificationDTO" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RuleListDTO">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="geographyRule" type="GeographyRuleDTO"/>
+            <xs:element name="weightRule" type="RangeRuleDTO"/>
+            <xs:element name="widthRule" type="RangeRuleDTO"/>
+            <xs:element name="lengthRule" type="RangeRuleDTO"/>
+            <xs:element name="heightRule" type="RangeRuleDTO"/>
+            <xs:element name="lengthOrGirthRule" type="LengthOrGirthRuleDTO"/>
+            <xs:element name="minDimensionsRule" type="MinDimensionsRuleDTO"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:element name="rules" type="RuleListDTO"/>
+</xs:schema>

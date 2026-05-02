@@ -6,19 +6,19 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-public final class CountryConstraint {
-    private final CountryCode               countryCode;
-    private final Set<PostalCodeConstraint> postalCodeConstraints;
+public final class CountrySpecification {
+    private final CountryCode                  countryCode;
+    private final Set<PostalCodeSpecification> postalCodeSpecifications;
 
-    public CountryConstraint(CountryCode countryCode, Set<PostalCodeConstraint> postalCodeConstraints) {
+    public CountrySpecification(CountryCode countryCode, Set<PostalCodeSpecification> postalCodeSpecifications) {
         if (countryCode == null) {
             throw new IllegalArgumentException("countryCode must not be null");
         }
-        this.countryCode           = countryCode;
-        this.postalCodeConstraints = postalCodeConstraints == null ? Collections.emptySet() : postalCodeConstraints;
+        this.countryCode              = countryCode;
+        this.postalCodeSpecifications = postalCodeSpecifications == null ? Collections.emptySet() : postalCodeSpecifications;
     }
 
-    public CountryConstraint(CountryCode countryCode) {
+    public CountrySpecification(CountryCode countryCode) {
         this(countryCode, Collections.emptySet());
     }
 
@@ -26,8 +26,8 @@ public final class CountryConstraint {
         return countryCode;
     }
 
-    public Set<PostalCodeConstraint> getPostalCodeConstraints() {
-        return postalCodeConstraints;
+    public Set<PostalCodeSpecification> getPostalCodeConstraints() {
+        return postalCodeSpecifications;
     }
 
     /**
@@ -40,26 +40,26 @@ public final class CountryConstraint {
     public boolean matches(CountryCode countryCode, PostalCode postalCode) {
         ArgumentExceptionHelper.throwIfNull(countryCode, "countryCode");
         ArgumentExceptionHelper.throwIfNull(postalCode, "postalCode");
-        return countryCode.equals(this.countryCode) && (postalCodeConstraints.isEmpty() || postalCodeConstraints.stream().anyMatch(postalCodeConstraint -> postalCodeConstraint.contains(postalCode)));
+        return countryCode.equals(this.countryCode) && (postalCodeSpecifications.isEmpty() || postalCodeSpecifications.stream().anyMatch(postalCodeConstraint -> postalCodeConstraint.contains(postalCode)));
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        CountryConstraint that = (CountryConstraint) o;
-        return Objects.equals(countryCode, that.countryCode) && Objects.equals(postalCodeConstraints, that.postalCodeConstraints);
+        CountrySpecification that = (CountrySpecification) o;
+        return Objects.equals(countryCode, that.countryCode) && Objects.equals(postalCodeSpecifications, that.postalCodeSpecifications);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countryCode, postalCodeConstraints);
+        return Objects.hash(countryCode, postalCodeSpecifications);
     }
 
     @Override
     public String toString() {
         return "CountryConstraint{" +
                 "countryCode=" + countryCode +
-                ", postalCodeConstraints=" + postalCodeConstraints +
+                ", postalCodeConstraints=" + postalCodeSpecifications +
                 '}';
     }
 }

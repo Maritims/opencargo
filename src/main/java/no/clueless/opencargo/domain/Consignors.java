@@ -1,8 +1,6 @@
 package no.clueless.opencargo.domain;
 
-import no.clueless.opencargo.dto.ConsignorListDTO;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
-import no.clueless.opencargo.util.XmlMarshaller;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -22,10 +20,6 @@ public class Consignors implements Iterable<Consignor> {
 
     public Consignors(Consignor... consignors) {
         this(Set.of(consignors));
-    }
-
-    public static Consignors fromResources() {
-        return XmlMarshaller.unmarshalResourceSilently("consignors.xml", ConsignorListDTO.class).toDomain();
     }
 
     @Override

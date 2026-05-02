@@ -1,7 +1,8 @@
 package no.clueless.opencargo.rules;
 
+import jakarta.annotation.Nonnull;
 import no.clueless.opencargo.Query;
-import no.clueless.opencargo.dto.RuleListDTO;
+import no.clueless.opencargo.bindings.RuleListDTO;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 import no.clueless.opencargo.util.XmlMarshaller;
 
@@ -16,7 +17,7 @@ import java.util.Set;
 public interface Rule extends Comparable<Rule> {
     int getId();
 
-    Integer getConsignorId();
+    Set<Integer> getConsignorIds();
 
     Set<Integer> getProductIds();
 
@@ -32,14 +33,13 @@ public interface Rule extends Comparable<Rule> {
      * Default implementation to allow sorting by priority.
      */
     @Override
-    default int compareTo(Rule other) {
+    default int compareTo(@Nonnull Rule other) {
         ArgumentExceptionHelper.throwIfNull(other, "other");
         return Integer.compare(getPriority(), other.getPriority());
     }
 
-    static RuleListDTO unmarshal(InputStream is) {
+    static Object unmarshal(InputStream is) {
         ArgumentExceptionHelper.throwIfNull(is, "is");
-
         return XmlMarshaller.unmarshalResourceSilently(is, RuleListDTO.class);
     }
 }

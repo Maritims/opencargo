@@ -5,7 +5,6 @@ import no.clueless.opencargo.Query;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -14,37 +13,37 @@ import static org.mockito.Mockito.when;
 class LengthGirthRuleTest {
     @Test
     void throw_when_maxLength_is_null() {
-        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, null, null));
+        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(mock(), null, null));
     }
 
     @Test
     void throw_when_maxLength_is_negative() {
-        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, new BigDecimal("-1.0"), null));
+        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(mock(), new BigDecimal("-1.0"), null));
     }
 
     @Test
     void throw_when_maxLengthAndGirthCombined_is_null() {
-        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, BigDecimal.ONE, null));
+        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(mock(), BigDecimal.ONE, null));
     }
 
     @Test
     void throw_when_maxLengthAndGirthCombined_is_negative() {
-        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, BigDecimal.ONE, new BigDecimal("-1.0")));
+        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(mock(), BigDecimal.ONE, new BigDecimal("-1.0")));
     }
 
     @Test
     void throw_when_maxLength_is_less_than_maxLengthAndGirthCombined() {
-        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, BigDecimal.TEN, BigDecimal.ONE));
+        assertThrows(IllegalArgumentException.class, () -> new LengthGirthRule(mock(), BigDecimal.TEN, BigDecimal.ONE));
     }
 
     @Test
     void do_not_throw_when_args_are_valid() {
-        assertDoesNotThrow(() -> new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, BigDecimal.ONE, BigDecimal.TEN));
+        assertDoesNotThrow(() -> new LengthGirthRule(mock(), BigDecimal.ONE, BigDecimal.TEN));
     }
 
     @Test
     void evaluate_should_return_unsatisfied_when_length_exceeds_maximum() {
-        var sut   = new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, new BigDecimal("240.0"), new BigDecimal("360.0"));
+        var sut   = new LengthGirthRule(mock(), new BigDecimal("240.0"), new BigDecimal("360.0"));
         var cargo = mock(Cargo.class);
         when(cargo.getLength()).thenReturn(new BigDecimal("245.0"));
         when(cargo.getWidth()).thenReturn(new BigDecimal("245.0"));
@@ -59,7 +58,7 @@ class LengthGirthRuleTest {
 
     @Test
     void evaluate_should_return_satisfied_when_length_is_equal_to_maximum() {
-        var sut = new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, new BigDecimal("240.0"), new BigDecimal("360.0"));
+        var sut = new LengthGirthRule(mock(), new BigDecimal("240.0"), new BigDecimal("360.0"));
         var cargo = mock(Cargo.class);
         when(cargo.getLength()).thenReturn(new BigDecimal("240.0"));
         var query = mock(Query.class);
@@ -72,7 +71,7 @@ class LengthGirthRuleTest {
 
     @Test
     void evaluate_should_return_satisfied_when_length_is_less_than_maximum() {
-        var sut = new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, new BigDecimal("240.0"), new BigDecimal("360.0"));
+        var sut = new LengthGirthRule(mock(), new BigDecimal("240.0"), new BigDecimal("360.0"));
         var cargo = mock(Cargo.class);
         when(cargo.getLength()).thenReturn(new BigDecimal("235.0"));
         var query = mock(Query.class);
@@ -85,7 +84,7 @@ class LengthGirthRuleTest {
 
     @Test
     void evaluate_should_return_satisfied_when_length_plus_girth_is_equal_to_maximum() {
-        var sut = new LengthGirthRule(1, 1, Set.of(1), "foo", "bar", 0, false, new BigDecimal("240.0"), new BigDecimal("360.0"));
+        var sut = new LengthGirthRule(mock(), new BigDecimal("240.0"), new BigDecimal("360.0"));
         var cargo = mock(Cargo.class);
         when(cargo.getLength()).thenReturn(new BigDecimal("260.0"));
         when(cargo.getWidth()).thenReturn(new BigDecimal("15.0"));
@@ -100,7 +99,7 @@ class LengthGirthRuleTest {
 
     @Test
     void evaluate_should_return_satisfied_when_length_plus_girth_is_less_than_maximum() {
-        var sut = new LengthGirthRule(1, 1,Set.of(1), "foo", "bar", 0, false, new BigDecimal("240.0"), new BigDecimal("360.0"));
+        var sut = new LengthGirthRule(mock(), new BigDecimal("240.0"), new BigDecimal("360.0"));
         var cargo = mock(Cargo.class);
         when(cargo.getLength()).thenReturn(new BigDecimal("235.0"));
         when(cargo.getWidth()).thenReturn(new BigDecimal("15.0"));

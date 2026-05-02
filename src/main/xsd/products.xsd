@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:import schemaLocation="common.xsd"/>
+
+    <xs:complexType name="ProductDTO">
+        <xs:complexContent>
+            <xs:extension base="IdentifiableEntityDTO">
+                <xs:sequence>
+                    <xs:element name="consignorId" type="xs:int"/>
+                    <xs:element name="number" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ProductListDTO">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="product" type="ProductDTO"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:element name="products" type="ProductListDTO"/>
+</xs:schema>

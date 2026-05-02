@@ -1,7 +1,5 @@
 package no.clueless.opencargo.domain;
 
-import no.clueless.opencargo.dto.ProductListDTO;
-import no.clueless.opencargo.util.XmlMarshaller;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 
 import java.util.*;
@@ -24,10 +22,6 @@ public class Products implements Iterable<Product> {
     public Products(Product... products) {
         products = ArgumentExceptionHelper.throwIfNullOrEmpty(products, "products");
         this.productsByNumber = Arrays.stream(products).collect(Collectors.toMap(Product::getNumber, product -> product));
-    }
-
-    public static Products fromResources() {
-        return XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class).toDomain();
     }
 
     @Override

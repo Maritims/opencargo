@@ -3,12 +3,16 @@ package no.clueless.opencargo;
 import no.clueless.opencargo.applicability.ProductApplicabilityReport;
 import no.clueless.opencargo.applicability.Rejection;
 import no.clueless.opencargo.applicability.Rejections;
+import no.clueless.opencargo.bindings.ProductListDTO;
+import no.clueless.opencargo.bindings.RuleListDTO;
 import no.clueless.opencargo.domain.geography.*;
 import no.clueless.opencargo.domain.Product;
 import no.clueless.opencargo.domain.Products;
 import no.clueless.opencargo.rules.EvaluationResult;
 import no.clueless.opencargo.rules.Rule;
 import no.clueless.opencargo.rules.Rules;
+import no.clueless.opencargo.rules.mapping.RulesMapper;
+import no.clueless.opencargo.util.XmlMarshaller;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -175,8 +179,13 @@ class RuleEngineTest {
         var cargo     = new Cargo(10.0, 100.0, 50.0, 50.0, 1337.0);
         var query     = new Query(cargo, stockholm);
 
-        var products     = Products.fromResources();
-        var rules        = Rules.fromResources();
+        var productListDTO = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
+        var products = productListDTO.getProduct()
+                .stream()
+                .map(productDTO -> new Product(productDTO.getId(), productDTO.getConsignorId(), productDTO.getNumber(), productDTO.getName()))
+                .collect(Products.collector());
+        var ruleListDTO  = XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class);
+        var rules        = RulesMapper.getInstance().mapToRules(ruleListDTO);
         var sut          = new RuleEngine(products, rules);
         var pakkeboks    = products.findByNumber("0344").orElseThrow(() -> new RuntimeException("A product with the number 0344 was not found"));
         var servicepakke = products.findByNumber("5800").orElseThrow(() -> new RuntimeException("A product with the number 5800 was not found"));
@@ -197,8 +206,13 @@ class RuleEngineTest {
         var cargo  = new Cargo(10.0, 100.0, 50.0, 50.0, 1337.0);
         var query  = new Query(cargo, oslo);
 
-        var products     = Products.fromResources();
-        var rules        = Rules.fromResources();
+        var productListDTO = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
+        var products = productListDTO.getProduct()
+                .stream()
+                .map(productDTO -> new Product(productDTO.getId(), productDTO.getConsignorId(), productDTO.getNumber(), productDTO.getName()))
+                .collect(Products.collector());
+        var ruleListDTO  = XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class);
+        var rules        = RulesMapper.getInstance().mapToRules(ruleListDTO);
         var sut          = new RuleEngine(products, rules);
         var pakkeboks    = products.findByNumber("0344").orElseThrow(() -> new RuntimeException("A product with the number 0344 was not found"));
         var servicepakke = products.findByNumber("5800").orElseThrow(() -> new RuntimeException("A product with the number 5800 was not found"));
@@ -216,8 +230,13 @@ class RuleEngineTest {
         var cargo  = new Cargo(11.0, 100.0, 50.0, 50.0, 1337.0);
         var query  = new Query(cargo, oslo);
 
-        var products = Products.fromResources();
-        var rules        = Rules.fromResources();
+        var productListDTO = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
+        var products = productListDTO.getProduct()
+                .stream()
+                .map(productDTO -> new Product(productDTO.getId(), productDTO.getConsignorId(), productDTO.getNumber(), productDTO.getName()))
+                .collect(Products.collector());
+        var ruleListDTO  = XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class);
+        var rules        = RulesMapper.getInstance().mapToRules(ruleListDTO);
         var sut          = new RuleEngine(products, rules);
         var pakkeboks    = products.findByNumber("0344").orElseThrow(() -> new RuntimeException("A product with the number 0344 was not found"));
         var servicepakke = products.findByNumber("5800").orElseThrow(() -> new RuntimeException("A product with the number 5800 was not found"));
@@ -235,8 +254,13 @@ class RuleEngineTest {
         var cargo  = new Cargo(10.0, 14.0, 10.0, 1.0, 1337.0);
         var query  = new Query(cargo, oslo);
 
-        var products     = Products.fromResources();
-        var rules        = Rules.fromResources();
+        var productListDTO = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
+        var products = productListDTO.getProduct()
+                .stream()
+                .map(productDTO -> new Product(productDTO.getId(), productDTO.getConsignorId(), productDTO.getNumber(), productDTO.getName()))
+                .collect(Products.collector());
+        var ruleListDTO    = XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class);
+        var rules          = RulesMapper.getInstance().mapToRules(ruleListDTO);
         var sut          = new RuleEngine(products, rules);
         var pakkeboks    = products.findByNumber("0344").orElseThrow(() -> new RuntimeException("A product with the number 0344 was not found"));
         var servicepakke = products.findByNumber("5800").orElseThrow(() -> new RuntimeException("A product with the number 5800 was not found"));

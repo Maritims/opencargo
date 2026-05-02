@@ -1,26 +1,24 @@
 package no.clueless.opencargo.rules;
 
-import no.clueless.opencargo.domain.geography.CountryConstraints;
+import no.clueless.opencargo.domain.geography.CountrySpecifications;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 import no.clueless.opencargo.Query;
 import no.clueless.opencargo.domain.geography.CountryCode;
 import no.clueless.opencargo.domain.geography.PostalCode;
 
-import java.util.Set;
-
 /**
  * A rule which is satisfied by certain geographical properties, such as country codes and/or postal codes.
  */
 public final class GeographyRule extends RuleBase implements Rule {
-    private final CountryConstraints countryConstraints;
+    private final CountrySpecifications countrySpecifications;
 
-    public GeographyRule(int id, Integer consignorId, Set<Integer> productIds, String number, String name, int priority, boolean isTerminal, CountryConstraints countryConstraints) {
-        super(id, consignorId, productIds, number, name, priority, isTerminal);
-        this.countryConstraints = ArgumentExceptionHelper.throwIfNull(countryConstraints, "countryConstraints");
+    public GeographyRule(RuleMetadata metadata, CountrySpecifications countrySpecifications) {
+        super(metadata);
+        this.countrySpecifications = ArgumentExceptionHelper.throwIfNull(countrySpecifications, "countryConstraints");
     }
 
-    public CountryConstraints getCountryConstraints() {
-        return countryConstraints;
+    public CountrySpecifications getCountryConstraints() {
+        return countrySpecifications;
     }
 
     @Override

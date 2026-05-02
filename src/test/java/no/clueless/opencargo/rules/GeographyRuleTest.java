@@ -11,31 +11,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class GeographyRuleTest {
 
     @Test
     void throw_when_countryConstraints_is_null() {
-        assertThrows(IllegalArgumentException.class, () -> new GeographyRule(1, null, null, "foo", "bar", 0, false, null));
+        assertThrows(IllegalArgumentException.class, () -> new GeographyRule(mock(), null));
     }
 
     @Test
-    void throw_when_countryConstraints_is_empty() {
-        assertThrows(IllegalArgumentException.class, () -> new GeographyRule(1, null, null, "foo", "bar", 0, false, null));
-    }
+    void do_not_throw_when_countryConstraints_is_not_null() {
+        Set<PostalCodeSpecification> postalCodeSpecifications = new HashSet<>();
+        var                          countryConstraints       = new CountrySpecifications(new CountrySpecification(new CountryCode("no"), postalCodeSpecifications));
 
-    @Test
-    void do_not_throw_when_countryConstraints_is_not_null_nor_empty() {
-        Set<PostalCodeConstraint> postalCodeConstraints = new HashSet<>();
-        var                       countryConstraints    = new CountryConstraints(new CountryConstraint(new CountryCode("no"), postalCodeConstraints));
-
-        assertDoesNotThrow(() -> new GeographyRule(1, null, null, "foo", "bar", 0, false, countryConstraints));
+        assertDoesNotThrow(() -> new GeographyRule(mock(), countryConstraints));
     }
 
     @Test
     void isSatisfiedBy_should_throw_when_query_is_null() {
-        var           countryConstraints = new CountryConstraints(new CountryConstraint(new CountryCode("no"), new HashSet<>()));
-        GeographyRule rule               = new GeographyRule(1, null, null, "foo", "bar", 0, false, countryConstraints);
+        var           countryConstraints = new CountrySpecifications(new CountrySpecification(new CountryCode("no"), new HashSet<>()));
+        GeographyRule rule               = new GeographyRule(mock(), countryConstraints);
 
         assertThrows(IllegalArgumentException.class, () -> rule.evaluate(null));
     }
@@ -43,8 +39,8 @@ class GeographyRuleTest {
     @Test
     void evaluate_should_return_true_when_any_countryConstraint_is_matched() {
         // arrange
-        var           countryConstraints = new CountryConstraints(new CountryConstraint(new CountryCode("no"), new HashSet<>()));
-        GeographyRule rule               = new GeographyRule(1, null, null, "foo", "bar", 0, false, countryConstraints);
+        var           countryConstraints = new CountrySpecifications(new CountrySpecification(new CountryCode("no"), new HashSet<>()));
+        GeographyRule rule               = new GeographyRule(mock(), countryConstraints);
         Cargo         cargo              = new Cargo(new BigDecimal("1.0"), new BigDecimal("2.0"), new BigDecimal("3.0"), new BigDecimal("4.0"), new BigDecimal("5.0"));
         Address       destination        = new Address("foo", "bar", "baz", "lorem", new PostalCode("ipsum"), new CountryCode("no"));
         Query         query              = new Query(cargo, destination);

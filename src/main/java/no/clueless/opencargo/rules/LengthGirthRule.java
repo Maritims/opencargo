@@ -4,14 +4,13 @@ import no.clueless.opencargo.Query;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 public class LengthGirthRule extends RuleBase implements Rule {
     private final BigDecimal maxLength;
     private final BigDecimal maxLengthAndGirthCombined;
 
-    public LengthGirthRule(int id, Integer consignorId, Set<Integer> productIds, String number, String name, int priority, boolean isTerminal, BigDecimal maxLength, BigDecimal maxLengthAndGirthCombined) {
-        super(id, consignorId, productIds, number, name, priority, isTerminal);
+    public LengthGirthRule(RuleMetadata metadata, BigDecimal maxLength, BigDecimal maxLengthAndGirthCombined) {
+        super(metadata);
         this.maxLength                 = ArgumentExceptionHelper.throwIfNullOrNegative(maxLength, "maxLength");
         this.maxLengthAndGirthCombined = ArgumentExceptionHelper.throwIfNullOrNegative(maxLengthAndGirthCombined, "maxLength");
 

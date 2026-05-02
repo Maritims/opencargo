@@ -4,7 +4,6 @@ import no.clueless.opencargo.Query;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 
 import java.math.BigDecimal;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,8 +12,8 @@ public class MinDimensionsRule extends RuleBase implements Rule {
     private final BigDecimal minLength;
     private final BigDecimal minHeight;
 
-    public MinDimensionsRule(int id, Integer consignorId, Set<Integer> productIds, String number, String name, int priority, boolean isTerminal, BigDecimal minWidth, BigDecimal minLength, BigDecimal minHeight) {
-        super(id, consignorId, productIds, number, name, priority, isTerminal);
+    public MinDimensionsRule(RuleMetadata metadata, BigDecimal minWidth, BigDecimal minLength, BigDecimal minHeight) {
+        super(metadata);
         this.minWidth  = ArgumentExceptionHelper.throwIfNullOrNegative(minWidth, "minWidth");
         this.minLength = ArgumentExceptionHelper.throwIfNullOrNegative(minLength, "minLength");
         this.minHeight = ArgumentExceptionHelper.throwIfNullOrNegative(minHeight, "minHeight");

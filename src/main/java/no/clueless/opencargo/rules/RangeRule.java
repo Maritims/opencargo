@@ -5,16 +5,26 @@ import no.clueless.opencargo.Cargo;
 import no.clueless.opencargo.Query;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.function.Function;
 
-public abstract class ScalarRuleBase extends RuleBase implements ScalarRule {
-    private final BigDecimal min;
-    private final BigDecimal max;
+public class RangeRule extends RuleBase {
+    private final Function<Cargo, BigDecimal> valueResolver;
+    private final BigDecimal                  min;
+    private final BigDecimal                  max;
 
-    protected ScalarRuleBase(int id, Integer consignorId, Set<Integer> productIds, String number, String name, int priority, boolean isTerminal, BigDecimal min, BigDecimal max) {
-        super(id, consignorId, productIds, number, name, priority, isTerminal);
-        this.min = min;
-        this.max = max;
+    public RangeRule(RuleMetadata metadata, Function<Cargo, BigDecimal> valueResolver, BigDecimal min, BigDecimal max) {
+        super(metadata);
+        this.valueResolver = ArgumentExceptionHelper.throwIfNull(valueResolver, "valueResolver");
+
+        if(min == null && max == null) {
+            throw new IllegalArgumentException("Either min or max must be specified");
+        }
+        if(min != null && max != null && min.compareTo(max) > 0) {
+            throw new IllegalArgumentException("min must be less than or equal to max");
+        }
+
+        this.min           = min;
+        this.max           = max;
     }
 
     @Override
@@ -22,7 +32,7 @@ public abstract class ScalarRuleBase extends RuleBase implements ScalarRule {
         ArgumentExceptionHelper.throwIfNull(query, "query");
 
         Cargo      cargo = query.getCargo();
-        BigDecimal value = resolveValue(cargo);
+        BigDecimal value = valueResolver.apply(cargo);
 
         boolean satisfied = (min != null && min.compareTo(value) <= 0) || (max != null && max.compareTo(value) >= 0);
         if (satisfied) {
