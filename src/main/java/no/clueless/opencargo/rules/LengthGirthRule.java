@@ -1,6 +1,6 @@
 package no.clueless.opencargo.rules;
 
-import no.clueless.opencargo.Query;
+import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 
 import java.math.BigDecimal;
@@ -20,10 +20,10 @@ public class LengthGirthRule extends RuleBase implements Rule {
     }
 
     @Override
-    public EvaluationResult evaluate(Query query) {
-        ArgumentExceptionHelper.throwIfNull(query, "query");
+    public EvaluationResult evaluate(ProductQuery productQuery) {
+        ArgumentExceptionHelper.throwIfNull(productQuery, "query");
 
-        var cargo  = query.getCargo();
+        var cargo  = productQuery.getCargo();
         var length = cargo.getLength();
 
         if (length.compareTo(maxLength) > 0) {

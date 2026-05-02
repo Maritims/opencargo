@@ -2,7 +2,7 @@ package no.clueless.opencargo.rules;
 
 import no.clueless.opencargo.domain.geography.CountrySpecifications;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
-import no.clueless.opencargo.Query;
+import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.domain.geography.CountryCode;
 import no.clueless.opencargo.domain.geography.PostalCode;
 
@@ -22,11 +22,11 @@ public final class GeographyRule extends RuleBase implements Rule {
     }
 
     @Override
-    public EvaluationResult evaluate(Query query) {
-        ArgumentExceptionHelper.throwIfNull(query, "query");
+    public EvaluationResult evaluate(ProductQuery productQuery) {
+        ArgumentExceptionHelper.throwIfNull(productQuery, "query");
 
-        CountryCode destinationCountry    = query.getDestination().getCountryCode();
-        PostalCode  destinationPostalCode = query.getDestination().getPostalCode();
+        CountryCode destinationCountry    = productQuery.getDestination().getCountryCode();
+        PostalCode  destinationPostalCode = productQuery.getDestination().getPostalCode();
 
         if (getCountryConstraints().stream().noneMatch(countryConstraint -> countryConstraint.getCountryCode().equals(destinationCountry))) {
             return EvaluationResult.unsatisfied(String.format("Service not available in country: %s", destinationCountry));

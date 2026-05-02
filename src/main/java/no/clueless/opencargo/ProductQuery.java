@@ -7,11 +7,11 @@ import java.util.Objects;
 /**
  * A query for applicable products.
  */
-public class Query {
+public class ProductQuery {
     private final Cargo   cargo;
     private final Address destination;
 
-    public Query(Cargo cargo, Address destination) {
+    public ProductQuery(Cargo cargo, Address destination) {
         this.cargo       = ArgumentExceptionHelper.throwIfNull(cargo, "cargo");
         this.destination = ArgumentExceptionHelper.throwIfNull(destination, "destination");
     }
@@ -27,8 +27,8 @@ public class Query {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Query query = (Query) o;
-        return Objects.equals(cargo, query.cargo) && Objects.equals(destination, query.destination);
+        ProductQuery productQuery = (ProductQuery) o;
+        return Objects.equals(cargo, productQuery.cargo) && Objects.equals(destination, productQuery.destination);
     }
 
     @Override

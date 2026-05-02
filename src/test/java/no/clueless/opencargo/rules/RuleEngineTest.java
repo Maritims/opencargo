@@ -1,5 +1,8 @@
-package no.clueless.opencargo;
+package no.clueless.opencargo.rules;
 
+import no.clueless.opencargo.Address;
+import no.clueless.opencargo.Cargo;
+import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.applicability.ProductApplicabilityReport;
 import no.clueless.opencargo.applicability.Rejection;
 import no.clueless.opencargo.applicability.Rejections;
@@ -8,9 +11,6 @@ import no.clueless.opencargo.bindings.RuleListDTO;
 import no.clueless.opencargo.domain.geography.*;
 import no.clueless.opencargo.domain.Product;
 import no.clueless.opencargo.domain.Products;
-import no.clueless.opencargo.rules.EvaluationResult;
-import no.clueless.opencargo.rules.Rule;
-import no.clueless.opencargo.rules.Rules;
 import no.clueless.opencargo.rules.mapping.RulesMapper;
 import no.clueless.opencargo.util.XmlMarshaller;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ class RuleEngineTest {
     @Test
     void evaluateProduct_should_throw_when_product_is_null() {
         var sut = new RuleEngine(mock(Products.class), mock(Rules.class));
-        assertThrows(IllegalArgumentException.class, () -> sut.evaluateProduct(mock(Query.class), null));
+        assertThrows(IllegalArgumentException.class, () -> sut.evaluateProduct(mock(ProductQuery.class), null));
     }
 
     @Test
@@ -57,7 +57,7 @@ class RuleEngineTest {
         var evaluationResult = mock(EvaluationResult.class);
         when(evaluationResult.isSatisfied()).thenReturn(false);
 
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         var rule  = mock(Rule.class);
         when(rule.getId()).thenReturn(1);
         when(rule.getName()).thenReturn("Rule without product id");
@@ -82,7 +82,7 @@ class RuleEngineTest {
         var evaluationResult = mock(EvaluationResult.class);
         when(evaluationResult.isSatisfied()).thenReturn(false);
 
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         var rule  = mock(Rule.class);
         when(rule.getProductIds()).thenReturn(Set.of(2));
         var rules = new Rules(rule);
@@ -106,7 +106,7 @@ class RuleEngineTest {
         var evaluationResult = mock(EvaluationResult.class);
         when(evaluationResult.isSatisfied()).thenReturn(true);
 
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         var rule  = mock(Rule.class);
         when(rule.evaluate(query)).thenReturn(evaluationResult);
         when(rule.getProductIds()).thenReturn(Set.of(productId));
@@ -131,7 +131,7 @@ class RuleEngineTest {
         var product  = mock(Product.class);
         var products = new Products(product);
         var sut      = spy(new RuleEngine(products, mock(Rules.class)));
-        var query    = mock(Query.class);
+        var query    = mock(ProductQuery.class);
 
         sut.resolve(query);
 
@@ -143,7 +143,7 @@ class RuleEngineTest {
         var product  = mock(Product.class);
         var products = new Products(product);
         var sut      = spy(new RuleEngine(products, mock(Rules.class)));
-        var query    = mock(Query.class);
+        var query    = mock(ProductQuery.class);
         var expected = new ProductApplicabilityReport(products, null);
 
         var actual = sut.resolve(query);
@@ -161,10 +161,10 @@ class RuleEngineTest {
         var rule = mock(Rule.class);
         when(rule.getId()).thenReturn(1);
         when(rule.getName()).thenReturn("Rule without product id");
-        when(rule.evaluate(any(Query.class))).thenReturn(evaluationResult);
+        when(rule.evaluate(any(ProductQuery.class))).thenReturn(evaluationResult);
         var rules    = new Rules(rule);
         var sut      = spy(new RuleEngine(products, rules));
-        var query    = mock(Query.class);
+        var query    = mock(ProductQuery.class);
         var expected = new ProductApplicabilityReport(null, new Rejections(Set.of(new Rejection(product, "foo bar"))));
 
         var actual = sut.resolve(query);
@@ -177,7 +177,7 @@ class RuleEngineTest {
         var sweden    = new CountryCode("se");
         var stockholm = new Address("Foo", "Bar", "Stockholm", null, new PostalCode("111 20"), sweden);
         var cargo     = new Cargo(10.0, 100.0, 50.0, 50.0, 1337.0);
-        var query     = new Query(cargo, stockholm);
+        var query     = new ProductQuery(cargo, stockholm);
 
         var productListDTO = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
         var products = productListDTO.getProduct()
@@ -204,7 +204,7 @@ class RuleEngineTest {
         var norway = new CountryCode("no");
         var oslo   = new Address("Foo", "Bar", "Oslo", null, new PostalCode("1111"), norway);
         var cargo  = new Cargo(10.0, 100.0, 50.0, 50.0, 1337.0);
-        var query  = new Query(cargo, oslo);
+        var query  = new ProductQuery(cargo, oslo);
 
         var productListDTO = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
         var products = productListDTO.getProduct()
@@ -228,7 +228,7 @@ class RuleEngineTest {
         var norway = new CountryCode("no");
         var oslo   = new Address("Foo", "Bar", "Oslo", null, new PostalCode("1111"), norway);
         var cargo  = new Cargo(11.0, 100.0, 50.0, 50.0, 1337.0);
-        var query  = new Query(cargo, oslo);
+        var query  = new ProductQuery(cargo, oslo);
 
         var productListDTO = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
         var products = productListDTO.getProduct()
@@ -252,7 +252,7 @@ class RuleEngineTest {
         var norway = new CountryCode("no");
         var oslo   = new Address("foo", "Bar", "Oslo", null, new PostalCode("1100"), norway);
         var cargo  = new Cargo(10.0, 14.0, 10.0, 1.0, 1337.0);
-        var query  = new Query(cargo, oslo);
+        var query  = new ProductQuery(cargo, oslo);
 
         var productListDTO = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
         var products = productListDTO.getProduct()

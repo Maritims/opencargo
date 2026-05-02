@@ -2,7 +2,7 @@ package no.clueless.opencargo.rules;
 
 import no.clueless.opencargo.Address;
 import no.clueless.opencargo.Cargo;
-import no.clueless.opencargo.Query;
+import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.domain.geography.*;
 import org.junit.jupiter.api.Test;
 
@@ -42,11 +42,11 @@ class GeographyRuleTest {
         var           countryConstraints = new CountrySpecifications(new CountrySpecification(new CountryCode("no"), new HashSet<>()));
         GeographyRule rule               = new GeographyRule(mock(), countryConstraints);
         Cargo         cargo              = new Cargo(new BigDecimal("1.0"), new BigDecimal("2.0"), new BigDecimal("3.0"), new BigDecimal("4.0"), new BigDecimal("5.0"));
-        Address       destination        = new Address("foo", "bar", "baz", "lorem", new PostalCode("ipsum"), new CountryCode("no"));
-        Query         query              = new Query(cargo, destination);
+        Address      destination  = new Address("foo", "bar", "baz", "lorem", new PostalCode("ipsum"), new CountryCode("no"));
+        ProductQuery productQuery = new ProductQuery(cargo, destination);
 
         // act
-        EvaluationResult result = rule.evaluate(query);
+        EvaluationResult result = rule.evaluate(productQuery);
 
         // assert
         assertTrue(result.isSatisfied(), result.getReason());

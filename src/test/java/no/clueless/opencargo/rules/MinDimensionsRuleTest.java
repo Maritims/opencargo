@@ -1,7 +1,7 @@
 package no.clueless.opencargo.rules;
 
 import no.clueless.opencargo.Cargo;
-import no.clueless.opencargo.Query;
+import no.clueless.opencargo.ProductQuery;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -80,7 +80,7 @@ class MinDimensionsRuleTest {
         when(cargo.getWidth()).thenReturn(width);
         when(cargo.getHeight()).thenReturn(height);
         when(cargo.getLength()).thenReturn(length);
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         when(query.getCargo()).thenReturn(cargo);
 
         var actual = sut.evaluate(query);
@@ -96,7 +96,7 @@ class MinDimensionsRuleTest {
         when(cargo.getWidth()).thenReturn(width);
         when(cargo.getHeight()).thenReturn(height);
         when(cargo.getLength()).thenReturn(length);
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         when(query.getCargo()).thenReturn(cargo);
 
         var actual = sut.evaluate(query);

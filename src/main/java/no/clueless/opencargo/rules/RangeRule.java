@@ -1,8 +1,8 @@
 package no.clueless.opencargo.rules;
 
+import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 import no.clueless.opencargo.Cargo;
-import no.clueless.opencargo.Query;
 
 import java.math.BigDecimal;
 import java.util.function.Function;
@@ -28,10 +28,10 @@ public class RangeRule extends RuleBase {
     }
 
     @Override
-    public EvaluationResult evaluate(Query query) {
-        ArgumentExceptionHelper.throwIfNull(query, "query");
+    public EvaluationResult evaluate(ProductQuery productQuery) {
+        ArgumentExceptionHelper.throwIfNull(productQuery, "query");
 
-        Cargo      cargo = query.getCargo();
+        Cargo      cargo = productQuery.getCargo();
         BigDecimal value = valueResolver.apply(cargo);
 
         boolean satisfied = (min != null && min.compareTo(value) <= 0) || (max != null && max.compareTo(value) >= 0);

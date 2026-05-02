@@ -1,7 +1,7 @@
 package no.clueless.opencargo.rules;
 
 import no.clueless.opencargo.Cargo;
-import no.clueless.opencargo.Query;
+import no.clueless.opencargo.ProductQuery;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -48,7 +48,7 @@ class LengthGirthRuleTest {
         when(cargo.getLength()).thenReturn(new BigDecimal("245.0"));
         when(cargo.getWidth()).thenReturn(new BigDecimal("245.0"));
         when(cargo.getHeight()).thenReturn(new BigDecimal("245.0"));
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         when(query.getCargo()).thenReturn(cargo);
 
         var actual = sut.evaluate(query);
@@ -61,7 +61,7 @@ class LengthGirthRuleTest {
         var sut = new LengthGirthRule(mock(), new BigDecimal("240.0"), new BigDecimal("360.0"));
         var cargo = mock(Cargo.class);
         when(cargo.getLength()).thenReturn(new BigDecimal("240.0"));
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         when(query.getCargo()).thenReturn(cargo);
 
         var actual = sut.evaluate(query);
@@ -74,7 +74,7 @@ class LengthGirthRuleTest {
         var sut = new LengthGirthRule(mock(), new BigDecimal("240.0"), new BigDecimal("360.0"));
         var cargo = mock(Cargo.class);
         when(cargo.getLength()).thenReturn(new BigDecimal("235.0"));
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         when(query.getCargo()).thenReturn(cargo);
 
         var actual = sut.evaluate(query);
@@ -89,7 +89,7 @@ class LengthGirthRuleTest {
         when(cargo.getLength()).thenReturn(new BigDecimal("260.0"));
         when(cargo.getWidth()).thenReturn(new BigDecimal("15.0"));
         when(cargo.getHeight()).thenReturn(new BigDecimal("15.0"));
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         when(query.getCargo()).thenReturn(cargo);
 
         var actual = sut.evaluate(query);
@@ -104,7 +104,7 @@ class LengthGirthRuleTest {
         when(cargo.getLength()).thenReturn(new BigDecimal("235.0"));
         when(cargo.getWidth()).thenReturn(new BigDecimal("15.0"));
         when(cargo.getHeight()).thenReturn(new BigDecimal("15.0"));
-        var query = mock(Query.class);
+        var query = mock(ProductQuery.class);
         when(query.getCargo()).thenReturn(cargo);
 
         var actual = sut.evaluate(query);

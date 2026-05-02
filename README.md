@@ -3,7 +3,7 @@
 # OpenCargo
 
 This project attempts to determine the applicability of freight products based on rules configured within the system,
-and a query from a consumer.
+and a productQuery from a consumer.
 
 ## What does it do?
 
@@ -35,11 +35,11 @@ There are various domain entities within this system.
   represented as products. A consignor does not concern itself with the products it provides, that is the responsibility
   of the product registry.
 - `Product`: A product represents a freight service provided by a consignor. The product doesn ot concern itself with
-  its applicability based on a consumer's query, that is the concern of the rules registry.
+  its applicability based on a consumer's productQuery, that is the concern of the rules registry.
 - `Address`: An address represents a geographical location to which cargo should be delivered.
-- `Query`: A query is submitted by a consumer with the consumer's cargo to be delivered and the consumer's address to
+- `Query`: A productQuery is submitted by a consumer with the consumer's cargo to be delivered and the consumer's address to
   which the cargo should be delivered.
-- `Rule`: A rule describes the constraints to evaluate in to determine a product's applicability based on a consumer's query.
+- `Rule`: A rule describes the constraints to evaluate in to determine a product's applicability based on a consumer's productQuery.
 
 ### Rules
 
@@ -48,7 +48,7 @@ find relevant. However, some of what you may be able to imagine might not be imp
 
 #### Types of rules
 
-- `Geography`: Uses country codes and/or postal codes to determine whether a query's delivery address is relevant.
+- `Geography`: Uses country codes and/or postal codes to determine whether a productQuery's delivery address is relevant.
 - `Width`, `Length` and `Height`: Either of these rules can be applied to require a minimum and/or maximum value for the
   corresponding cargo dimension. These rules must not be confused as being one combined rule. They are separate rules:
   width, length, height.

@@ -1,12 +1,11 @@
-package no.clueless.opencargo;
+package no.clueless.opencargo.rules;
 
+import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.applicability.ProductApplicabilityReport;
 import no.clueless.opencargo.applicability.Rejection;
 import no.clueless.opencargo.applicability.Rejections;
 import no.clueless.opencargo.domain.Product;
 import no.clueless.opencargo.domain.Products;
-import no.clueless.opencargo.rules.EvaluationResult;
-import no.clueless.opencargo.rules.Rules;
 import no.clueless.opencargo.util.ArgumentExceptionHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +23,8 @@ public final class RuleEngine {
         this.rules    = ArgumentExceptionHelper.throwIfNull(rules, "rules");
     }
 
-    public EvaluationResult evaluateProduct(Query query, Product product) {
-        ArgumentExceptionHelper.throwIfNull(query, "query");
+    public EvaluationResult evaluateProduct(ProductQuery productQuery, Product product) {
+        ArgumentExceptionHelper.throwIfNull(productQuery, "query");
         ArgumentExceptionHelper.throwIfNull(product, "product");
 
         return rules.stream()
@@ -35,19 +34,19 @@ public final class RuleEngine {
                     }
                 })
                 .filter(rule -> rule.getProductIds() == null || rule.getProductIds().isEmpty() || rule.getProductIds().contains(product.getId()))
-                .map(rule -> rule.evaluate(query))
+                .map(rule -> rule.evaluate(productQuery))
                 .filter(evaluationResult -> !evaluationResult.isSatisfied())
                 .findFirst()
                 .orElse(EvaluationResult.satisfied());
     }
 
-    public ProductApplicabilityReport resolve(Query query) {
-        ArgumentExceptionHelper.throwIfNull(query, "query");
+    public ProductApplicabilityReport resolve(ProductQuery productQuery) {
+        ArgumentExceptionHelper.throwIfNull(productQuery, "query");
         Set<Product>   applicableProducts = new HashSet<>();
         Set<Rejection> rejections         = new HashSet<>();
 
         for (Product product : products) {
-            EvaluationResult evaluationResult = evaluateProduct(query, product);
+            EvaluationResult evaluationResult = evaluateProduct(productQuery, product);
             if (evaluationResult.isSatisfied()) {
                 applicableProducts.add(product);
             } else {
