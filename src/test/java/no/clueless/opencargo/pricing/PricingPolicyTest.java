@@ -3,9 +3,7 @@ package no.clueless.opencargo.pricing;
 import no.clueless.opencargo.Address;
 import no.clueless.opencargo.Cargo;
 import no.clueless.opencargo.PricingQuery;
-import no.clueless.opencargo.domain.geography.CountryCode;
-import no.clueless.opencargo.domain.geography.CountrySpecification;
-import no.clueless.opencargo.domain.geography.PostalCode;
+import no.clueless.opencargo.domain.geography.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +25,13 @@ class PricingPolicyTest {
                         new WeightLimitRule(new BigDecimal("35.0")),
                         new ProductRequirementRule(1)
                 )),
-                null,
+                new PriceModifiers(Set.of(
+                        new GeographicSurcharge(
+                                "Svalbard surcharge",
+                                new CountrySpecification(new CountryCode("no"), Set.of(new PostalCodeRange(new PostalCode("9170"), new PostalCode("9178")))),
+                                new BigDecimal("10.0")
+                        )
+                )),
                 new BigDecimal("150.0"),
                 0
         );
@@ -76,5 +80,19 @@ class PricingPolicyTest {
 
         // assert
         assertFalse(actual, "The policy should not apply, but it did:" + applicabilityReports.getRejections());
+    }
+
+    @Test
+    void price_should_increase_by_ten_percent_when_destination_is_svalbard() {
+        // arrange
+        var cargo       = new Cargo(10.0, 100.0, 50.0, 50.0, 1337.0);
+        var destination = new Address("Foo", "Bar", "Svalbard", null, new PostalCode("9170"), new CountryCode("no"));
+        var query       = new PricingQuery(cargo, Set.of(1), destination, Currency.getInstance("NOK"));
+
+        // act
+        var actual      = servicepakke.calculateFinalPrice(query).orElseThrow();
+
+        // assert
+        assertEquals(new BigDecimal("165.00"), actual);
     }
 }

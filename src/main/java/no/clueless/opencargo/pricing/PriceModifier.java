@@ -11,5 +11,7 @@ public interface PriceModifier {
 
     BigDecimal calculateDelta(PricingQuery query, BigDecimal amount);
 
-    BigDecimal modify(PricingQuery query, BigDecimal currentPrice);
+    default BigDecimal modify(PricingQuery query, BigDecimal currentPrice) {
+        return currentPrice.add(calculateDelta(query, currentPrice));
+    }
 }

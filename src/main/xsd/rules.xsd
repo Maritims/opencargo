@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    <xs:import schemaLocation="common.xsd"/>
+    <xs:include schemaLocation="common.xsd"/>
 
     <xs:simpleType name="CountryCodeDTO">
         <xs:restriction base="xs:string">
@@ -90,7 +90,7 @@
         <xs:complexContent>
             <xs:extension base="PostalCodeSpecificationDTO">
                 <xs:sequence>
-                    <xs:element name="postalCode" type="PostalCodeDTO" maxOccurs="unbounded" minOccurs="1"/>
+                    <xs:element name="postalCode" type="PostalCodeDTO" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
