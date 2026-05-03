@@ -1,6 +1,6 @@
 package no.clueless.opencargo.pricing.domain.service.engine;
 
-import no.clueless.opencargo.shared.applicability.EvaluationResult;
+import no.clueless.opencargo.domain.model.applicability.EvaluationResult;
 import no.clueless.opencargo.bindings.WeightLimitRuleDTO;
 import no.clueless.opencargo.pricing.domain.model.policy.PricingRule;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;

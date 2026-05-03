@@ -1,30 +1,24 @@
-package no.clueless.opencargo.pricing.adapter.in.web;
+package no.clueless.opencargo.product_selection.adapter.in.web;
 
-import no.clueless.opencargo.pricing.port.in.RequestPricingCommand;
-import no.clueless.opencargo.shared.DomainMapper;
 import no.clueless.opencargo.domain.model.Cargo;
 import no.clueless.opencargo.domain.model.geography.Address;
 import no.clueless.opencargo.domain.model.geography.CountryCode;
 import no.clueless.opencargo.domain.model.geography.PostalCode;
+import no.clueless.opencargo.product_selection.port.in.RequestProductsCommand;
+import no.clueless.opencargo.shared.DomainMapper;
 
-import java.util.Arrays;
-import java.util.Currency;
-import java.util.stream.Collectors;
-
-public class RequestPricingWebCommand implements DomainMapper<RequestPricingCommand> {
+public class RequestProductsWebCommand implements DomainMapper<RequestProductsCommand> {
     private double cargoWeight;
     private double cargoWidth;
     private double cargoLength;
     private double cargoHeight;
     private double cargoMonetaryValue;
-    private int[]  productIds;
     private String destinationAddressLine1;
     private String destinationAddressLine2;
     private String destinationPostalCode;
     private String destinationCity;
     private String destinationState;
     private String destinationCountryCode;
-    private String currency;
 
     public double getCargoWeight() {
         return cargoWeight;
@@ -64,14 +58,6 @@ public class RequestPricingWebCommand implements DomainMapper<RequestPricingComm
 
     public void setCargoMonetaryValue(double cargoMonetaryValue) {
         this.cargoMonetaryValue = cargoMonetaryValue;
-    }
-
-    public int[] getProductIds() {
-        return productIds;
-    }
-
-    public void setProductIds(int[] productIds) {
-        this.productIds = productIds;
     }
 
     public String getDestinationAddressLine1() {
@@ -122,21 +108,11 @@ public class RequestPricingWebCommand implements DomainMapper<RequestPricingComm
         this.destinationCountryCode = destinationCountryCode;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     @Override
-    public RequestPricingCommand toDomain() {
+    public RequestProductsCommand toDomain() {
         var cargo       = new Cargo(cargoWeight, cargoWidth, cargoLength, cargoHeight, cargoMonetaryValue);
-        var productIds  = Arrays.stream(this.productIds).boxed().collect(Collectors.toSet());
         var destination = new Address(destinationAddressLine1, destinationAddressLine2, destinationCity, destinationState, new PostalCode(destinationPostalCode), new CountryCode(destinationCountryCode));
-        var currency    = Currency.getInstance(this.currency);
 
-        return new RequestPricingCommand(cargo, productIds, destination, currency);
+        return new RequestProductsCommand(cargo, destination);
     }
 }

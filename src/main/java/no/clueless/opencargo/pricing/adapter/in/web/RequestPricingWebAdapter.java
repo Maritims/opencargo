@@ -3,7 +3,7 @@ package no.clueless.opencargo.pricing.adapter.in.web;
 import no.clueless.opencargo.infrastructure.web.*;
 import no.clueless.opencargo.pricing.port.in.RequestPricingUseCase;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
-import no.clueless.opencargo.shared.JsonMarshaller;
+import no.clueless.opencargo.infrastructure.marshalling.JsonMarshaller;
 
 import java.util.Map;
 import java.util.function.BiConsumer;

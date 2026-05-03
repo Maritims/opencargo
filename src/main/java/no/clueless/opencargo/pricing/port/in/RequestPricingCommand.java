@@ -1,8 +1,8 @@
 package no.clueless.opencargo.pricing.port.in;
 
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
-import no.clueless.opencargo.shared.cargo.Cargo;
-import no.clueless.opencargo.shared.geography.Address;
+import no.clueless.opencargo.domain.model.Cargo;
+import no.clueless.opencargo.domain.model.geography.Address;
 
 import java.util.Currency;
 import java.util.Objects;

@@ -2,7 +2,7 @@ package no.clueless.opencargo.infrastructure.web;
 
 import jakarta.servlet.http.HttpServletResponse;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
-import no.clueless.opencargo.shared.JsonMarshaller;
+import no.clueless.opencargo.infrastructure.marshalling.JsonMarshaller;
 
 import java.io.IOException;
 

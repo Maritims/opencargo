@@ -1,9 +1,9 @@
 package no.clueless.opencargo.pricing.domain.service.engine;
 
-import no.clueless.opencargo.shared.applicability.EvaluationResult;
+import no.clueless.opencargo.domain.model.applicability.EvaluationResult;
 import no.clueless.opencargo.bindings.GeographicPricingRuleDTO;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
-import no.clueless.opencargo.shared.geography.CountrySpecification;
+import no.clueless.opencargo.domain.model.geography.CountrySpecification;
 import no.clueless.opencargo.pricing.domain.model.policy.PricingRule;
 
 import java.util.Objects;

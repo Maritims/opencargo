@@ -1,7 +1,7 @@
 package no.clueless.opencargo.pricing.domain.service.engine;
 
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
-import no.clueless.opencargo.shared.geography.CountrySpecification;
+import no.clueless.opencargo.domain.model.geography.CountrySpecification;
 import no.clueless.opencargo.pricing.domain.model.policy.PriceModifier;
 
 import java.math.BigDecimal;
