@@ -24,4 +24,12 @@ public class RequestPricingService implements RequestPricingUseCase {
                 command.getCurrency()
         )).orElseThrow(() -> new RuntimeException("No pricing policy could be found for the given query"));
     }
+
+    private static final class SingletonHolder {
+        private static final RequestPricingService INSTANCE = new RequestPricingService(PriceEngine.getInstance());
+    }
+
+    public static RequestPricingService getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
 }

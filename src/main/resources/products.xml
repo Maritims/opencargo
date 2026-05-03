@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="../../main/xsd/products.xsd">
+          xsi:noNamespaceSchemaLocation="../xsd/products.xsd">
     <product id="1">
         <consignorId>1</consignorId>
         <number>5800</number>

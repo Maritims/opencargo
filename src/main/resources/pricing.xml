@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <pricingPolicies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:noNamespaceSchemaLocation="../../main/xsd/pricing.xsd">
+                 xsi:noNamespaceSchemaLocation="../xsd/pricing.xsd">
     <pricingPolicy id="1">
         <name>Foo bar</name>
         <basePrice>135.0</basePrice>

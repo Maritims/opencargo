@@ -1,8 +1,9 @@
 package no.clueless.opencargo.infrastructure.marshalling;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
-import tools.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -15,7 +16,7 @@ public class JsonMarshaller {
         return objectMapper.convertValue(is, clazz);
     }
 
-    public static <T> void marshal(T source, OutputStream os) {
+    public static <T> void marshal(T source, OutputStream os) throws IOException {
         ArgumentExceptionHelper.throwIfNull(source, "source");
         ArgumentExceptionHelper.throwIfNull(os, "os");
         objectMapper.writeValue(os, source);

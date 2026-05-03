@@ -20,4 +20,12 @@ public class RequestProductsService implements RequestProductsUseCase {
         ArgumentExceptionHelper.throwIfNull(command, "command");
         return ruleEngine.resolve(new ProductSelectionQuery(command.getCargo(), command.getDestination()));
     }
+
+    private static final class SingletonHolder {
+        private static final RequestProductsService INSTANCE = new RequestProductsService(RuleEngine.getInstance());
+    }
+
+    public static RequestProductsService getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <consignors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="../../main/xsd/consignors.xsd">
+            xsi:noNamespaceSchemaLocation="../xsd/consignors.xsd">
     <consignor id="1">
         <number>postennorgeas</number>
         <name>Posten Norge AS</name>
