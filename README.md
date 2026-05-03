@@ -2,59 +2,55 @@
 
 # OpenCargo
 
-This project attempts to determine the applicability of freight products based on pricingRules configured within the system,
-and a productQuery from a consumer.
+OpenCargo is a library which tries to solve two fundamental problems in freight management:
 
-## What does it do?
+- Determining which services are capable of handling a shipment.
+- Calculating the cost of cargo delivery based on flexible pricing rules and price modifiers.
 
-These are the things OpenCargo CAN do for you.
+## Core features
 
-- OpenCargo helps you determine the most suitable freight product for a consumer based on the pricingRules you configure.
+### Product selection
 
-## What does it not do?
+Before the cost can be calculated, a shipment must be validated against a service's physical and geographic constraints.
+OpenCargo filters services based on:
 
-These are the things OpenCargo CANNOT do for you.
+- Dimensions: Minimum and maximum width, length and height.
+- Weight: Absolute weight limits per service.
+- Geography: Country codes and/or postal codes.
+- Girth: Calculations for meeting carrier standards.
+- Monetary value: The value of the cargo.
 
-- OpenCargo cannot figure out how to pack your cargo to determine the most optimal means of cargo delivery.
-- OpenCargo cannot figure out the cost of cargo delivery.
+### Pricing policies
 
-## Technical details
+Pricing is not hardcoded, it is defined via pricing policies. A policy is a contract containing pricing rules and price
+modifiers. The contract is applicable if the pricing query satisfies each of its pricing rules. A pricing query
+consists of cargo, a delivery address and a list of products.
 
-These are some technical details which you as a user of this library might find interesting.
+- Priority-based matching: The engine sorts policies by priority and then matches the pricing query against the
+  policies.
+- Detailed rejections: Through the `ApplicabilityReports` model the engine can report on the reasons why a pricing
+  query was not applicable.
 
-### Serialization and deserialization
+### Price modifiers
 
-The various domain entities within this system may be expressed as XML in their respective files within the
-`src/main/resources` area. These files are deserialized using JAXB.
+Once a policy has been matched, the engine can apply price modifiers to the pricing query based on "price increasing
+circumstances".
 
-### Domain entities
+- Fixed surcharges: A fixed increase in delivery cost when the cargo contains dangerous goods.
+- Dynamic surcharges: A variable increase in delivery cost (e.g. due to increased fuel cost or peak season adjustments).
+- Geographic surcharges: Automated increases for delivery to remote areas (e.g. Svalbard).
 
-There are various domain entities within this system.
+### Detailed price breakdown
 
-- `Consignor`: A consignor is an entity which provides one or more freight services. These freight services are
-  represented as products. A consignor does not concern itself with the products it provides, that is the responsibility
-  of the product registry.
-- `Product`: A product represents a freight service provided by a consignor. The product doesn ot concern itself with
-  its applicability based on a consumer's productQuery, that is the concern of the pricingRules registry.
-- `Address`: An address represents a geographical location to which cargo should be delivered.
-- `Query`: A productQuery is submitted by a consumer with the consumer's cargo to be delivered and the consumer's address to
-  which the cargo should be delivered.
-- `Rule`: A rule describes the constraints to evaluate in to determine a product's applicability based on a consumer's productQuery.
+Instead of returning just the calculated total price, OpenCargo returns an instance of the `PriceBreakdown` model. This
+model enables you to understand precisely how the system arrived at the result.
 
-### Rules
+### Currently not supported: Optimal packing
 
-There are many different types of pricingRules. A rule can consider geography, dimensions, monetary value or anything you may
-find relevant. However, some of what you may be able to imagine might not be implemented yet.
+OpenCargo is currently **NOT** able to determine the most optimal way to pack your cargo.
 
-#### Types of pricingRules
+## Roadmap
 
-- `Geography`: Uses country codes and/or postal codes to determine whether a productQuery's delivery address is relevant.
-- `Width`, `Length` and `Height`: Either of these pricingRules can be applied to require a minimum and/or maximum value for the
-  corresponding cargo dimension. These pricingRules must not be confused as being one combined rule. They are separate pricingRules:
-  width, length, height.
-- `LengthGirth`: Determine whether the cargo exceeds either a maximum length or a maximum combined length and girth.
-- `MinDimensions`: Determine whether the cargo meets the required minimum dimensions. This rule supports rotation so
-  that the orientation
-  of the cargo is irrelevant to the system.
-- `MonetaryValue`: Require a minimum and/or maximum monetary value based on the cargo content.
-- `Weight`: Require a minimum and/or maximum cargo weight.
+1. Document how to configure selection rules with XML.
+2. Document how to configure price modifiers with XML.
+3. Document how to configure pricing policies with XML.
