@@ -28,7 +28,7 @@ public final class CountrySpecification {
         return countryCode;
     }
 
-    public Set<PostalCodeSpecification> getPostalCodeConstraints() {
+    public Set<PostalCodeSpecification> getPostalCodeSpecifications() {
         return postalCodeSpecifications;
     }
 

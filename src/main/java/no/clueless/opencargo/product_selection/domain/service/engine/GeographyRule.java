@@ -4,22 +4,25 @@ import no.clueless.opencargo.domain.model.applicability.EvaluationResult;
 import no.clueless.opencargo.bindings.GeographyRuleDTO;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import no.clueless.opencargo.domain.model.geography.CountrySpecification;
-import no.clueless.opencargo.domain.model.geography.CountrySpecifications;
 import no.clueless.opencargo.domain.model.geography.CountryCode;
 import no.clueless.opencargo.domain.model.geography.PostalCode;
+import no.clueless.opencargo.shared.Population;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A rule which is satisfied by certain geographical properties, such as country codes and/or postal codes.
  */
 public final class GeographyRule extends RuleBase implements Rule {
-    private final CountrySpecifications countrySpecifications;
+    private final Population<CountrySpecification, Set<CountrySpecification>> countrySpecifications;
 
-    public GeographyRule(RuleMetadata metadata, CountrySpecifications countrySpecifications) {
+    public GeographyRule(RuleMetadata metadata, Population<CountrySpecification, Set<CountrySpecification>> countrySpecifications) {
         super(metadata);
         this.countrySpecifications = ArgumentExceptionHelper.throwIfNull(countrySpecifications, "countryConstraints");
     }
 
-    public CountrySpecifications getCountryConstraints() {
+    public Population<CountrySpecification, Set<CountrySpecification>> getCountrySpecifications() {
         return countrySpecifications;
     }
 
@@ -30,11 +33,11 @@ public final class GeographyRule extends RuleBase implements Rule {
         CountryCode destinationCountry    = productSelectionQuery.getDestination().getCountryCode();
         PostalCode  destinationPostalCode = productSelectionQuery.getDestination().getPostalCode();
 
-        if (getCountryConstraints().stream().noneMatch(countryConstraint -> countryConstraint.getCountryCode().equals(destinationCountry))) {
+        if (getCountrySpecifications().stream().noneMatch(countrySpecification -> countrySpecification.getCountryCode().equals(destinationCountry))) {
             return EvaluationResult.unsatisfied(String.format("Service not available in country: %s", destinationCountry));
         }
 
-        if (getCountryConstraints().stream().noneMatch(countryConstraint -> countryConstraint.matches(destinationCountry, destinationPostalCode))) {
+        if (getCountrySpecifications().stream().noneMatch(countrySpecification -> countrySpecification.matches(destinationCountry, destinationPostalCode))) {
             return EvaluationResult.unsatisfied(String.format("Postal code %s is not within the supported postal code constraints in %s", destinationPostalCode, destinationCountry));
         }
 
@@ -48,6 +51,6 @@ public final class GeographyRule extends RuleBase implements Rule {
         return new GeographyRule(metadata, dto.getCountrySpecification()
                 .stream()
                 .map(CountrySpecification::from)
-                .collect(CountrySpecifications.collector()));
+                .collect(Population.collector(HashSet::new)));
     }
 }

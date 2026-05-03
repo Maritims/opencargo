@@ -85,6 +85,11 @@ public class Population<T, C extends Collection<T>> implements Iterable<T> {
         };
     }
 
+    public static <T> Population<T, Set<T>> fromOneOf(T element) {
+        ArgumentExceptionHelper.throwIfNull(element, "element");
+        return new Population<>(Set.of(element));
+    }
+
     public static <T> Population<T, Set<T>> fromSetOf(Set<T> elements) {
         ArgumentExceptionHelper.throwIfNullOrEmpty(elements, "elements");
         return new Population<>(elements);

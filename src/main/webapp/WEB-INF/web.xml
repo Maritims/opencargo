@@ -53,7 +53,7 @@
 
     <servlet>
         <servlet-name>RequestProductsServlet</servlet-name>
-        <servlet-class>no.clueless.opencargo.product_selection.adapter.in.web.RequestProductsWebAdapter</servlet-class>
+        <servlet-class>no.clueless.opencargo.product_selection.adapter.in.web.ProductSelectionWebAdapter</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     
