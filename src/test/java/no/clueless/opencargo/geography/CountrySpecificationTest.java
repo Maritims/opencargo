@@ -1,6 +1,6 @@
 package no.clueless.opencargo.geography;
 
-import no.clueless.opencargo.domain.geography.*;
+import no.clueless.opencargo.shared.geography.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;

@@ -1,7 +1,7 @@
 package no.clueless.opencargo.geography;
 
-import no.clueless.opencargo.domain.geography.PostalCode;
-import no.clueless.opencargo.domain.geography.PostalCodeRange;
+import no.clueless.opencargo.shared.geography.PostalCode;
+import no.clueless.opencargo.shared.geography.PostalCodeRange;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

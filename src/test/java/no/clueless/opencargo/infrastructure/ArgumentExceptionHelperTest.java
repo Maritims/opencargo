@@ -1,5 +1,6 @@
 package no.clueless.opencargo.infrastructure;
 
+import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

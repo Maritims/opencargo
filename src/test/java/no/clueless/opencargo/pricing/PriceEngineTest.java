@@ -1,13 +1,14 @@
 package no.clueless.opencargo.pricing;
 
-import no.clueless.opencargo.PricingQuery;
 import no.clueless.opencargo.bindings.PricingPolicyListDTO;
-import no.clueless.opencargo.domain.cargo.Address;
-import no.clueless.opencargo.domain.cargo.Cargo;
-import no.clueless.opencargo.domain.geography.CountryCode;
-import no.clueless.opencargo.domain.geography.PostalCode;
-import no.clueless.opencargo.infrastructure.xml.XmlMarshaller;
+import no.clueless.opencargo.catalog.Address;
+import no.clueless.opencargo.catalog.Cargo;
+import no.clueless.opencargo.pricing.policy.PricingPolicyMapper;
+import no.clueless.opencargo.shared.geography.CountryCode;
+import no.clueless.opencargo.shared.geography.PostalCode;
+import no.clueless.opencargo.shared.XmlMarshaller;
 import no.clueless.opencargo.pricing.breakdown.PriceBreakdown;
+import no.clueless.opencargo.pricing.engine.PriceEngine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class PriceEngineTest {
     @BeforeEach
     void setUp() {
         var dto      = XmlMarshaller.unmarshalResourceSilently("pricing.xml", PricingPolicyListDTO.class);
-        var policies = PricingPolicies.from(dto);
+        var policies = PricingPolicyMapper.getInstance().mapToPolicies(dto);
         sut = new PriceEngine(policies);
     }
 

@@ -1,6 +1,6 @@
 package no.clueless.opencargo.pricing.breakdown;
 
-import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
+import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 
 import java.math.BigDecimal;
 import java.util.Objects;

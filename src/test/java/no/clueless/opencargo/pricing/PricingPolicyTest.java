@@ -1,9 +1,17 @@
 package no.clueless.opencargo.pricing;
 
-import no.clueless.opencargo.domain.cargo.Address;
-import no.clueless.opencargo.domain.cargo.Cargo;
-import no.clueless.opencargo.PricingQuery;
-import no.clueless.opencargo.domain.geography.*;
+import no.clueless.opencargo.shared.Population;
+import no.clueless.opencargo.shared.geography.CountryCode;
+import no.clueless.opencargo.shared.geography.CountrySpecification;
+import no.clueless.opencargo.shared.geography.PostalCode;
+import no.clueless.opencargo.shared.geography.PostalCodeRange;
+import no.clueless.opencargo.catalog.Address;
+import no.clueless.opencargo.catalog.Cargo;
+import no.clueless.opencargo.pricing.engine.GeographicPricingRule;
+import no.clueless.opencargo.pricing.engine.GeographicSurcharge;
+import no.clueless.opencargo.pricing.engine.ProductRequirementRule;
+import no.clueless.opencargo.pricing.engine.WeightLimitRule;
+import no.clueless.opencargo.pricing.policy.PricingPolicy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +28,12 @@ class PricingPolicyTest {
     void setUp() {
         servicepakke = new PricingPolicy(
                 "Servicepakke",
-                new PricingRules(Set.of(
+                Population.fromSetOf(Set.of(
                         new GeographicPricingRule(new CountrySpecification(new CountryCode("no"), null)),
                         new WeightLimitRule(new BigDecimal("35.0")),
                         new ProductRequirementRule(1)
                 )),
-                new PriceModifiers(Set.of(
+                Population.fromSetOf(Set.of(
                         new GeographicSurcharge(
                                 "Svalbard surcharge",
                                 new CountrySpecification(new CountryCode("no"), Set.of(new PostalCodeRange(new PostalCode("9170"), new PostalCode("9178")))),

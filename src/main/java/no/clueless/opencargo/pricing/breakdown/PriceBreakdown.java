@@ -1,6 +1,7 @@
 package no.clueless.opencargo.pricing.breakdown;
 
-import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
+import no.clueless.opencargo.shared.ArgumentExceptionHelper;
+import no.clueless.opencargo.shared.Population;
 
 import java.math.BigDecimal;
 import java.util.Currency;
@@ -14,15 +15,15 @@ import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 public class PriceBreakdown {
-    private final PriceComponents priceComponents;
-    private final Currency        currency;
+    private final Population<PriceComponent, Set<PriceComponent>> priceComponents;
+    private final Currency                                        currency;
 
-    public PriceBreakdown(PriceComponents priceComponents, Currency currency) {
+    public PriceBreakdown(Population<PriceComponent, Set<PriceComponent>> priceComponents, Currency currency) {
         this.priceComponents = ArgumentExceptionHelper.throwIfNull(priceComponents, "priceComponents");
         this.currency        = ArgumentExceptionHelper.throwIfNull(currency, "currency");
     }
 
-    public PriceComponents getPriceComponents() {
+    public Population<PriceComponent, Set<PriceComponent>> getPriceComponents() {
         return priceComponents;
     }
 
@@ -81,7 +82,7 @@ public class PriceBreakdown {
 
             @Override
             public Function<Set<PriceComponent>, PriceBreakdown> finisher() {
-                return (set) -> new PriceBreakdown(new PriceComponents(set), currency);
+                return (set) -> new PriceBreakdown(Population.fromSetOf(set), currency);
             }
 
             @Override

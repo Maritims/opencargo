@@ -1,6 +1,6 @@
 package no.clueless.opencargo.geography;
 
-import no.clueless.opencargo.domain.geography.CountryCode;
+import no.clueless.opencargo.shared.geography.CountryCode;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
