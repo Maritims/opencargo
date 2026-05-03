@@ -1,8 +1,8 @@
 package no.clueless.opencargo.pricing;
 
 import no.clueless.opencargo.bindings.PricingPolicyListDTO;
-import no.clueless.opencargo.catalog.Address;
-import no.clueless.opencargo.catalog.Cargo;
+import no.clueless.opencargo.shared.geography.Address;
+import no.clueless.opencargo.shared.cargo.Cargo;
 import no.clueless.opencargo.pricing.policy.PricingPolicyMapper;
 import no.clueless.opencargo.shared.geography.CountryCode;
 import no.clueless.opencargo.shared.geography.PostalCode;

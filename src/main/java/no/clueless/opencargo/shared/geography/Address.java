@@ -1,8 +1,6 @@
-package no.clueless.opencargo.catalog;
+package no.clueless.opencargo.shared.geography;
 
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
-import no.clueless.opencargo.shared.geography.CountryCode;
-import no.clueless.opencargo.shared.geography.PostalCode;
 
 import java.util.Objects;
 

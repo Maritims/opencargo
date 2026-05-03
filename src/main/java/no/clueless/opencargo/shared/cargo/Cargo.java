@@ -1,4 +1,4 @@
-package no.clueless.opencargo.catalog;
+package no.clueless.opencargo.shared.cargo;
 
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 

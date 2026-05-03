@@ -2,7 +2,7 @@ package no.clueless.opencargo.product_selection.engine;
 
 import no.clueless.opencargo.shared.applicability.EvaluationResult;
 import no.clueless.opencargo.bindings.RangeRuleDTO;
-import no.clueless.opencargo.catalog.Cargo;
+import no.clueless.opencargo.shared.cargo.Cargo;
 import no.clueless.opencargo.product_selection.ProductSelectionQuery;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 

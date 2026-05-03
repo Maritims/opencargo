@@ -1,7 +1,7 @@
 package no.clueless.opencargo.product_selection;
 
-import no.clueless.opencargo.catalog.Address;
-import no.clueless.opencargo.catalog.Cargo;
+import no.clueless.opencargo.shared.geography.Address;
+import no.clueless.opencargo.shared.cargo.Cargo;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 
 import java.util.Objects;

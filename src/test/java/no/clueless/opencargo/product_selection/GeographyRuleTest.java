@@ -1,8 +1,8 @@
 package no.clueless.opencargo.product_selection;
 
 import no.clueless.opencargo.shared.geography.*;
-import no.clueless.opencargo.catalog.Address;
-import no.clueless.opencargo.catalog.Cargo;
+import no.clueless.opencargo.shared.geography.Address;
+import no.clueless.opencargo.shared.cargo.Cargo;
 import no.clueless.opencargo.shared.applicability.EvaluationResult;
 import no.clueless.opencargo.product_selection.engine.GeographyRule;
 import org.junit.jupiter.api.Test;

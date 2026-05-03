@@ -4,18 +4,15 @@ import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 
 import java.util.Objects;
 
-/**
- * A container is nothing but a description of an entity which provides services of transportation, represented by a set of products. It has no functionality and functions merely as a container of information.
- */
-public final class Consignor {
-    private final int          id;
-    private final String       number;
-    private final String       name;
+public class Consignor {
+    private final int    id;
+    private final String number;
+    private final String name;
 
     public Consignor(int id, String number, String name) {
-        this.id       = ArgumentExceptionHelper.throwIfNegative(id, "id");
-        this.number   = ArgumentExceptionHelper.throwIfNullOrBlank(name, "name");
-        this.name     = ArgumentExceptionHelper.throwIfNullOrBlank(number, "number");
+        this.id     = ArgumentExceptionHelper.throwIfNegative(id, "id");
+        this.number = ArgumentExceptionHelper.throwIfNullOrBlank(name, "name");
+        this.name   = ArgumentExceptionHelper.throwIfNullOrBlank(number, "number");
     }
 
     public int getId() {

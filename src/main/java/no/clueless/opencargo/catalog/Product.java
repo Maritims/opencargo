@@ -5,9 +5,6 @@ import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 
 import java.util.Objects;
 
-/**
- * A product is nothing but a description of a service provided by a {@link Consignor}. It has no functionality and functions merely as a container of information.
- */
 public class Product {
     private final int    id;
     private final int    consignorId;
