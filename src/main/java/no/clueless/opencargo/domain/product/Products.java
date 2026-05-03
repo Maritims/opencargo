@@ -1,6 +1,8 @@
 package no.clueless.opencargo.domain.product;
 
+import no.clueless.opencargo.bindings.ProductListDTO;
 import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
+import no.clueless.opencargo.infrastructure.xml.XmlMarshaller;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -91,5 +93,18 @@ public class Products implements Iterable<Product> {
                 return Set.of(Characteristics.UNORDERED);
             }
         };
+    }
+
+    public static Products from(ProductListDTO dto) {
+        return ArgumentExceptionHelper.throwIfNull(dto, "dto")
+                .getProduct()
+                .stream()
+                .map(Product::from)
+                .collect(Products.collector());
+    }
+
+    public static Products fromResources() {
+        var dto = XmlMarshaller.unmarshalResourceSilently("products.xml", ProductListDTO.class);
+        return Products.from(dto);
     }
 }

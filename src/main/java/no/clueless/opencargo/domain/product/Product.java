@@ -1,5 +1,6 @@
 package no.clueless.opencargo.domain.product;
 
+import no.clueless.opencargo.bindings.ProductDTO;
 import no.clueless.opencargo.domain.consignor.Consignor;
 import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
@@ -57,5 +58,10 @@ public class Product {
                 ", number='" + number + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public static Product from(ProductDTO dto) {
+        ArgumentExceptionHelper.throwIfNull(dto, "dto");
+        return new Product(dto.getId(), dto.getConsignorId(), dto.getNumber(), dto.getName());
     }
 }

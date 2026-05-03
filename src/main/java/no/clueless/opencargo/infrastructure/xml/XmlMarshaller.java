@@ -1,7 +1,8 @@
-package no.clueless.opencargo.infrastructure;
+package no.clueless.opencargo.infrastructure.xml;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
+import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;

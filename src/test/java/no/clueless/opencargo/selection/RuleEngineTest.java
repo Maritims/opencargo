@@ -12,7 +12,7 @@ import no.clueless.opencargo.bindings.RuleListDTO;
 import no.clueless.opencargo.domain.geography.*;
 import no.clueless.opencargo.domain.product.Product;
 import no.clueless.opencargo.domain.product.Products;
-import no.clueless.opencargo.infrastructure.XmlMarshaller;
+import no.clueless.opencargo.infrastructure.xml.XmlMarshaller;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;

@@ -2,6 +2,7 @@ package no.clueless.opencargo.selection;
 
 import no.clueless.opencargo.bindings.RuleListDTO;
 import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
+import no.clueless.opencargo.infrastructure.xml.XmlMarshaller;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -72,6 +73,12 @@ public class SelectionRules implements Iterable<SelectionRule> {
     }
 
     public static SelectionRules from(RuleListDTO dto) {
+        ArgumentExceptionHelper.throwIfNull(dto, "dto");
         return SelectionRulesMapper.getInstance().mapToRules(dto);
+    }
+
+    public static SelectionRules fromResources() {
+        var dto = XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class);
+        return SelectionRules.from(dto);
     }
 }

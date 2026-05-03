@@ -6,7 +6,7 @@ import no.clueless.opencargo.domain.cargo.Address;
 import no.clueless.opencargo.domain.cargo.Cargo;
 import no.clueless.opencargo.domain.geography.CountryCode;
 import no.clueless.opencargo.domain.geography.PostalCode;
-import no.clueless.opencargo.infrastructure.XmlMarshaller;
+import no.clueless.opencargo.infrastructure.xml.XmlMarshaller;
 import no.clueless.opencargo.pricing.breakdown.PriceBreakdown;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

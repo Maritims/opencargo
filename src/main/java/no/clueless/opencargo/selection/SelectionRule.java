@@ -5,7 +5,7 @@ import no.clueless.opencargo.applicability.EvaluationResult;
 import no.clueless.opencargo.ProductQuery;
 import no.clueless.opencargo.bindings.RuleListDTO;
 import no.clueless.opencargo.infrastructure.ArgumentExceptionHelper;
-import no.clueless.opencargo.infrastructure.XmlMarshaller;
+import no.clueless.opencargo.infrastructure.xml.XmlMarshaller;
 
 import java.io.InputStream;
 import java.util.Set;

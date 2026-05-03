@@ -56,4 +56,12 @@ public final class RuleEngine {
 
         return new ApplicabilityReports<>(applicableProducts.isEmpty() ? null : new Products(applicableProducts), rejections.isEmpty() ? null : new Rejections<>(rejections));
     }
+
+    private static final class SingletonHolder {
+        private static final RuleEngine INSTANCE = new RuleEngine(Products.fromResources(), SelectionRules.fromResources());
+    }
+
+    public static RuleEngine getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
 }
