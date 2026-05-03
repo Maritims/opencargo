@@ -6,6 +6,11 @@ import no.clueless.opencargo.domain.model.geography.Address;
 
 import java.util.Objects;
 
+/**
+ * An immutable command object for requesting products.
+ * <p>
+ * All fields are required. This object ensures the domain logic receives a valid set of parameters for product selection.
+ */
 public class RequestProductsCommand {
     private final Cargo   cargo;
     private final Address destination;

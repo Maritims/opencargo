@@ -9,6 +9,22 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <name>OpenCargo</name>
+    <description>A Hexagonal Architecture implementation for cargo product selection and pricing.</description>
+    <url>https://github.com/maritims/opencargo</url>
+    <inceptionYear>2026</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>martin</id>
+            <name>Martin Severin Steffensen</name>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
     <properties>
         <slf4j.version>2.0.17</slf4j.version>
         <junit-jupiter.version>5.9.2</junit-jupiter.version>
@@ -21,6 +37,7 @@
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
         <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
         <jackson-databind.version>2.20.1</jackson-databind.version>
+        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
     </properties>
 
     <dependencies>
@@ -33,6 +50,7 @@
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>${jakarta.servlet-api.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
@@ -70,11 +88,83 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <show>package</show>
+                    <nohelp>true</nohelp>
+                    <links>
+                        <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
+                        <link>https://jakarta.ee/specifications/platform/10/apidocs/</link>
+                        <link>https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/latest/</link>
+                    </links>
+                    <additionalOptions>-Xdoclint:none</additionalOptions>
+                    <detectTestJavadoc>false</detectTestJavadoc>
+                    <groups>
+                        <group>
+                            <title>Inbound Adapters (web)</title>
+                            <packages>no.clueless.opencargo.catalog.adapter.in.web:no.clueless.opencargo.product_selection.adapter.in.web:no.clueless.opencargo.pricing.adapter.in.web</packages>
+                        </group>
+                        <group>
+                            <title>Application Ports (boundaries)</title>
+                            <packages>no.clueless.opencargo.*.port.in*</packages>
+                        </group>
+                        <group>
+                            <title>Domain Services</title>
+                            <packages>no.clueless.opencargo.*.domain.service*</packages>
+                        </group>
+                        <group>
+                            <title>Domain Model</title>
+                            <packages>no.clueless.opencargo.domain.model*</packages>
+                        </group>
+                        <group>
+                            <title>Infrastructure</title>
+                            <packages>no.clueless.opencargo.infrastructure*</packages>
+                        </group>
+                    </groups>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>3.6.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <show>public</show>
+                    <nohelp>true</nohelp>
+                    <links>
+                        <link>https://jakarta.ee/specifications/platform/10/apidocs/</link>
+                        <link>https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/latest/</link>
+                    </links>
+                    <additionalOptions>-Xdoclint:none</additionalOptions>
+                    <detectTestJavadoc>false</detectTestJavadoc>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>

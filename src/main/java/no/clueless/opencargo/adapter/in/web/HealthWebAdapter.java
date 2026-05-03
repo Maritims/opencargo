@@ -7,11 +7,19 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
+/**
+ * Web adapter responsible for system health and diagnostic endpoints.
+ * Provides metadata about registered routes across the application.
+ */
 public class HealthWebAdapter extends WebAdapterBase {
     public HealthWebAdapter() {
         super("health");
     }
 
+    /**
+     * Registers health-related actions.
+     * The "/api-routes" action returns a map of all registered routes, grouped by HTTP method.
+     */
     @Override
     protected void registerActions(BiConsumer<HttpMethod, Map<String, WebAction>> actions) {
         actions.accept(HttpMethod.GET, Map.of(
