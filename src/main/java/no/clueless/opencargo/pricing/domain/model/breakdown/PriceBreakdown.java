@@ -1,4 +1,4 @@
-package no.clueless.opencargo.pricing.breakdown;
+package no.clueless.opencargo.pricing.domain.model.breakdown;
 
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import no.clueless.opencargo.shared.Population;

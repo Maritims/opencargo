@@ -1,14 +1,15 @@
 package no.clueless.opencargo.pricing;
 
 import no.clueless.opencargo.bindings.PricingPolicyListDTO;
+import no.clueless.opencargo.pricing.domain.service.engine.PricingQuery;
 import no.clueless.opencargo.shared.geography.Address;
 import no.clueless.opencargo.shared.cargo.Cargo;
-import no.clueless.opencargo.pricing.policy.PricingPolicyMapper;
+import no.clueless.opencargo.pricing.domain.model.policy.PricingPolicyMapper;
 import no.clueless.opencargo.shared.geography.CountryCode;
 import no.clueless.opencargo.shared.geography.PostalCode;
 import no.clueless.opencargo.shared.XmlMarshaller;
-import no.clueless.opencargo.pricing.breakdown.PriceBreakdown;
-import no.clueless.opencargo.pricing.engine.PriceEngine;
+import no.clueless.opencargo.pricing.domain.model.breakdown.PriceBreakdown;
+import no.clueless.opencargo.pricing.domain.service.engine.PriceEngine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

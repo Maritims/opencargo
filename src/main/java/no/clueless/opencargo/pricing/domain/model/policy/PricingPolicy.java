@@ -1,8 +1,8 @@
-package no.clueless.opencargo.pricing.policy;
+package no.clueless.opencargo.pricing.domain.model.policy;
 
 import no.clueless.opencargo.shared.applicability.ApplicabilityReports;
 import no.clueless.opencargo.shared.applicability.Rejection;
-import no.clueless.opencargo.pricing.PricingQuery;
+import no.clueless.opencargo.pricing.domain.service.engine.PricingQuery;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import no.clueless.opencargo.shared.Population;
 import org.slf4j.Logger;

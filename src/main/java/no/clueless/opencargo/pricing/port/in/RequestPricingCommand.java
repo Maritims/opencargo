@@ -1,20 +1,20 @@
-package no.clueless.opencargo.pricing;
+package no.clueless.opencargo.pricing.port.in;
 
-import no.clueless.opencargo.shared.geography.Address;
-import no.clueless.opencargo.shared.cargo.Cargo;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
+import no.clueless.opencargo.shared.cargo.Cargo;
+import no.clueless.opencargo.shared.geography.Address;
 
 import java.util.Currency;
 import java.util.Objects;
 import java.util.Set;
 
-public class PricingQuery {
+public class RequestPricingCommand {
     private final Cargo        cargo;
     private final Set<Integer> productIds;
     private final Address      destination;
     private final Currency     currency;
 
-    public PricingQuery(Cargo cargo, Set<Integer> productIds, Address destination, Currency currency) {
+    public RequestPricingCommand(Cargo cargo, Set<Integer> productIds, Address destination, Currency currency) {
         this.cargo       = ArgumentExceptionHelper.throwIfNull(cargo, "cargo");
         this.productIds  = ArgumentExceptionHelper.throwIfNullOrEmpty(productIds, "products");
         this.destination = ArgumentExceptionHelper.throwIfNull(destination, "destination");
@@ -40,7 +40,7 @@ public class PricingQuery {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        PricingQuery that = (PricingQuery) o;
+        RequestPricingCommand that = (RequestPricingCommand) o;
         return Objects.equals(cargo, that.cargo) && Objects.equals(productIds, that.productIds) && Objects.equals(destination, that.destination) && Objects.equals(currency, that.currency);
     }
 
@@ -51,7 +51,7 @@ public class PricingQuery {
 
     @Override
     public String toString() {
-        return "PricingQuery{" +
+        return "RequestPricingCommand{" +
                 "cargo=" + cargo +
                 ", productIds=" + productIds +
                 ", destination=" + destination +

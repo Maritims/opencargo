@@ -1,5 +1,6 @@
 package no.clueless.opencargo.pricing;
 
+import no.clueless.opencargo.pricing.domain.service.engine.*;
 import no.clueless.opencargo.shared.Population;
 import no.clueless.opencargo.shared.geography.CountryCode;
 import no.clueless.opencargo.shared.geography.CountrySpecification;
@@ -7,11 +8,7 @@ import no.clueless.opencargo.shared.geography.PostalCode;
 import no.clueless.opencargo.shared.geography.PostalCodeRange;
 import no.clueless.opencargo.shared.geography.Address;
 import no.clueless.opencargo.shared.cargo.Cargo;
-import no.clueless.opencargo.pricing.engine.GeographicPricingRule;
-import no.clueless.opencargo.pricing.engine.GeographicSurcharge;
-import no.clueless.opencargo.pricing.engine.ProductRequirementRule;
-import no.clueless.opencargo.pricing.engine.WeightLimitRule;
-import no.clueless.opencargo.pricing.policy.PricingPolicy;
+import no.clueless.opencargo.pricing.domain.model.policy.PricingPolicy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

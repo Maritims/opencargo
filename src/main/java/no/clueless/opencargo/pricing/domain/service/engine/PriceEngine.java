@@ -1,10 +1,9 @@
-package no.clueless.opencargo.pricing.engine;
+package no.clueless.opencargo.pricing.domain.service.engine;
 
-import no.clueless.opencargo.pricing.PricingQuery;
-import no.clueless.opencargo.pricing.breakdown.PriceBreakdown;
-import no.clueless.opencargo.pricing.breakdown.PriceComponent;
-import no.clueless.opencargo.pricing.breakdown.PriceComponentType;
-import no.clueless.opencargo.pricing.policy.PricingPolicy;
+import no.clueless.opencargo.pricing.domain.model.breakdown.PriceBreakdown;
+import no.clueless.opencargo.pricing.domain.model.breakdown.PriceComponent;
+import no.clueless.opencargo.pricing.domain.model.breakdown.PriceComponentType;
+import no.clueless.opencargo.pricing.domain.model.policy.PricingPolicy;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import no.clueless.opencargo.shared.Population;
 

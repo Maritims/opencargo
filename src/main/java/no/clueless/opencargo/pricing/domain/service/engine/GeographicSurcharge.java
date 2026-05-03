@@ -1,9 +1,8 @@
-package no.clueless.opencargo.pricing.engine;
+package no.clueless.opencargo.pricing.domain.service.engine;
 
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import no.clueless.opencargo.shared.geography.CountrySpecification;
-import no.clueless.opencargo.pricing.policy.PriceModifier;
-import no.clueless.opencargo.pricing.PricingQuery;
+import no.clueless.opencargo.pricing.domain.model.policy.PriceModifier;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

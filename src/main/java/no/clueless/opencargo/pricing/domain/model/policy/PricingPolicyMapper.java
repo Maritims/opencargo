@@ -1,9 +1,9 @@
-package no.clueless.opencargo.pricing.policy;
+package no.clueless.opencargo.pricing.domain.model.policy;
 
 import no.clueless.opencargo.bindings.*;
-import no.clueless.opencargo.pricing.engine.GeographicPricingRule;
-import no.clueless.opencargo.pricing.engine.ProductRequirementRule;
-import no.clueless.opencargo.pricing.engine.WeightLimitRule;
+import no.clueless.opencargo.pricing.domain.service.engine.GeographicPricingRule;
+import no.clueless.opencargo.pricing.domain.service.engine.ProductRequirementRule;
+import no.clueless.opencargo.pricing.domain.service.engine.WeightLimitRule;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import no.clueless.opencargo.shared.Population;
 

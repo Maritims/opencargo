@@ -2,6 +2,7 @@ package no.clueless.opencargo.shared;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Map;
 
 public final class ArgumentExceptionHelper {
     public static <T> T throwIfNull(T arg, String argName) {
@@ -19,6 +20,13 @@ public final class ArgumentExceptionHelper {
     }
 
     public static <T, C extends Collection<T>> C throwIfNullOrEmpty(C arg, String argName) {
+        if (arg == null || arg.isEmpty()) {
+            throw new IllegalArgumentException("The argument " + argName + " cannot be null or empty");
+        }
+        return arg;
+    }
+
+    public static <K, V, M extends Map<K, V>> M throwIfNullOrEmpty(M arg, String argName) {
         if (arg == null || arg.isEmpty()) {
             throw new IllegalArgumentException("The argument " + argName + " cannot be null or empty");
         }
