@@ -1,32 +1,61 @@
 package no.clueless.opencargo.pricing.domain.service;
 
 import no.clueless.opencargo.pricing.domain.model.breakdown.PriceBreakdown;
-import no.clueless.opencargo.pricing.domain.service.engine.PriceEngine;
-import no.clueless.opencargo.pricing.domain.service.engine.PricingQuery;
+import no.clueless.opencargo.pricing.domain.model.breakdown.PriceComponent;
+import no.clueless.opencargo.pricing.domain.model.breakdown.PriceComponentType;
+import no.clueless.opencargo.pricing.domain.model.policy.PricingPolicy;
+import no.clueless.opencargo.pricing.domain.model.PricingQuery;
 import no.clueless.opencargo.pricing.port.in.RequestPricingCommand;
 import no.clueless.opencargo.pricing.port.in.RequestPricingUseCase;
+import no.clueless.opencargo.pricing.port.out.PolicyRepository;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 
-public class RequestPricingService implements RequestPricingUseCase {
-    private final PriceEngine priceEngine;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
-    public RequestPricingService(PriceEngine priceEngine) {
-        this.priceEngine = ArgumentExceptionHelper.throwIfNull(priceEngine, "priceEngine");
+public class RequestPricingService implements RequestPricingUseCase {
+    private final PolicyRepository policyRepository;
+
+    public RequestPricingService(PolicyRepository policyRepository) {
+        this.policyRepository = ArgumentExceptionHelper.throwIfNull(policyRepository, "policyRepository");
     }
 
     @Override
     public PriceBreakdown requestPricing(RequestPricingCommand command) {
         ArgumentExceptionHelper.throwIfNull(command, "command");
-        return priceEngine.calculate(new PricingQuery(
-                command.getCargo(),
-                command.getProductIds(),
-                command.getDestination(),
-                command.getCurrency()
-        )).orElseThrow(() -> new RuntimeException("No pricing policy could be found for the given query"));
+
+        var bestPolicy = policyRepository.getAll()
+                .stream()
+                .filter(policy -> policy.resolve(new PricingQuery(
+                        command.getCargo(),
+                        command.getProductIds(),
+                        command.getDestination(),
+                        command.getCurrency()
+                )).isApplicable())
+                .max(Comparator.comparingInt(PricingPolicy::getPriority))
+                .orElseThrow(() -> new RuntimeException("No applicable policies found"));
+
+        var baseComponent = new PriceComponent(bestPolicy.getName(), bestPolicy.getBasePrice(), PriceComponentType.BASE);
+        var query = new PricingQuery(command.getCargo(), command.getProductIds(), command.getDestination(), command.getCurrency());
+
+        if (bestPolicy.getPriceModifiers() != null) {
+            var modifierStream = bestPolicy.getPriceModifiers()
+                    .stream()
+                    .filter(modifier -> modifier.isApplicable(query))
+                    .map(modifier -> new PriceComponent(
+                            modifier.getName(),
+                            modifier.calculateDelta(query, baseComponent.getAmount()),
+                            PriceComponentType.SURCHARGE
+                    ));
+
+            return Stream.concat(Stream.of(baseComponent), modifierStream).collect(PriceBreakdown.collector(query.getCurrency()));
+        } else {
+            return Stream.of(baseComponent).collect(PriceBreakdown.collector(query.getCurrency()));
+        }
     }
 
     private static final class SingletonHolder {
-        private static final RequestPricingService INSTANCE = new RequestPricingService(PriceEngine.getInstance());
+        private static final RequestPricingService INSTANCE = (RequestPricingService) RequestPricingUseCase.create();
     }
 
     public static RequestPricingService getInstance() {

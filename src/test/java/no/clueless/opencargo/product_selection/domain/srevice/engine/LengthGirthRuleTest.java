@@ -2,8 +2,8 @@ package no.clueless.opencargo.product_selection.domain.srevice.engine;
 
 import no.clueless.opencargo.domain.model.Cargo;
 import no.clueless.opencargo.domain.model.applicability.EvaluationResult;
-import no.clueless.opencargo.product_selection.domain.service.engine.LengthGirthRule;
-import no.clueless.opencargo.product_selection.domain.service.engine.ProductSelectionQuery;
+import no.clueless.opencargo.product_selection.domain.model.LengthGirthRule;
+import no.clueless.opencargo.product_selection.domain.model.ProductSelectionQuery;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

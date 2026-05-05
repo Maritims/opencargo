@@ -1,6 +1,6 @@
 package no.clueless.opencargo.pricing.domain.model.policy;
 
-import no.clueless.opencargo.pricing.domain.service.engine.*;
+import no.clueless.opencargo.pricing.domain.model.*;
 import no.clueless.opencargo.shared.Population;
 import no.clueless.opencargo.domain.model.geography.CountryCode;
 import no.clueless.opencargo.domain.model.geography.CountrySpecification;
@@ -24,11 +24,11 @@ class PricingPolicyTest {
     void setUp() {
         servicepakke = new PricingPolicy(
                 "Servicepakke",
-                Population.fromSetOf(Set.of(
+                Set.of(
                         new GeographicPricingRule(new CountrySpecification(new CountryCode("no"), null)),
                         new WeightLimitRule(new BigDecimal("35.0")),
                         new ProductRequirementRule(1)
-                )),
+                ),
                 Population.fromSetOf(Set.of(
                         new GeographicSurcharge(
                                 "Svalbard surcharge",

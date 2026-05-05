@@ -1,6 +1,5 @@
 package no.clueless.opencargo.product_selection.port.in;
 
-import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import no.clueless.opencargo.domain.model.Cargo;
 import no.clueless.opencargo.domain.model.geography.Address;
 
@@ -16,8 +15,14 @@ public class RequestProductsCommand {
     private final Address destination;
 
     public RequestProductsCommand(Cargo cargo, Address destination) {
-        this.cargo       = ArgumentExceptionHelper.throwIfNull(cargo, "cargo");
-        this.destination = ArgumentExceptionHelper.throwIfNull(destination, "destination");
+        if(cargo == null) {
+            throw new IllegalArgumentException("Cargo must not be null");
+        }
+        if(destination == null) {
+            throw new IllegalArgumentException("Destination must not be null");
+        }
+        this.cargo       = cargo;
+        this.destination = destination;
     }
 
     public Cargo getCargo() {

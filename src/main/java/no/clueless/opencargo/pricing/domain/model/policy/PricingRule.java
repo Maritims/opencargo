@@ -1,7 +1,7 @@
 package no.clueless.opencargo.pricing.domain.model.policy;
 
 import no.clueless.opencargo.domain.model.applicability.EvaluationResult;
-import no.clueless.opencargo.pricing.domain.service.engine.PricingQuery;
+import no.clueless.opencargo.pricing.domain.model.PricingQuery;
 
 public interface PricingRule {
     String getName();

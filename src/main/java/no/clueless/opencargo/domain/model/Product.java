@@ -1,6 +1,6 @@
 package no.clueless.opencargo.domain.model;
 
-import no.clueless.opencargo.bindings.ProductDTO;
+import no.clueless.opencargo.bindings.ProductType;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 
 import java.util.Objects;
@@ -56,8 +56,8 @@ public class Product {
                 '}';
     }
 
-    public static Product from(ProductDTO dto) {
+    public static Product from(ProductType dto) {
         ArgumentExceptionHelper.throwIfNull(dto, "dto");
-        return new Product(dto.getId(), dto.getConsignorId(), dto.getNumber(), dto.getName());
+        return new Product(dto.getId().intValue(), dto.getConsignorId(), dto.getNumber(), dto.getName());
     }
 }

@@ -1,0 +1,37 @@
+package no.clueless.opencargo.product_selection.domain.model;
+
+import jakarta.annotation.Nonnull;
+import no.clueless.opencargo.domain.model.applicability.EvaluationResult;
+import no.clueless.opencargo.shared.ArgumentExceptionHelper;
+
+import java.util.Set;
+
+/**
+ * A base interface for rules of various types.
+ * The type of rule is identified by the interface it implements, and therefore any rule interface meant for direct implementation should have a descriptive name.
+ * Examples of good names are "HeightRule", "LengthRule" etc.
+ */
+public interface Rule extends Comparable<Rule> {
+    int getId();
+
+    Set<Integer> getConsignorIds();
+
+    Set<Integer> getProductIds();
+
+    String getNumber();
+
+    String getName();
+
+    int getPriority();
+
+    EvaluationResult evaluate(ProductSelectionQuery productQuery);
+
+    /**
+     * Default implementation to allow sorting by priority.
+     */
+    @Override
+    default int compareTo(@Nonnull Rule other) {
+        ArgumentExceptionHelper.throwIfNull(other, "other");
+        return Integer.compare(getPriority(), other.getPriority());
+    }
+}

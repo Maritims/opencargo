@@ -1,8 +1,5 @@
 package no.clueless.opencargo.domain.model.geography;
 
-import no.clueless.opencargo.bindings.PostalCodeRangeSpecificationDTO;
-import no.clueless.opencargo.shared.ArgumentExceptionHelper;
-
 import java.util.Objects;
 
 public class PostalCodeRange implements PostalCodeSpecification {
@@ -50,10 +47,5 @@ public class PostalCodeRange implements PostalCodeSpecification {
                 "start=" + start +
                 ", end=" + end +
                 '}';
-    }
-
-    public static PostalCodeRange from(PostalCodeRangeSpecificationDTO dto) {
-        ArgumentExceptionHelper.throwIfNull(dto, "dto");
-        return new PostalCodeRange(new PostalCode(dto.getMinInclusive()), new PostalCode(dto.getMaxInclusive()));
     }
 }

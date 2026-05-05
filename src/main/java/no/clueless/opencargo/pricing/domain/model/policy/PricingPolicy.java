@@ -2,7 +2,7 @@ package no.clueless.opencargo.pricing.domain.model.policy;
 
 import no.clueless.opencargo.domain.model.applicability.ApplicabilityReports;
 import no.clueless.opencargo.domain.model.applicability.Rejection;
-import no.clueless.opencargo.pricing.domain.service.engine.PricingQuery;
+import no.clueless.opencargo.pricing.domain.model.PricingQuery;
 import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 import no.clueless.opencargo.shared.Population;
 import org.slf4j.Logger;
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 public class PricingPolicy implements Comparable<PricingPolicy> {
     private static final Logger                                        log = LoggerFactory.getLogger(PricingPolicy.class);
     private final        String                                        name;
-    private final        Population<PricingRule, Set<PricingRule>>     pricingRules;
+    private final        Set<PricingRule>                              pricingRules;
     private final        Population<PriceModifier, Set<PriceModifier>> priceModifiers;
     private final        BigDecimal                                    basePrice;
     private final        int                                           priority;
 
-    public PricingPolicy(String name, Population<PricingRule, Set<PricingRule>> pricingRules, Population<PriceModifier, Set<PriceModifier>> priceModifiers, BigDecimal basePrice, int priority) {
+    public PricingPolicy(String name, Set<PricingRule> pricingRules, Population<PriceModifier, Set<PriceModifier>> priceModifiers, BigDecimal basePrice, int priority) {
         this.name           = ArgumentExceptionHelper.throwIfNullOrBlank(name, "name");
         this.pricingRules   = pricingRules;
         this.priceModifiers = priceModifiers;
@@ -34,7 +34,7 @@ public class PricingPolicy implements Comparable<PricingPolicy> {
         return name;
     }
 
-    public Population<PricingRule, Set<PricingRule>> getPricingRules() {
+    public Set<PricingRule> getPricingRules() {
         return pricingRules;
     }
 

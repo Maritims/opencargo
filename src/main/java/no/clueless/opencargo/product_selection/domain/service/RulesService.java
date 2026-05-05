@@ -1,39 +1,32 @@
 package no.clueless.opencargo.product_selection.domain.service;
 
-import no.clueless.opencargo.bindings.RuleListDTO;
-import no.clueless.opencargo.infrastructure.marshalling.XmlMarshaller;
-import no.clueless.opencargo.product_selection.domain.service.engine.Rule;
-import no.clueless.opencargo.product_selection.domain.service.engine.RulesMapper;
+import no.clueless.opencargo.product_selection.domain.model.Rule;
 import no.clueless.opencargo.product_selection.port.in.CountRulesUseCase;
 import no.clueless.opencargo.product_selection.port.in.ListRulesUseCase;
-import no.clueless.opencargo.shared.Population;
+import no.clueless.opencargo.product_selection.port.out.RuleRepository;
+import no.clueless.opencargo.shared.ArgumentExceptionHelper;
 
 import java.util.Set;
 
 public class RulesService implements CountRulesUseCase, ListRulesUseCase {
-    private RuleListDTO ruleListDTO;
+    private final RuleRepository ruleRepository;
 
-    private RuleListDTO getRuleListDTO() {
-        if (ruleListDTO == null) {
-            ruleListDTO = XmlMarshaller.unmarshalResourceSilently("rules.xml", RuleListDTO.class);
-        }
-        return ruleListDTO;
+    public RulesService(RuleRepository ruleRepository) {
+        this.ruleRepository = ArgumentExceptionHelper.throwIfNull(ruleRepository, "ruleProvider");
     }
 
     @Override
     public int countRules() {
-        var ruleListDTO = getRuleListDTO();
-        return ruleListDTO == null || ruleListDTO.getGeographyRuleOrWeightRuleOrWidthRule() == null ? 0 : ruleListDTO.getGeographyRuleOrWeightRuleOrWidthRule().size();
+        return ruleRepository.getTotalCount();
     }
 
     @Override
-    public Population<Rule, Set<Rule>> listRules() {
-        var ruleListDTO = getRuleListDTO();
-        return ruleListDTO == null || ruleListDTO.getGeographyRuleOrWeightRuleOrWidthRule() == null ? null : RulesMapper.getInstance().mapToRules(ruleListDTO);
+    public Set<Rule> listRules() {
+        return ruleRepository.getAll();
     }
 
     private static final class SingletonHolder {
-        private static final RulesService INSTANCE = new RulesService();
+        private static final RulesService INSTANCE = new RulesService(RuleRepository.create());
     }
 
     public static RulesService getInstance() {

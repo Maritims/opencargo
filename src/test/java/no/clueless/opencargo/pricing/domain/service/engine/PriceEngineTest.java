@@ -1,13 +1,12 @@
 package no.clueless.opencargo.pricing.domain.service.engine;
 
-import no.clueless.opencargo.bindings.PricingPolicyListDTO;
 import no.clueless.opencargo.domain.model.geography.Address;
 import no.clueless.opencargo.domain.model.Cargo;
-import no.clueless.opencargo.pricing.domain.model.policy.PricingPolicyMapper;
+import no.clueless.opencargo.pricing.domain.model.PricingQuery;
 import no.clueless.opencargo.domain.model.geography.CountryCode;
 import no.clueless.opencargo.domain.model.geography.PostalCode;
-import no.clueless.opencargo.infrastructure.marshalling.XmlMarshaller;
-import no.clueless.opencargo.pricing.domain.model.breakdown.PriceBreakdown;
+import no.clueless.opencargo.pricing.domain.service.RequestPricingService;
+import no.clueless.opencargo.pricing.port.out.PolicyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,13 +17,13 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PriceEngineTest {
-    PriceEngine sut;
+    PolicyRepository      policyRepository;
+    RequestPricingService sut;
 
     @BeforeEach
     void setUp() {
-        var dto      = XmlMarshaller.unmarshalResourceSilently("pricing.xml", PricingPolicyListDTO.class);
-        var policies = PricingPolicyMapper.getInstance().mapToPolicies(dto);
-        sut = new PriceEngine(policies);
+        policyRepository = PolicyRepository.create();
+        sut              = new RequestPricingService(policyRepository);
     }
 
     @Test
@@ -35,9 +34,7 @@ class PriceEngineTest {
         var currency    = Currency.getInstance("NOK");
         var query       = new PricingQuery(cargo, productIds, destination, currency);
 
-        var actual = sut.calculate(query)
-                .map(PriceBreakdown::getTotalPrice)
-                .orElse(null);
+        var actual = sut.requestPricing(query).getTotalPrice();
 
         assertNotNull(actual);
         assertEquals(new BigDecimal("135.0"), actual);
@@ -51,7 +48,7 @@ class PriceEngineTest {
         var currency    = Currency.getInstance("NOK");
         var query       = new PricingQuery(cargo, productIds, destination, currency);
 
-        var actual = sut.calculate(query).orElse(null);
+        var actual = sut.requestPricing(query);
 
         assertNull(actual);
     }

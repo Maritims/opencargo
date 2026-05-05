@@ -24,7 +24,7 @@
         <targets>
             <product id="1"/>
         </targets>
-        <maxExclusive>35.0</maxExclusive>
+        <max>35.0</max>
     </weightRule>
     <weightRule id="3">
         <number>3</number>
@@ -33,7 +33,7 @@
         <targets>
             <product id="2"/>
         </targets>
-        <maxExclusive>10.0</maxExclusive>
+        <max>10.0</max>
     </weightRule>
     <minDimensionsRule id="3">
         <number>4</number>
@@ -56,6 +56,6 @@
             <product id="2"/>
         </targets>
         <maxLength>240.0</maxLength>
-        <maxLengthAndGirthCombined>360.0</maxLengthAndGirthCombined>
+        <maxCombined>360.0</maxCombined>
     </lengthOrGirthRule>
 </rules>

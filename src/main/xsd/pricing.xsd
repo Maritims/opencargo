@@ -4,7 +4,7 @@
 
     <xs:complexType name="PricingRuleDTO" abstract="true">
         <xs:complexContent>
-            <xs:extension base="IdentifiableEntityDTO"/>
+            <xs:extension base="IdentifiableType"/>
         </xs:complexContent>
     </xs:complexType>
 
@@ -12,7 +12,7 @@
         <xs:complexContent>
             <xs:extension base="PricingRuleDTO">
                 <xs:sequence>
-                    <xs:element name="countrySpecification" type="CountrySpecificationDTO"/>
+                    <xs:element name="countrySpecification" type="CountrySpecificationType"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -22,7 +22,7 @@
         <xs:complexContent>
             <xs:extension base="PricingRuleDTO">
                 <xs:sequence>
-                    <xs:element name="product" type="IdentifiableEntityDTO"/>
+                    <xs:element name="product" type="IdentifiableType"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -32,7 +32,7 @@
         <xs:complexContent>
             <xs:extension base="PricingRuleDTO">
                 <xs:sequence>
-                    <xs:element name="maxWeight" type="PositiveDecimalDTO"/>
+                    <xs:element name="maxWeight" type="PositiveDecimalType"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -48,7 +48,7 @@
 
     <xs:complexType name="PriceModifierDTO" abstract="true">
         <xs:complexContent>
-            <xs:extension base="IdentifiableEntityDTO">
+            <xs:extension base="IdentifiableType">
                 <xs:sequence>
                     <xs:element name="name" type="xs:string"/>
                 </xs:sequence>
@@ -60,8 +60,8 @@
         <xs:complexContent>
             <xs:extension base="PriceModifierDTO">
                 <xs:sequence>
-                    <xs:element name="percentage" type="PositiveDecimalDTO"/>
-                    <xs:element name="countrySpecification" type="CountrySpecificationDTO"/>
+                    <xs:element name="percentage" type="PositiveDecimalType"/>
+                    <xs:element name="countrySpecification" type="CountrySpecificationType"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -75,7 +75,7 @@
 
     <xs:complexType name="PricingPolicyDTO">
         <xs:complexContent>
-            <xs:extension base="IdentifiableEntityDTO">
+            <xs:extension base="IdentifiableType">
                 <xs:sequence>
                     <xs:element name="name" type="xs:string"/>
                     <xs:element name="basePrice" type="xs:decimal"/>

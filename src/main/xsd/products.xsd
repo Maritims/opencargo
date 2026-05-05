@@ -2,9 +2,9 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common.xsd"/>
 
-    <xs:complexType name="ProductDTO">
+    <xs:complexType name="ProductType">
         <xs:complexContent>
-            <xs:extension base="IdentifiableEntityDTO">
+            <xs:extension base="IdentifiableType">
                 <xs:sequence>
                     <xs:element name="consignorId" type="xs:int"/>
                     <xs:element name="number" type="xs:string"/>
@@ -14,11 +14,11 @@
         </xs:complexContent>
     </xs:complexType>
 
-    <xs:complexType name="ProductListDTO">
-        <xs:choice maxOccurs="unbounded">
-            <xs:element name="product" type="ProductDTO"/>
-        </xs:choice>
+    <xs:complexType name="ProductListType">
+        <xs:sequence>
+            <xs:element name="product" type="ProductType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="products" type="ProductListDTO"/>
+    <xs:element name="products" type="ProductListType"/>
 </xs:schema>
