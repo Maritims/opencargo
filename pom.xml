@@ -7,7 +7,7 @@
     <groupId>no.clueless</groupId>
     <artifactId>opencargo</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <name>OpenCargo</name>
     <description>A Hexagonal Architecture implementation for cargo product selection and pricing.</description>
@@ -24,6 +24,13 @@
             </roles>
         </developer>
     </developers>
+    <modules>
+        <module>opencargo-shared</module>
+        <module>opencargo-domain</module>
+        <module>opencargo-application</module>
+        <module>opencargo-infrastructure</module>
+        <module>opencargo-bootstrap</module>
+    </modules>
 
     <properties>
         <slf4j.version>2.0.17</slf4j.version>
@@ -40,131 +47,57 @@
         <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson-databind.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>${jakarta.servlet-api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${jakarta.xml.bind-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-            <version>${jakarta.annotation-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>${jaxb-runtime.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <configuration>
-                    <show>package</show>
-                    <nohelp>true</nohelp>
-                    <links>
-                        <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
-                        <link>https://jakarta.ee/specifications/platform/10/apidocs/</link>
-                        <link>https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/latest/</link>
-                    </links>
-                    <additionalOptions>-Xdoclint:none</additionalOptions>
-                    <detectTestJavadoc>false</detectTestJavadoc>
-                    <groups>
-                        <group>
-                            <title>Inbound Adapters (web)</title>
-                            <packages>no.clueless.opencargo.catalog.adapter.in.web:no.clueless.opencargo.product_selection.adapter.in.web:no.clueless.opencargo.pricing.adapter.in.web</packages>
-                        </group>
-                        <group>
-                            <title>Application Ports (boundaries)</title>
-                            <packages>no.clueless.opencargo.*.port.in*</packages>
-                        </group>
-                        <group>
-                            <title>Domain Services</title>
-                            <packages>no.clueless.opencargo.*.domain.service*</packages>
-                        </group>
-                        <group>
-                            <title>Domain Model</title>
-                            <packages>no.clueless.opencargo.domain.model*</packages>
-                        </group>
-                        <group>
-                            <title>Infrastructure</title>
-                            <packages>no.clueless.opencargo.infrastructure*</packages>
-                        </group>
-                    </groups>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.6.0</version>
-            </plugin>
-        </plugins>
-    </reporting>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${jakarta.servlet-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>${jakarta.xml.bind-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>${jakarta.annotation-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb-runtime.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <configuration>
-                    <show>public</show>
-                    <nohelp>true</nohelp>
-                    <links>
-                        <link>https://jakarta.ee/specifications/platform/10/apidocs/</link>
-                        <link>https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/latest/</link>
-                    </links>
-                    <additionalOptions>-Xdoclint:none</additionalOptions>
-                    <detectTestJavadoc>false</detectTestJavadoc>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -179,24 +112,16 @@
                     <target>${maven-compiler-plugin.source}</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>${jaxb2-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>xjc</id>
-                        <goals>
-                            <goal>xjc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <addGeneratedAnnotation>true</addGeneratedAnnotation>
-                    <packageName>no.clueless.opencargo.bindings</packageName>
-                </configuration>
-            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jaxb2-maven-plugin</artifactId>
+                    <version>${jaxb2-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

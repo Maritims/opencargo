@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<freight-products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="../../../../opencargo-infrastructure/target/generated-resources/schemagen/schema1.xsd">
+    <product id="5800">
+        <name>Pakke til hentested</name>
+        <constraints>
+            <max-weight unit="KILOGRAM">35.0</max-weight>
+            <any>
+                <max-length unit="CENTIMETER">240</max-length>
+                <max-length-plus-girth unit="CENTIMETER">360</max-length-plus-girth>
+            </any>
+            <min-dimensions>
+                <width unit="CENTIMETER">15</width>
+                <length unit="CENTIMETER">10</length>
+                <height unit="CENTIMETER">1</height>
+            </min-dimensions>
+        </constraints>
+    </product>
+    <product id="0344">
+        <name>Pakke til pakkeboks</name>
+        <constraints>
+            <max-weight unit="KILOGRAM">10</max-weight>
+            <max-dimensions>
+                <width unit="CENTIMETER">60</width>
+                <length unit="CENTIMETER">50</length>
+                <height unit="CENTIMETER">44</height>
+            </max-dimensions>
+            <min-dimensions>
+                <width unit="CENTIMETER">15</width>
+                <length unit="CENTIMETER">10</length>
+                <height unit="CENTIMETER">1</height>
+            </min-dimensions>
+        </constraints>
+    </product>
+</freight-products>

@@ -1,0 +1,129 @@
+package no.clueless.opencargo.infrastructure.persistence.xml;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+import no.clueless.opencargo.application.ports.output.FreightProductRepository;
+import no.clueless.opencargo.domain.criteria.*;
+import no.clueless.opencargo.domain.model.FreightProduct;
+import no.clueless.opencargo.domain.physical.Dimensions;
+import no.clueless.opencargo.domain.physical.DistanceUnit;
+import no.clueless.opencargo.domain.physical.Weight;
+import no.clueless.opencargo.domain.shared.Measure;
+import no.clueless.opencargo.domain.shared.Money;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class XmlFreightProductRepository implements FreightProductRepository {
+    private final Unmarshaller         xmlProductCatalogUnmarshaller;
+    private       List<FreightProduct> products;
+
+    public XmlFreightProductRepository() throws JAXBException {
+        xmlProductCatalogUnmarshaller = JAXBContext.newInstance(XmlProductCatalog.class).createUnmarshaller();
+    }
+
+    protected Measure<DistanceUnit> mapToMeasure(XmlDistanceConstraint xmlDistanceConstraint) {
+        if (xmlDistanceConstraint == null) {
+            throw new IllegalArgumentException("xmlDistanceConstraint cannot be null");
+        }
+        return new Measure<>(xmlDistanceConstraint.getValue(), xmlDistanceConstraint.getUnit());
+    }
+
+    protected Constraint mapToDomain(XmlConstraint xmlConstraint) {
+        if (xmlConstraint == null) {
+            throw new IllegalArgumentException("xmlConstraint cannot be null");
+        }
+
+        Constraint constraint;
+
+        if (xmlConstraint instanceof XmlMaxLengthConstraint) {
+            constraint = new MaxLengthConstraint(mapToMeasure((XmlDistanceConstraint) xmlConstraint));
+        } else if (xmlConstraint instanceof XmlMaxLengthPlusGirthConstraint) {
+            constraint = new MaxLengthPlusGirthConstraint(mapToMeasure((XmlDistanceConstraint) xmlConstraint));
+        } else if (xmlConstraint instanceof XmlMaxWeightConstraint) {
+            var xmlMaxWeightConstraint = (XmlMaxWeightConstraint) xmlConstraint;
+            var maxWeight              = new Weight(xmlMaxWeightConstraint.getMaxWeight(), xmlMaxWeightConstraint.getUnit());
+            constraint = new MaxWeightConstraint(maxWeight);
+        } else if (xmlConstraint instanceof XmlMaxDimensionsConstraint) {
+            var xmlMaxDimensionsConstraint = (XmlMaxDimensionsConstraint) xmlConstraint;
+            constraint = new DimensionsConstraint(new Dimensions(
+                    mapToMeasure(xmlMaxDimensionsConstraint.getWidth()),
+                    mapToMeasure(xmlMaxDimensionsConstraint.getLength()),
+                    mapToMeasure(xmlMaxDimensionsConstraint.getHeight())
+            ), false);
+        } else if (xmlConstraint instanceof XmlMinDimensionsConstraint) {
+            var xmlMinDimensionsConstraint = (XmlDimensionsConstraint) xmlConstraint;
+            constraint = new DimensionsConstraint(new Dimensions(
+                    mapToMeasure(xmlMinDimensionsConstraint.getWidth()),
+                    mapToMeasure(xmlMinDimensionsConstraint.getLength()),
+                    mapToMeasure(xmlMinDimensionsConstraint.getHeight())
+            ), true);
+        } else if (xmlConstraint instanceof XmlConstraints) {
+            var xmlConstraints = (XmlConstraints) xmlConstraint;
+            var constraints    = mapToDomain(xmlConstraints);
+            constraint = new AnyConstraint(constraints.toArray(new Constraint[0]));
+        } else {
+            throw new IllegalArgumentException("Unknown constraint type: " + xmlConstraint.getClass());
+        }
+
+        return constraint;
+    }
+
+    protected List<Constraint> mapToDomain(XmlConstraints xmlConstraints) {
+        if (xmlConstraints == null) {
+            throw new IllegalArgumentException("xmlConstraints cannot be null");
+        }
+
+        return xmlConstraints.getConstraints()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(this::mapToDomain)
+                .collect(Collectors.toList());
+    }
+
+    protected FreightProduct mapToDomain(XmlProduct xmlProduct) {
+        if (xmlProduct == null) {
+            throw new IllegalArgumentException("xmlProduct cannot be null");
+        }
+
+        return new FreightProduct(
+                UUID.fromString(xmlProduct.getId()),
+                xmlProduct.getName(),
+                mapToDomain(xmlProduct.getConstraints())
+        );
+    }
+
+    protected List<FreightProduct> mapToDomain(XmlProductCatalog xmlProductCatalog) {
+        if (xmlProductCatalog == null) {
+            throw new IllegalArgumentException("xmlProductCatalog cannot be null");
+        }
+
+        return xmlProductCatalog.getProducts()
+                .stream()
+                .map(this::mapToDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FreightProduct> findAll() {
+        if (products != null) {
+            return products;
+        }
+
+        try (var inputStream = XmlFreightProductRepository.class.getClassLoader().getResourceAsStream("freight-products.xml")) {
+            if (inputStream == null) {
+                throw new RuntimeException("Could not find freight-products.xml");
+            }
+
+            var xmlProductCatalog = (XmlProductCatalog) xmlProductCatalogUnmarshaller.unmarshal(inputStream);
+            products = mapToDomain(xmlProductCatalog);
+            return products;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load freight-products.xml:" + e.getMessage(), e);
+        } catch (JAXBException e) {
+            throw new RuntimeException("Failed to initialize JAXB context for XmlProductCatalog:" + e.getMessage(), e);
+        }
+    }
+}
