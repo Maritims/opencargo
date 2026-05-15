@@ -14,14 +14,11 @@ public class MaxWeightConstraint implements Constraint {
 
     @Override
     public Decision evaluate(Parcel parcel) {
-        var ok = parcel.getWeight()
+        var satisfied = parcel.getWeight()
                 .toKilograms()
                 .getValue()
                 .compareTo(maxWeight.toKilograms().getValue()) <= 0;
-        return new Decision(getClass().getSimpleName(),
-                ok,
-                ok ? String.format("Weight %s is within allowed limit of %s", parcel.getWeight(), maxWeight)
-                        : String.format("Weight %s exceeds the limit of %s", parcel.getWeight(), maxWeight));
+        return satisfied ? Decision.satisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Weight %s exceeds the limit of %s", parcel.getWeight(), maxWeight));
     }
 
     @Override

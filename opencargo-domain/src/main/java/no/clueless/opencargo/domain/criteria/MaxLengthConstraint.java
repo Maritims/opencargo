@@ -16,13 +16,9 @@ public class MaxLengthConstraint implements Constraint {
     @Override
     public Decision evaluate(Parcel parcel) {
         var satisfied = Objects.requireNonNull(parcel)
-                .getDimensions()
+                .dimensions()
                 .getLength()
                 .isLessThanOrEqual(maxLength);
-        return new Decision(getClass().getSimpleName(),
-                satisfied,
-                satisfied ? String.format("Length %s is within allowed limit of %s", parcel.getDimensions().getLength(), maxLength)
-                        : String.format("Length %s is outside allowed limit of %s", parcel.getDimensions().getLength(), maxLength)
-        );
+        return satisfied ? Decision.satisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Length %s is outside allowed limit of %s", parcel.dimensions().getLength(), maxLength));
     }
 }

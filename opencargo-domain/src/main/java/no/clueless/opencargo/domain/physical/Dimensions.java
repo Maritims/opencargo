@@ -3,6 +3,8 @@ package no.clueless.opencargo.domain.physical;
 import no.clueless.opencargo.domain.shared.Measure;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Dimensions {
@@ -28,26 +30,40 @@ public class Dimensions {
         return height;
     }
 
-    public BigDecimal getCubicVolumeInMillimeters() {
-        return length.toBaseUnit()
-                .multiply(width.toBaseUnit())
-                .multiply(height.toBaseUnit());
-    }
-
-    public Measure<VolumeUnit> getVolume() {
-        return new Measure<>(getCubicVolumeInMillimeters(), VolumeUnit.CUBIC_MILLIMETER);
-    }
-
     public Measure<DistanceUnit> getGirth() {
-        var girthMm = width.toBaseUnit().add(height.toBaseUnit()).multiply(BigDecimal.valueOf(2));
-        return new Measure<>(girthMm, DistanceUnit.MILLIMETER);
+        var sides = new BigDecimal[]{width.toBaseUnit(), length.toBaseUnit(), height.toBaseUnit()};
+        Arrays.sort(sides);
+        var shortest      = sides[0];
+        var otherShortest = sides[1];
+        var longest       = sides[2];
+        var girth = longest.add(shortest.multiply(BigDecimal.valueOf(2)))
+                .add(otherShortest.multiply(BigDecimal.valueOf(2)))
+                .divide(width.getUnit().getMultiplier(), RoundingMode.HALF_UP);
+
+        return new Measure<>(girth, width.getUnit());
     }
 
-    public Measure<DistanceUnit> getLengthPlusGirth() {
-        var totalMm = getLength()
-                .toBaseUnit()
-                .add(getGirth().toBaseUnit());
-        return new Measure<>(totalMm, DistanceUnit.MILLIMETER);
+    public boolean fitsWithin(Dimensions other) {
+        if (other == null) {
+            throw new IllegalArgumentException("other cannot be null");
+        }
+
+        var sides      = new BigDecimal[]{width.toBaseUnit(), length.toBaseUnit(), height.toBaseUnit()};
+        var otherSides = new BigDecimal[]{other.width.toBaseUnit(), other.length.toBaseUnit(), other.height.toBaseUnit()};
+
+        Arrays.sort(sides);
+        Arrays.sort(otherSides);
+
+        return sides[0].compareTo(otherSides[0]) <= 0 &&
+                sides[1].compareTo(otherSides[1]) <= 0 &&
+                sides[2].compareTo(otherSides[2]) <= 0;
+    }
+
+    public boolean contains(Dimensions other) {
+        if (other == null) {
+            throw new IllegalArgumentException("other cannot be null");
+        }
+        return other.fitsWithin(this);
     }
 
     @Override

@@ -18,16 +18,12 @@ public class MaxLengthPlusGirthConstraint implements Constraint {
         if (parcel == null) {
             throw new IllegalArgumentException("parcel cannot be null");
         }
-        var baseParcelGirth  = parcel.getDimensions().getGirth().toBaseUnit();
-        var baseParcelLength = parcel.getDimensions().getLength().toBaseUnit();
+        var baseParcelGirth  = parcel.dimensions().getGirth().toBaseUnit();
+        var baseParcelLength = parcel.dimensions().getLength().toBaseUnit();
         var girthPlusLength  = baseParcelGirth.add(baseParcelLength);
-
-
-        var satisfied = girthPlusLength.compareTo(maxLengthPlusGirth.toBaseUnit()) <= 0;
-        return new Decision(getClass().getSimpleName(),
-                satisfied,
-                satisfied ? String.format("Combined length and girth %s is within allowed limit of %s", girthPlusLength, maxLengthPlusGirth)
-                        : String.format("Combined length and girth %s is outside allowed limit of %s", girthPlusLength, maxLengthPlusGirth)
-        );
+        var satisfied        = girthPlusLength.compareTo(maxLengthPlusGirth.toBaseUnit()) <= 0;
+        return satisfied ?
+                Decision.satisfied(getClass().getSimpleName()) :
+                Decision.unsatisfied(getClass().getSimpleName(), String.format("Combined length and girth %s is outside allowed limit of %s", girthPlusLength, maxLengthPlusGirth));
     }
 }

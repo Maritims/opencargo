@@ -10,7 +10,6 @@ import no.clueless.opencargo.domain.physical.Dimensions;
 import no.clueless.opencargo.domain.physical.DistanceUnit;
 import no.clueless.opencargo.domain.physical.Weight;
 import no.clueless.opencargo.domain.shared.Measure;
-import no.clueless.opencargo.domain.shared.Money;
 
 import java.io.IOException;
 import java.util.*;
@@ -48,18 +47,18 @@ public class XmlFreightProductRepository implements FreightProductRepository {
             constraint = new MaxWeightConstraint(maxWeight);
         } else if (xmlConstraint instanceof XmlMaxDimensionsConstraint) {
             var xmlMaxDimensionsConstraint = (XmlMaxDimensionsConstraint) xmlConstraint;
-            constraint = new DimensionsConstraint(new Dimensions(
+            constraint = new MaxDimensionsConstraint(new Dimensions(
                     mapToMeasure(xmlMaxDimensionsConstraint.getWidth()),
                     mapToMeasure(xmlMaxDimensionsConstraint.getLength()),
                     mapToMeasure(xmlMaxDimensionsConstraint.getHeight())
-            ), false);
+            ));
         } else if (xmlConstraint instanceof XmlMinDimensionsConstraint) {
             var xmlMinDimensionsConstraint = (XmlDimensionsConstraint) xmlConstraint;
-            constraint = new DimensionsConstraint(new Dimensions(
+            constraint = new MaxDimensionsConstraint(new Dimensions(
                     mapToMeasure(xmlMinDimensionsConstraint.getWidth()),
                     mapToMeasure(xmlMinDimensionsConstraint.getLength()),
                     mapToMeasure(xmlMinDimensionsConstraint.getHeight())
-            ), true);
+            ));
         } else if (xmlConstraint instanceof XmlConstraints) {
             var xmlConstraints = (XmlConstraints) xmlConstraint;
             var constraints    = mapToDomain(xmlConstraints);

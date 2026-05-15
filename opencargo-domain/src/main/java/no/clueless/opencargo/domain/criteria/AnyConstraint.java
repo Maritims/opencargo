@@ -21,7 +21,7 @@ public class AnyConstraint implements Constraint {
         }
         return constraints.stream()
                 .map(constraint -> constraint.evaluate(parcel))
-                .filter(Decision::isSatisfied)
+                .filter(Decision::satisfied)
                 .findFirst()
                 .orElseGet(() -> new Decision(getClass().getSimpleName(), false, "None of the constraints were satisfied"));
     }

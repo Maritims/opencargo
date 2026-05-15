@@ -12,6 +12,10 @@ public class Measure<U extends Unit> {
         this.unit  = Objects.requireNonNull(unit);
     }
 
+    public U getUnit() {
+        return unit;
+    }
+
     public BigDecimal toBaseUnit() {
         return value.multiply(unit.getMultiplier());
     }
@@ -26,5 +30,17 @@ public class Measure<U extends Unit> {
     @Override
     public String toString() {
         return value + " " + unit.getSymbol();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Measure<?> measure = (Measure<?>) o;
+        return Objects.equals(value, measure.value) && Objects.equals(unit, measure.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, unit);
     }
 }

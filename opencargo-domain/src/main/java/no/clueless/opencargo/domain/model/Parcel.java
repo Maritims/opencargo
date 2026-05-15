@@ -17,18 +17,18 @@ public class Parcel {
     private final Destination   destination;
 
     public Parcel(UUID id, Dimensions dimensions, Weight weight, Set<AdrClass> adrClasses, Destination destination) {
-        this.id          = Objects.requireNonNull(id);
-        this.dimensions  = Objects.requireNonNull(dimensions);
-        this.weight      = Objects.requireNonNull(weight);
-        this.adrClasses  = Objects.requireNonNull(adrClasses);
-        this.destination = Objects.requireNonNull(destination);
+        this.id          = Objects.requireNonNull(id, "id cannot be null");
+        this.dimensions  = Objects.requireNonNull(dimensions, "dimensions cannot be null");
+        this.weight      = Objects.requireNonNull(weight, "weight cannot be null");
+        this.adrClasses  = Objects.requireNonNull(adrClasses, "adrClasses cannot be null");
+        this.destination = Objects.requireNonNull(destination, "destination cannot be null");
     }
 
     public UUID getId() {
         return id;
     }
 
-    public Dimensions getDimensions() {
+    public Dimensions dimensions() {
         return dimensions;
     }
 
