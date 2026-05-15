@@ -3,10 +3,19 @@ package no.clueless.opencargo.domain.criteria;
 import no.clueless.opencargo.domain.shared.AdrClass;
 import no.clueless.opencargo.domain.model.Parcel;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class AdrConstraint implements Constraint {
     private final Set<AdrClass> supportedClasses;
+
+    public AdrConstraint(AdrClass... supportedClasses) {
+        if (supportedClasses == null || supportedClasses.length == 0) {
+            throw new IllegalArgumentException("supportedClasses must not be null or empty");
+        }
+        this.supportedClasses = new HashSet<>(List.of(supportedClasses));
+    }
 
     public AdrConstraint(Set<AdrClass> supportedClasses) {
         if (supportedClasses == null || supportedClasses.isEmpty()) {
