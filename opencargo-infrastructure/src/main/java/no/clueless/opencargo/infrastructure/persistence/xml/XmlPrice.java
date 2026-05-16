@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 public class XmlPrice implements DomainMapper<FreightPrice> {
     @XmlElement(name = "base-price", required = true)
     private XmlMoney           basePrice;
+    @XmlElementWrapper(name = "surcharges")
+    @XmlElement(name = "surcharge")
     private List<XmlSurcharge> surcharges;
     @XmlElement(name = "constraints", required = true)
     private XmlConstraints     constraints;

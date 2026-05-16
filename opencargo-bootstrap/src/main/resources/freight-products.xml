@@ -16,17 +16,85 @@
             </min-dimensions>
         </constraints>
         <price>
-            <base-price currency="NOK">150</base-price>
+            <base-price currency="NOK">142</base-price>
             <surcharges>
-                <reason>Er pakken din over 120 x 60 x 60 cm må den sorteres manuelt og medfører derfor et tillegg i prisen.</reason>
-                <money currency="NOK">164</money>
-                <constraints>
-                    <max-dimensions>
-                        <width unit="CENTIMETER">120</width>
-                        <length unit="CENTIMETER">60</length>
-                        <height unit="CENTIMETER">60</height>
-                    </max-dimensions>
-                </constraints>
+                <surcharge>
+                    <reason>Sone 1, opp til 2kg</reason>
+                    <money currency="NOK">3</money>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">2</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 3kg</reason>
+                    <money currency="NOK">5</money>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">3</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 5kg</reason>
+                    <money currency="NOK">15</money>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">5</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 7kg</reason>
+                    <money currency="NOK">34</money>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">7</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 10kg</reason>
+                    <money currency="NOK">48</money>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">10</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 15kg</reason>
+                    <money currency="NOK">107</money>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">15</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 20kg</reason>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">20</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 25kg</reason>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">25</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 30kg</reason>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">30</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Sone 1, opp til 35kg</reason>
+                    <constraints>
+                        <max-weight unit="KILOGRAM">35</max-weight>
+                    </constraints>
+                </surcharge>
+                <surcharge>
+                    <reason>Er pakken din over 120 x 60 x 60 cm må den sorteres manuelt og medfører derfor et tillegg i prisen.</reason>
+                    <money currency="NOK">164</money>
+                    <constraints>
+                        <max-dimensions>
+                            <width unit="CENTIMETER">120</width>
+                            <length unit="CENTIMETER">60</length>
+                            <height unit="CENTIMETER">60</height>
+                        </max-dimensions>
+                    </constraints>
+                </surcharge>
             </surcharges>
             <constraints/>
         </price>
