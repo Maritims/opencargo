@@ -1,4 +1,4 @@
-package no.clueless.opencargo.infrastructure.config;
+package no.clueless.opencargo.domain.shared;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServiceLocator {
-    private static final Logger log = LoggerFactory.getLogger(ServiceLocator.class);
-    private final Map<Class<?>, Object> registry = new ConcurrentHashMap<>();
+    private static final Logger                log      = LoggerFactory.getLogger(ServiceLocator.class);
+    private final        Map<Class<?>, Object> registry = new ConcurrentHashMap<>();
 
     public <T> void register(Class<T> clazz, T instance) {
         if (clazz == null) {
@@ -28,7 +28,7 @@ public class ServiceLocator {
         if (clazz == null) {
             throw new IllegalArgumentException("clazz cannot be null");
         }
-        if(!registry.containsKey(clazz)) {
+        if (!registry.containsKey(clazz)) {
             log.warn("{} is not registered", clazz.getName());
             return Optional.empty();
         }

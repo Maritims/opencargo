@@ -1,9 +1,9 @@
 package no.clueless.opencargo.infrastructure.web;
 
-public class FreightProductServletException extends RuntimeException {
+public class StatusAwareServletException extends RuntimeException {
     private final int statusCode;
 
-    public FreightProductServletException(int statusCode, String message) {
+    public StatusAwareServletException(int statusCode, String message) {
         super(message);
         if (statusCode < 400 || statusCode > 500) {
             throw new IllegalArgumentException("statusCode must be between 400 and 500");
@@ -11,18 +11,18 @@ public class FreightProductServletException extends RuntimeException {
         this.statusCode = statusCode;
     }
 
-    public static FreightProductServletException badRequest(String message) {
+    public static StatusAwareServletException badRequest(String message) {
         if (message == null || message.isBlank()) {
             throw new  IllegalArgumentException("message cannot be null or blank");
         }
-        return new FreightProductServletException(400, message);
+        return new StatusAwareServletException(400, message);
     }
 
-    public static FreightProductServletException internalServerError(String message) {
+    public static StatusAwareServletException internalServerError(String message) {
         if (message == null || message.isBlank()) {
             throw new  IllegalArgumentException("message cannot be null or blank");
         }
-        return new  FreightProductServletException(500, message);
+        return new StatusAwareServletException(500, message);
     }
 
     public int getStatusCode() {

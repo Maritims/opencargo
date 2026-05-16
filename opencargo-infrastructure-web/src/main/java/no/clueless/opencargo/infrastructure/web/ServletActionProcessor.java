@@ -2,22 +2,31 @@ package no.clueless.opencargo.infrastructure.web;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import no.clueless.opencargo.application.ports.input.FindEligibleProductsUseCase;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ServletActionProcessor {
     private final Map<String, ServletAction> servletActions;
 
-    public ServletActionProcessor(FindEligibleProductsUseCase findEligibleProductsUseCase) {
-        if (findEligibleProductsUseCase == null) {
-            throw new IllegalArgumentException("findEligibleProductsUseCase cannot be null");
+    public ServletActionProcessor(Set<ServletActionRoute> servletActionRoutes) {
+        this(Objects.requireNonNull(servletActionRoutes, "servletActionRoutes cannot be null").toArray(ServletActionRoute[]::new));
+    }
+
+    public ServletActionProcessor(ServletActionRoute... servletActionRoutes) {
+        if (servletActionRoutes == null || servletActionRoutes.length == 0) {
+            throw new IllegalArgumentException("servletActionRoutes must not be null or empty");
         }
 
-        this.servletActions = Map.of(
-                "GET:/find-eligible-products", new FindEligibleProductsAction(findEligibleProductsUseCase)
-        );
+        this.servletActions = Arrays.stream(servletActionRoutes)
+                .collect(Collectors.toMap(
+                        servletActionRoute -> String.format("%s:%s", servletActionRoute.getMethod(), servletActionRoute.getPath()),
+                        ServletActionRoute::getAction
+                ));
     }
 
     public void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -28,7 +37,7 @@ public class ServletActionProcessor {
         }
 
         var servletActionKey = String.format("%s:%s", request.getMethod(), path);
-        if(!servletActions.containsKey(servletActionKey)) {
+        if (!servletActions.containsKey(servletActionKey)) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "No route for method " + request.getMethod() + " and path " + path + " exists");
             return;
         }
@@ -41,7 +50,7 @@ public class ServletActionProcessor {
 
         try {
             servletAction.process(request).render(response);
-        } catch (FreightProductServletException e) {
+        } catch (StatusAwareServletException e) {
             new ErrorResult(e.getStatusCode(), e.getMessage()).render(response);
         }
     }

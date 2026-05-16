@@ -25,11 +25,11 @@
         </developer>
     </developers>
     <modules>
-        <module>opencargo-shared</module>
         <module>opencargo-domain</module>
         <module>opencargo-application</module>
         <module>opencargo-infrastructure</module>
         <module>opencargo-bootstrap</module>
+        <module>opencargo-infrastructure-web</module>
     </modules>
 
     <properties>

@@ -13,7 +13,7 @@
 
     <servlet>
         <servlet-name>FreightProductServlet</servlet-name>
-        <servlet-class>no.clueless.opencargo.infrastructure.web.FreightProductApiServlet</servlet-class>
+        <servlet-class>no.clueless.opencargo.infrastructure.web.ProcessorServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

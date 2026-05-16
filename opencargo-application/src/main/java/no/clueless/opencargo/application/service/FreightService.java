@@ -2,6 +2,7 @@ package no.clueless.opencargo.application.service;
 
 import no.clueless.opencargo.application.dto.FindProductsQuery;
 import no.clueless.opencargo.application.ports.input.FindEligibleProductsUseCase;
+import no.clueless.opencargo.application.ports.input.FindProductsUseCase;
 import no.clueless.opencargo.application.ports.output.FreightProductRepository;
 import no.clueless.opencargo.domain.model.*;
 import no.clueless.opencargo.domain.physical.Destination;
@@ -14,7 +15,7 @@ import no.clueless.opencargo.domain.shared.Measure;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FreightService implements FindEligibleProductsUseCase {
+public class FreightService implements FindEligibleProductsUseCase, FindProductsUseCase {
     private final FreightProductRepository freightProductRepository;
 
     public FreightService(FreightProductRepository freightProductRepository) {
@@ -39,5 +40,10 @@ public class FreightService implements FindEligibleProductsUseCase {
                 .stream()
                 .filter(freightProduct -> freightProduct.isEligible(parcel))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FreightProduct> findAll() {
+        return freightProductRepository.findAll();
     }
 }

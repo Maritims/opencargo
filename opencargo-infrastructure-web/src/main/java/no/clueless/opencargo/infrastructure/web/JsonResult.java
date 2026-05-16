@@ -29,7 +29,7 @@ public class JsonResult<T> implements ServletActionResult {
             json = MAPPER.writeValueAsString(payload);
         } catch (JsonProcessingException e) {
             log.error("Failed to serialize payload", e);
-            throw FreightProductServletException.internalServerError("Failed to serialize payload");
+            throw StatusAwareServletException.internalServerError("Failed to serialize payload");
         }
 
         response.setContentType("application/json");
