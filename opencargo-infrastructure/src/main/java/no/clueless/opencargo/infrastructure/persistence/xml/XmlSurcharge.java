@@ -2,7 +2,7 @@ package no.clueless.opencargo.infrastructure.persistence.xml;
 
 import jakarta.xml.bind.annotation.*;
 import no.clueless.opencargo.domain.model.FreightSurcharge;
-import no.clueless.opencargo.domain.model.SurchargeModifier;
+import no.clueless.opencargo.domain.shared.PriceModifier;
 import no.clueless.opencargo.domain.shared.DomainMapper;
 
 @XmlRootElement(name = "surcharge")
@@ -32,11 +32,11 @@ public class XmlSurcharge implements DomainMapper<FreightSurcharge> {
 
     @Override
     public FreightSurcharge toDomain() {
-        SurchargeModifier modifier;
+        PriceModifier modifier;
         if (value instanceof XmlMoney) {
-            modifier = SurchargeModifier.money(((XmlMoney) value).toDomain());
+            modifier = PriceModifier.money(((XmlMoney) value).toDomain());
         } else if (value instanceof XmlPercentage) {
-            modifier = SurchargeModifier.percentage(((XmlPercentage) value).toDomain());
+            modifier = PriceModifier.percentage(((XmlPercentage) value).toDomain());
         } else {
             throw new IllegalStateException("unknown amount modifier type");
         }

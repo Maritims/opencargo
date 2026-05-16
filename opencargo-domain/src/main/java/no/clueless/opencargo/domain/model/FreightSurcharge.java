@@ -1,6 +1,7 @@
 package no.clueless.opencargo.domain.model;
 
 import no.clueless.opencargo.domain.criteria.Constraint;
+import no.clueless.opencargo.domain.shared.PriceModifier;
 
 import java.util.List;
 import java.util.Map;
@@ -8,15 +9,15 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class FreightSurcharge {
-    private final String                  description;
-    private final SurchargeModifier       modifier;
+    private final String        reason;
+    private final PriceModifier modifier;
     private final Map<String, Constraint> constraints;
 
-    public FreightSurcharge(String description, SurchargeModifier modifier, List<Constraint> constraints) {
-        if (description == null || description.isBlank()) {
+    public FreightSurcharge(String reason, PriceModifier modifier, List<Constraint> constraints) {
+        if (reason == null || reason.isBlank()) {
             throw new IllegalArgumentException("description cannot be null or empty");
         }
-        this.description = description;
+        this.reason      = reason;
         this.modifier    = Objects.requireNonNull(modifier, "modifier cannot be null");
         this.constraints = constraints == null ? Map.of() : constraints.stream().collect(Collectors.toMap(
                 (Constraint constraint) -> {
@@ -28,11 +29,11 @@ public class FreightSurcharge {
         ));
     }
 
-    public String getDescription() {
-        return description;
+    public String getReason() {
+        return reason;
     }
 
-    public SurchargeModifier getModifier() {
+    public PriceModifier getModifier() {
         return modifier;
     }
 

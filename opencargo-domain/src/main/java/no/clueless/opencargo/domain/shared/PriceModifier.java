@@ -1,13 +1,10 @@
-package no.clueless.opencargo.domain.model;
+package no.clueless.opencargo.domain.shared;
 
-import no.clueless.opencargo.domain.shared.Money;
-import no.clueless.opencargo.domain.shared.Percentage;
-
-public class SurchargeModifier {
+public class PriceModifier {
     private final Money      money;
     private final Percentage percentage;
 
-    private SurchargeModifier(Money money, Percentage percentage) {
+    private PriceModifier(Money money, Percentage percentage) {
         if (money == null && percentage == null) {
             throw new IllegalArgumentException("money and percentage cannot both be null");
         }
@@ -18,18 +15,18 @@ public class SurchargeModifier {
         this.percentage = percentage;
     }
 
-    public static SurchargeModifier money(Money money) {
+    public static PriceModifier money(Money money) {
         if (money == null) {
             throw new IllegalArgumentException("money cannot be null");
         }
-        return new SurchargeModifier(money, null);
+        return new PriceModifier(money, null);
     }
 
-    public static SurchargeModifier percentage(Percentage percentage) {
+    public static PriceModifier percentage(Percentage percentage) {
         if (percentage == null) {
             throw new IllegalArgumentException("percentage cannot be null");
         }
-        return new SurchargeModifier(null, percentage);
+        return new PriceModifier(null, percentage);
     }
 
     public Money getMoney() {
