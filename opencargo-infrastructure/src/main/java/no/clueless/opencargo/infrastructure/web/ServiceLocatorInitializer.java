@@ -4,7 +4,7 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import no.clueless.opencargo.application.service.FreightService;
 import no.clueless.opencargo.domain.shared.ServiceLocator;
-import no.clueless.opencargo.infrastructure.persistence.xml.XmlFreightProductRepository;
+import no.clueless.opencargo.infrastructure.persistence.XmlFreightProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

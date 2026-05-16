@@ -1,4 +1,4 @@
-package no.clueless.opencargo.infrastructure.persistence.xml;
+package no.clueless.opencargo.infrastructure.persistence;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -11,6 +11,7 @@ import no.clueless.opencargo.domain.physical.Dimensions;
 import no.clueless.opencargo.domain.physical.DistanceUnit;
 import no.clueless.opencargo.domain.physical.Weight;
 import no.clueless.opencargo.domain.shared.Measure;
+import no.clueless.opencargo.infrastructure.persistence.xml.*;
 
 import java.io.InputStream;
 import java.util.*;

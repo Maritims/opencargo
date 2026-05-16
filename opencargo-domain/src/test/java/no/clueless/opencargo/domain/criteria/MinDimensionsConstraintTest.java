@@ -33,7 +33,7 @@ class MinDimensionsConstraintTest {
                 UUID.randomUUID(),
                 new Dimensions(
                         new Measure<>(BigDecimal.valueOf(16.0), DistanceUnit.CENTIMETER),
-                        new Measure<>(BigDecimal.valueOf(10.0), DistanceUnit.CENTIMETER),
+                        new Measure<>(BigDecimal.valueOf(15.0), DistanceUnit.CENTIMETER),
                         new Measure<>(BigDecimal.valueOf(1.0), DistanceUnit.CENTIMETER)
                 ),
                 mock(),
