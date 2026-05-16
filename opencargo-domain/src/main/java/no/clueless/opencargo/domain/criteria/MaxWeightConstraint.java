@@ -16,7 +16,7 @@ public class MaxWeightConstraint extends Weight implements Constraint {
                 .toKilograms()
                 .getValue()
                 .compareTo(this.toKilograms().getValue()) <= 0;
-        return satisfied ? Decision.isSatisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Weight %s exceeds the limit of %s", parcel.getWeight(), this));
+        return satisfied ? Decision.satisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Weight %s exceeds the limit of %s", parcel.getWeight(), this));
     }
 
     @Override

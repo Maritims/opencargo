@@ -15,18 +15,20 @@ public class FreightProduct {
     private final        FreightProductId        id;
     private final        String                  name;
     private final        Map<String, Constraint> constraints;
+    private final        FreightPrice            freightPrice;
 
-    public FreightProduct(FreightProductId id, String name, List<Constraint> constraints) {
+    public FreightProduct(FreightProductId id, String name, List<Constraint> constraints, FreightPrice freightPrice) {
         this.id          = Objects.requireNonNull(id);
         this.name        = Objects.requireNonNull(name);
         this.constraints = constraints == null ? Map.of() : constraints.stream().collect(Collectors.toMap(
                 (Constraint constraint) -> {
-                    var foo = constraint.getClass().getSimpleName().replace("Constraint", "");
-                    foo = foo.substring(0, 1).toLowerCase() + foo.substring(1);
-                    return foo;
+                    var key = constraint.getClass().getSimpleName().replace("Constraint", "");
+                    key = key.substring(0, 1).toLowerCase() + key.substring(1);
+                    return key;
                 },
                 entry -> entry
         ));
+        this.freightPrice = Objects.requireNonNull(freightPrice, "freightPrice cannot be null");
     }
 
     public boolean isEligible(Parcel parcel) {
@@ -57,5 +59,9 @@ public class FreightProduct {
 
     public Map<String, Constraint> getConstraints() {
         return constraints;
+    }
+
+    public FreightPrice getFreightPrice() {
+        return freightPrice;
     }
 }

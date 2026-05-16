@@ -13,7 +13,7 @@ public class MaxDimensionsConstraint extends Dimensions implements Constraint {
     @Override
     public Decision evaluate(Parcel parcel) {
         return Objects.requireNonNull(parcel).dimensions().fitsWithin(this) ?
-                Decision.isSatisfied(getClass().getSimpleName()) :
+                Decision.satisfied(getClass().getSimpleName()) :
                 Decision.unsatisfied(parcel.getClass().getSimpleName(), "Package does not fit within the maximum dimensions");
     }
 }

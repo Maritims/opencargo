@@ -7,10 +7,6 @@ import no.clueless.opencargo.application.ports.output.FreightProductRepository;
 import no.clueless.opencargo.domain.criteria.*;
 import no.clueless.opencargo.domain.model.FreightProduct;
 import no.clueless.opencargo.domain.model.FreightProductId;
-import no.clueless.opencargo.domain.physical.Dimensions;
-import no.clueless.opencargo.domain.physical.DistanceUnit;
-import no.clueless.opencargo.domain.physical.Weight;
-import no.clueless.opencargo.domain.shared.Measure;
 import no.clueless.opencargo.infrastructure.persistence.xml.*;
 
 import java.io.InputStream;
@@ -42,51 +38,11 @@ public class XmlFreightProductRepository implements FreightProductRepository {
         products = mapToDomain(xmlProductCatalog);
     }
 
-    protected Measure<DistanceUnit> mapToMeasure(XmlDistanceConstraint xmlDistanceConstraint) {
-        if (xmlDistanceConstraint == null) {
-            throw new IllegalArgumentException("xmlDistanceConstraint cannot be null");
-        }
-        return new Measure<>(xmlDistanceConstraint.getValue(), xmlDistanceConstraint.getUnit());
-    }
-
-    protected Constraint mapToDomain(XmlConstraint xmlConstraint) {
+    protected Constraint mapToDomain(XmlConstraint<?> xmlConstraint) {
         if (xmlConstraint == null) {
             throw new IllegalArgumentException("xmlConstraint cannot be null");
         }
-
-        Constraint constraint;
-
-        if (xmlConstraint instanceof XmlMaxLengthConstraint) {
-            constraint = new MaxLengthConstraint(mapToMeasure((XmlDistanceConstraint) xmlConstraint));
-        } else if (xmlConstraint instanceof XmlMaxLengthPlusGirthConstraint) {
-            constraint = new MaxLengthPlusGirthConstraint(mapToMeasure((XmlDistanceConstraint) xmlConstraint));
-        } else if (xmlConstraint instanceof XmlMaxWeightConstraint) {
-            var xmlMaxWeightConstraint = (XmlMaxWeightConstraint) xmlConstraint;
-            var maxWeight              = new Weight(xmlMaxWeightConstraint.getMaxWeight(), xmlMaxWeightConstraint.getUnit());
-            constraint = new MaxWeightConstraint(maxWeight);
-        } else if (xmlConstraint instanceof XmlMaxDimensionsConstraint) {
-            var xmlMaxDimensionsConstraint = (XmlMaxDimensionsConstraint) xmlConstraint;
-            constraint = new MaxDimensionsConstraint(new Dimensions(
-                    mapToMeasure(xmlMaxDimensionsConstraint.getWidth()),
-                    mapToMeasure(xmlMaxDimensionsConstraint.getLength()),
-                    mapToMeasure(xmlMaxDimensionsConstraint.getHeight())
-            ));
-        } else if (xmlConstraint instanceof XmlMinDimensionsConstraint) {
-            var xmlMinDimensionsConstraint = (XmlDimensionsConstraint) xmlConstraint;
-            constraint = new MinDimensionsConstraint(new Dimensions(
-                    mapToMeasure(xmlMinDimensionsConstraint.getWidth()),
-                    mapToMeasure(xmlMinDimensionsConstraint.getLength()),
-                    mapToMeasure(xmlMinDimensionsConstraint.getHeight())
-            ));
-        } else if (xmlConstraint instanceof XmlConstraints) {
-            var xmlConstraints = (XmlConstraints) xmlConstraint;
-            var constraints    = mapToDomain(xmlConstraints);
-            constraint = new AnyConstraint(constraints.toArray(new Constraint[0]));
-        } else {
-            throw new IllegalArgumentException("Unknown constraint type: " + xmlConstraint.getClass());
-        }
-
-        return constraint;
+        return xmlConstraint.toDomain();
     }
 
     protected List<Constraint> mapToDomain(XmlConstraints xmlConstraints) {
@@ -109,7 +65,8 @@ public class XmlFreightProductRepository implements FreightProductRepository {
         return new FreightProduct(
                 new FreightProductId(xmlProduct.getId()),
                 xmlProduct.getName(),
-                mapToDomain(xmlProduct.getConstraints())
+                mapToDomain(xmlProduct.getConstraints()),
+                xmlProduct.getPrice().toDomain()
         );
     }
 

@@ -19,7 +19,7 @@ public class MaxLengthPlusGirthConstraint extends Measure<DistanceUnit> implemen
         var girthPlusLength  = baseParcelGirth.add(baseParcelLength);
         var satisfied        = girthPlusLength.compareTo(this.toBaseUnit()) <= 0;
         return satisfied ?
-                Decision.isSatisfied(getClass().getSimpleName()) :
+                Decision.satisfied(getClass().getSimpleName()) :
                 Decision.unsatisfied(getClass().getSimpleName(), String.format("Combined length and girth %s is outside allowed limit of %s", girthPlusLength, this));
     }
 }

@@ -17,6 +17,6 @@ public class MaxLengthConstraint extends Measure<DistanceUnit> implements Constr
                 .dimensions()
                 .getLength()
                 .isLessThanOrEqual(this);
-        return satisfied ? Decision.isSatisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Length %s is outside allowed limit of %s", parcel.dimensions().getLength(), this));
+        return satisfied ? Decision.satisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Length %s is outside allowed limit of %s", parcel.dimensions().getLength(), this));
     }
 }

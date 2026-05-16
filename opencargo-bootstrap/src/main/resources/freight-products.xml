@@ -15,6 +15,21 @@
                 <height unit="CENTIMETER">1</height>
             </min-dimensions>
         </constraints>
+        <price>
+            <base-price currency="NOK">150</base-price>
+            <surcharges>
+                <reason>Er pakken din over 120 x 60 x 60 cm må den sorteres manuelt og medfører derfor et tillegg i prisen.</reason>
+                <money currency="NOK">164</money>
+                <constraints>
+                    <max-dimensions>
+                        <width unit="CENTIMETER">120</width>
+                        <length unit="CENTIMETER">60</length>
+                        <height unit="CENTIMETER">60</height>
+                    </max-dimensions>
+                </constraints>
+            </surcharges>
+            <constraints/>
+        </price>
     </product>
     <product id="0344">
         <name>Pakke til pakkeboks</name>
@@ -31,5 +46,9 @@
                 <height unit="CENTIMETER">1</height>
             </min-dimensions>
         </constraints>
+        <price>
+            <base-price currency="NOK">100</base-price>
+            <constraints/>
+        </price>
     </product>
 </freight-products>

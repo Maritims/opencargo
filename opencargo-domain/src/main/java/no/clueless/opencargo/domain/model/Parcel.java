@@ -10,8 +10,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Parcel {
-    private final UUID       id;
-    private final Dimensions dimensions;
+    private final UUID          id;
+    private final Dimensions    dimensions;
     private final Weight        weight;
     private final Set<AdrClass> adrClasses;
     private final Destination   destination;

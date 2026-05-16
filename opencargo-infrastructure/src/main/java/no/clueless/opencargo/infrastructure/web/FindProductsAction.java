@@ -18,7 +18,7 @@ public class FindProductsAction extends ServletAction {
             throw new IllegalArgumentException("request cannot be null");
         }
 
-        var products = findProductsUseCase.findAll();
+        var products = findProductsUseCase.findProducts();
         return new JsonResult<>(products);
     }
 }

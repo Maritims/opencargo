@@ -2,7 +2,9 @@ package no.clueless.opencargo.application.service;
 
 import no.clueless.opencargo.application.dto.FindProductsQuery;
 import no.clueless.opencargo.application.ports.input.FindEligibleProductsUseCase;
+import no.clueless.opencargo.application.ports.input.FindPriceUseCase;
 import no.clueless.opencargo.application.ports.input.FindProductsUseCase;
+import no.clueless.opencargo.application.ports.output.FreightPriceRepository;
 import no.clueless.opencargo.application.ports.output.FreightProductRepository;
 import no.clueless.opencargo.domain.model.*;
 import no.clueless.opencargo.domain.physical.Destination;
@@ -15,15 +17,17 @@ import no.clueless.opencargo.domain.shared.Measure;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FreightService implements FindEligibleProductsUseCase, FindProductsUseCase {
+public class FreightService implements FindEligibleProductsUseCase, FindProductsUseCase, FindPriceUseCase {
+    private final FreightPriceRepository   freightPriceRepository;
     private final FreightProductRepository freightProductRepository;
 
-    public FreightService(FreightProductRepository freightProductRepository) {
-        this.freightProductRepository = Objects.requireNonNull(freightProductRepository);
+    public FreightService(FreightPriceRepository freightPriceRepository, FreightProductRepository freightProductRepository) {
+        this.freightPriceRepository   = Objects.requireNonNull(freightPriceRepository, "freightPriceRepository cannot be null");
+        this.freightProductRepository = Objects.requireNonNull(freightProductRepository, "freightProductRepository cannot be null");
     }
 
     @Override
-    public List<FreightProduct> findForCriteria(FindProductsQuery query) {
+    public List<FreightProduct> findEligibleProducts(FindProductsQuery query) {
         if (query == null) {
             throw new IllegalArgumentException("query cannot be null");
         }
@@ -43,7 +47,12 @@ public class FreightService implements FindEligibleProductsUseCase, FindProducts
     }
 
     @Override
-    public List<FreightProduct> findAll() {
+    public List<FreightProduct> findProducts() {
         return freightProductRepository.findAll();
+    }
+
+    @Override
+    public List<FreightPrice> findPrice(FreightProductId productId) {
+        return freightPriceRepository.findAll();
     }
 }

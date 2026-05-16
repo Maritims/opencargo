@@ -42,7 +42,7 @@ public class FindEligibleProductsAction extends ServletAction {
             return new ErrorResult(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Only GET is supported");
         }
 
-        var result = findEligibleProductsUseCase.findForCriteria(mapToQuery(request));
+        var result = findEligibleProductsUseCase.findEligibleProducts(mapToQuery(request));
         return new JsonResult<>(result);
     }
 }

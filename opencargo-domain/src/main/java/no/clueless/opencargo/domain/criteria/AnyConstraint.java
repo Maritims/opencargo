@@ -15,6 +15,13 @@ public class AnyConstraint implements Constraint {
         this.constraints = List.of(constraints);
     }
 
+    public AnyConstraint(List<Constraint> constraints) {
+        if (constraints == null || constraints.isEmpty()) {
+            throw new IllegalArgumentException("constraints cannot be null or empty");
+        }
+        this.constraints = List.copyOf(constraints);
+    }
+
     public List<Constraint> getConstraints() {
         return List.copyOf(constraints);
     }

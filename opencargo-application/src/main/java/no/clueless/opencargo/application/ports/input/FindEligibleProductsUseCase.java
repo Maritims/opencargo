@@ -6,5 +6,5 @@ import no.clueless.opencargo.domain.model.FreightProduct;
 import java.util.List;
 
 public interface FindEligibleProductsUseCase {
-    List<FreightProduct> findForCriteria(FindProductsQuery query);
+    List<FreightProduct> findEligibleProducts(FindProductsQuery query);
 }

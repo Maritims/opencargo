@@ -13,7 +13,7 @@ public class MinDimensionsConstraint extends Dimensions implements Constraint {
     @Override
     public Decision evaluate(Parcel parcel) {
         return this.fitsWithin(Objects.requireNonNull(parcel).dimensions()) ?
-                Decision.isSatisfied(getClass().getSimpleName()) :
+                Decision.satisfied(getClass().getSimpleName()) :
                 Decision.unsatisfied(getClass().getSimpleName(), String.format("Parcel dimensions (%s) are smaller than minimum dimensions (%s)", parcel.dimensions(), this));
     }
 }

@@ -24,6 +24,13 @@ public class Money {
         return currency;
     }
 
+    public Money add(Money other) {
+        if (other == null) {
+            throw new IllegalArgumentException("other cannot be null");
+        }
+        return new Money(amount.add(other.amount), currency);
+    }
+
     public Money multiply(BigDecimal factor) {
         if (factor == null) {
             throw new IllegalArgumentException("factor cannot be null");

@@ -19,7 +19,7 @@ public class Decision {
         this.reason         = reason;
     }
 
-    public static Decision isSatisfied(String constraintName) {
+    public static Decision satisfied(String constraintName) {
         if (constraintName == null || constraintName.isBlank()) {
             throw new IllegalArgumentException("Constraint name cannot be null or blank");
         }
