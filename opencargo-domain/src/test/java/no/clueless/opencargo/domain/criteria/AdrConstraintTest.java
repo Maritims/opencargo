@@ -36,7 +36,7 @@ class AdrConstraintTest {
         var actual = sut.evaluate(parcel);
 
         // assert
-        assertTrue(actual.satisfied());
+        assertTrue(actual.isSatisfied());
     }
 
     @ParameterizedTest
@@ -51,7 +51,7 @@ class AdrConstraintTest {
         var actual = sut.evaluate(parcel);
 
         // assert
-        assertTrue(actual.satisfied(), actual.reason());
+        assertTrue(actual.isSatisfied(), actual.getReason());
     }
 
     @Test
@@ -65,7 +65,7 @@ class AdrConstraintTest {
         var actual = sut.evaluate(parcel);
 
         // assert
-        assertTrue(actual.satisfied(), actual.reason());
+        assertTrue(actual.isSatisfied(), actual.getReason());
     }
 
     @Test

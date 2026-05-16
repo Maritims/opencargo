@@ -12,6 +12,10 @@ public class Measure<U extends Unit> {
         this.unit  = Objects.requireNonNull(unit);
     }
 
+    public BigDecimal getValue() {
+        return value;
+    }
+
     public U getUnit() {
         return unit;
     }

@@ -12,22 +12,21 @@ import no.clueless.opencargo.domain.shared.Measure;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 public class InMemoryFreightProductRepository implements FreightProductRepository {
     private final List<FreightProduct> products;
 
     public InMemoryFreightProductRepository() {
         products = List.of(
-                new FreightProduct(UUID.randomUUID(),
+                new FreightProduct(new FreightProductId("foo"),
                         "Standard Parcel",
                         List.of(new MaxWeightConstraint(new Weight(new BigDecimal("35.00"), WeightUnit.KILOGRAM)))
                 ),
-                new FreightProduct(UUID.randomUUID(),
+                new FreightProduct(new FreightProductId("bar"),
                         "Heavy Cargo",
                         List.of(new MaxWeightConstraint(new Weight(new BigDecimal("100.00"), WeightUnit.KILOGRAM)))
                 ),
-                new FreightProduct(UUID.randomUUID(),
+                new FreightProduct(new FreightProductId("baz"),
                         "Flexible Courier Service",
                         List.of(
                                 new MaxWeightConstraint(new Weight(new BigDecimal("10.00"), WeightUnit.KILOGRAM)),
@@ -39,12 +38,12 @@ public class InMemoryFreightProductRepository implements FreightProductRepositor
                 ),
                 // Basic Gas Transport: Only supports Class 2
                 new FreightProduct(
-                        UUID.randomUUID(), "Basic Gas Transport",
+                        new FreightProductId("gas"), "Basic Gas Transport",
                         List.of(new AdrConstraint(Set.of(AdrClass.CLASS_2_GASES)))
                 ),
                 // Hazmat Premium: Supports both Gases and Flammable Liquids
                 new FreightProduct(
-                        UUID.randomUUID(), "Hazmat Premium",
+                        new FreightProductId("hazmat"), "Hazmat Premium",
                         List.of(new AdrConstraint(Set.of(
                                 AdrClass.CLASS_2_GASES,
                                 AdrClass.CLASS_3_FLAMMABLE_LIQUIDS

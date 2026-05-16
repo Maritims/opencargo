@@ -1,5 +1,7 @@
 package no.clueless.opencargo.domain.criteria;
 
+import java.util.Objects;
+
 public class Decision {
     private final String  constraintName;
     private final boolean satisfied;
@@ -17,7 +19,7 @@ public class Decision {
         this.reason         = reason;
     }
 
-    public static Decision satisfied(String constraintName) {
+    public static Decision isSatisfied(String constraintName) {
         if (constraintName == null || constraintName.isBlank()) {
             throw new IllegalArgumentException("Constraint name cannot be null or blank");
         }
@@ -34,15 +36,32 @@ public class Decision {
         return new Decision(constraintName, false, reason);
     }
 
-    public String constraintName() {
+    public String getConstraintName() {
         return constraintName;
     }
 
-    public boolean satisfied() {
+    public boolean isSatisfied() {
         return satisfied;
     }
 
-    public String reason() {
+    public String getReason() {
         return reason;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Decision decision = (Decision) o;
+        return satisfied == decision.satisfied && Objects.equals(constraintName, decision.constraintName) && Objects.equals(reason, decision.reason);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(constraintName, satisfied, reason);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s", constraintName, reason);
     }
 }

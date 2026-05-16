@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DimensionsTest {
 
     @Test
-    void getGirth() {
+    void calculateGirth() {
         // arrange
         var sut = new Dimensions(
                 new Measure<>(BigDecimal.valueOf(60), DistanceUnit.CENTIMETER),
@@ -20,7 +20,7 @@ class DimensionsTest {
         var expected = new Measure<>(BigDecimal.valueOf(248), DistanceUnit.CENTIMETER);
 
         // act
-        var actual = sut.getGirth();
+        var actual = sut.calculateGirth();
 
         // assert
         assertEquals(expected, actual);

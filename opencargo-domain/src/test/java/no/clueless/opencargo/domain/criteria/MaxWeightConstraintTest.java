@@ -36,7 +36,7 @@ class MaxWeightConstraintTest {
         var actual = maxWeightConstraint.evaluate(parcel);
 
         // assert
-        assertTrue(actual.satisfied(), actual.reason());
+        assertTrue(actual.isSatisfied(), actual.getReason());
     }
 
     @Test
@@ -54,6 +54,6 @@ class MaxWeightConstraintTest {
         var actual = maxWeightConstraint.evaluate(parcel);
 
         // assert
-        assertFalse(actual.satisfied(), actual.reason());
+        assertFalse(actual.isSatisfied(), actual.getReason());
     }
 }

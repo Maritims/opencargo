@@ -5,17 +5,15 @@ import no.clueless.opencargo.domain.physical.Dimensions;
 
 import java.util.Objects;
 
-public class MaxDimensionsConstraint implements Constraint {
-    private final Dimensions maxDimensions;
-
+public class MaxDimensionsConstraint extends Dimensions implements Constraint {
     public MaxDimensionsConstraint(Dimensions maxDimensions) {
-        this.maxDimensions = Objects.requireNonNull(maxDimensions);
+        super(maxDimensions.getWidth(), maxDimensions.getLength(), maxDimensions.getHeight());
     }
 
     @Override
     public Decision evaluate(Parcel parcel) {
-        return Objects.requireNonNull(parcel).dimensions().fitsWithin(maxDimensions) ?
-                Decision.satisfied(getClass().getSimpleName()) :
+        return Objects.requireNonNull(parcel).dimensions().fitsWithin(this) ?
+                Decision.isSatisfied(getClass().getSimpleName()) :
                 Decision.unsatisfied(parcel.getClass().getSimpleName(), "Package does not fit within the maximum dimensions");
     }
 }

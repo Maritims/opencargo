@@ -34,4 +34,24 @@ public class Weight {
         var kgValue = value.divide(KILOGRAM_TO_GRAM, 3, RoundingMode.HALF_UP);
         return new Weight(kgValue, WeightUnit.KILOGRAM);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Weight weight = (Weight) o;
+        return Objects.equals(value, weight.value) && unit == weight.unit;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, unit);
+    }
+
+    @Override
+    public String toString() {
+        return "Weight{" +
+                "value=" + value +
+                ", unit=" + unit +
+                '}';
+    }
 }

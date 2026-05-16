@@ -24,6 +24,10 @@ public class AdrConstraint implements Constraint {
         this.supportedClasses = Set.copyOf(supportedClasses);
     }
 
+    public Set<AdrClass> getSupportedClasses() {
+        return Set.copyOf(supportedClasses);
+    }
+
     @Override
     public Decision evaluate(Parcel parcel) {
         if (parcel == null) {

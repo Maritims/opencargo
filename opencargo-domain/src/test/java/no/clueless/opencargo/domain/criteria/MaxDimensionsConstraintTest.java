@@ -46,7 +46,7 @@ class MaxDimensionsConstraintTest {
         var actual = maxDimensionsConstraint.evaluate(parcel);
 
         // assert
-        assertTrue(actual.satisfied(), actual.reason());
+        assertTrue(actual.isSatisfied(), actual.getReason());
     }
 
     @Test
@@ -68,6 +68,6 @@ class MaxDimensionsConstraintTest {
         var actual = maxDimensionsConstraint.evaluate(parcel);
 
         // assert
-        assertFalse(actual.satisfied(), actual.reason());
+        assertFalse(actual.isSatisfied(), actual.getReason());
     }
 }

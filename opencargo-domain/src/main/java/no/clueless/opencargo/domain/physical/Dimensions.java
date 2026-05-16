@@ -30,7 +30,7 @@ public class Dimensions {
         return height;
     }
 
-    public Measure<DistanceUnit> getGirth() {
+    public Measure<DistanceUnit> calculateGirth() {
         var sides = new BigDecimal[]{width.toBaseUnit(), length.toBaseUnit(), height.toBaseUnit()};
         Arrays.sort(sides);
         var shortest      = sides[0];
@@ -57,13 +57,6 @@ public class Dimensions {
         return sides[0].compareTo(otherSides[0]) <= 0 &&
                 sides[1].compareTo(otherSides[1]) <= 0 &&
                 sides[2].compareTo(otherSides[2]) <= 0;
-    }
-
-    public boolean contains(Dimensions other) {
-        if (other == null) {
-            throw new IllegalArgumentException("other cannot be null");
-        }
-        return other.fitsWithin(this);
     }
 
     @Override

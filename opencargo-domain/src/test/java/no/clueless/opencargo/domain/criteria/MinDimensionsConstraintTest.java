@@ -45,7 +45,7 @@ class MinDimensionsConstraintTest {
         var actual = minDimensionsConstraint.evaluate(parcel);
 
         // assert
-        assertTrue(actual.satisfied(), actual.reason());
+        assertTrue(actual.isSatisfied(), actual.getReason());
     }
 
     @Test
@@ -67,6 +67,6 @@ class MinDimensionsConstraintTest {
         var actual =  minDimensionsConstraint.evaluate(parcel);
 
         // assert
-        assertFalse(actual.satisfied(), actual.reason());
+        assertFalse(actual.isSatisfied(), actual.getReason());
     }
 }

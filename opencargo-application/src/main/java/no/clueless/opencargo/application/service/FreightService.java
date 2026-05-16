@@ -6,7 +6,6 @@ import no.clueless.opencargo.application.ports.output.FreightProductRepository;
 import no.clueless.opencargo.domain.model.*;
 import no.clueless.opencargo.domain.physical.Destination;
 import no.clueless.opencargo.domain.physical.Dimensions;
-import no.clueless.opencargo.domain.physical.DistanceUnit;
 import no.clueless.opencargo.domain.physical.Weight;
 import no.clueless.opencargo.domain.shared.AdrClass;
 import no.clueless.opencargo.domain.shared.CountryCode;
@@ -28,9 +27,9 @@ public class FreightService implements FindEligibleProductsUseCase {
             throw new IllegalArgumentException("query cannot be null");
         }
 
-        var width      = new Measure<>(query.getWidth(), DistanceUnit.MILLIMETER);
-        var height     = new Measure<>(query.getHeight(), DistanceUnit.MILLIMETER);
-        var length     = new Measure<>(query.getLength(), DistanceUnit.MILLIMETER);
+        var width      = new Measure<>(query.getWidth(), query.getDistanceUnit());
+        var height     = new Measure<>(query.getHeight(), query.getDistanceUnit());
+        var length     = new Measure<>(query.getLength(), query.getDistanceUnit());
         var dimensions = new Dimensions(width, height, length);
         var weight     = new Weight(query.getWeight(), query.getWeightUnit());
         var adrRatings = query.getAdrClassShortCodes() == null ? new HashSet<AdrClass>() : AdrClass.fromShortCodes(query.getAdrClassShortCodes());

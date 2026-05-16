@@ -6,21 +6,39 @@ import jakarta.xml.bind.Unmarshaller;
 import no.clueless.opencargo.application.ports.output.FreightProductRepository;
 import no.clueless.opencargo.domain.criteria.*;
 import no.clueless.opencargo.domain.model.FreightProduct;
+import no.clueless.opencargo.domain.model.FreightProductId;
 import no.clueless.opencargo.domain.physical.Dimensions;
 import no.clueless.opencargo.domain.physical.DistanceUnit;
 import no.clueless.opencargo.domain.physical.Weight;
 import no.clueless.opencargo.domain.shared.Measure;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class XmlFreightProductRepository implements FreightProductRepository {
-    private final Unmarshaller         xmlProductCatalogUnmarshaller;
-    private       List<FreightProduct> products;
+    private final List<FreightProduct> products;
 
-    public XmlFreightProductRepository() throws JAXBException {
-        xmlProductCatalogUnmarshaller = JAXBContext.newInstance(XmlProductCatalog.class).createUnmarshaller();
+    public XmlFreightProductRepository(InputStream inputStream) {
+        if (inputStream == null) {
+            throw new IllegalArgumentException("inputStream cannot be null");
+        }
+
+        Unmarshaller xmlProductCatalogUnmarshaller;
+        try {
+            xmlProductCatalogUnmarshaller = JAXBContext.newInstance(XmlProductCatalog.class).createUnmarshaller();
+        } catch (JAXBException e) {
+            throw new RuntimeException("Failed to create unmarshaller", e);
+        }
+
+        XmlProductCatalog xmlProductCatalog;
+        try {
+            xmlProductCatalog = (XmlProductCatalog) xmlProductCatalogUnmarshaller.unmarshal(inputStream);
+        } catch (JAXBException e) {
+            throw new RuntimeException("Failed to unmarshal XML product catalog");
+        }
+
+        products = mapToDomain(xmlProductCatalog);
     }
 
     protected Measure<DistanceUnit> mapToMeasure(XmlDistanceConstraint xmlDistanceConstraint) {
@@ -54,7 +72,7 @@ public class XmlFreightProductRepository implements FreightProductRepository {
             ));
         } else if (xmlConstraint instanceof XmlMinDimensionsConstraint) {
             var xmlMinDimensionsConstraint = (XmlDimensionsConstraint) xmlConstraint;
-            constraint = new MaxDimensionsConstraint(new Dimensions(
+            constraint = new MinDimensionsConstraint(new Dimensions(
                     mapToMeasure(xmlMinDimensionsConstraint.getWidth()),
                     mapToMeasure(xmlMinDimensionsConstraint.getLength()),
                     mapToMeasure(xmlMinDimensionsConstraint.getHeight())
@@ -88,7 +106,7 @@ public class XmlFreightProductRepository implements FreightProductRepository {
         }
 
         return new FreightProduct(
-                UUID.fromString(xmlProduct.getId()),
+                new FreightProductId(xmlProduct.getId()),
                 xmlProduct.getName(),
                 mapToDomain(xmlProduct.getConstraints())
         );
@@ -107,22 +125,6 @@ public class XmlFreightProductRepository implements FreightProductRepository {
 
     @Override
     public List<FreightProduct> findAll() {
-        if (products != null) {
-            return products;
-        }
-
-        try (var inputStream = XmlFreightProductRepository.class.getClassLoader().getResourceAsStream("freight-products.xml")) {
-            if (inputStream == null) {
-                throw new RuntimeException("Could not find freight-products.xml");
-            }
-
-            var xmlProductCatalog = (XmlProductCatalog) xmlProductCatalogUnmarshaller.unmarshal(inputStream);
-            products = mapToDomain(xmlProductCatalog);
-            return products;
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load freight-products.xml:" + e.getMessage(), e);
-        } catch (JAXBException e) {
-            throw new RuntimeException("Failed to initialize JAXB context for XmlProductCatalog:" + e.getMessage(), e);
-        }
+        return products;
     }
 }

@@ -6,11 +6,9 @@ import no.clueless.opencargo.domain.shared.Measure;
 
 import java.util.Objects;
 
-public class MaxLengthConstraint implements Constraint {
-    private final Measure<DistanceUnit> maxLength;
-
+public class MaxLengthConstraint extends Measure<DistanceUnit> implements Constraint {
     public MaxLengthConstraint(Measure<DistanceUnit> maxLength) {
-        this.maxLength = Objects.requireNonNull(maxLength);
+        super(maxLength.getValue(), maxLength.getUnit());
     }
 
     @Override
@@ -18,7 +16,7 @@ public class MaxLengthConstraint implements Constraint {
         var satisfied = Objects.requireNonNull(parcel)
                 .dimensions()
                 .getLength()
-                .isLessThanOrEqual(maxLength);
-        return satisfied ? Decision.satisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Length %s is outside allowed limit of %s", parcel.dimensions().getLength(), maxLength));
+                .isLessThanOrEqual(this);
+        return satisfied ? Decision.isSatisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Length %s is outside allowed limit of %s", parcel.dimensions().getLength(), this));
     }
 }

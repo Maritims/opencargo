@@ -41,7 +41,7 @@ class MaxLengthPlusGirthConstraintTest {
         var actual = maxLengthPlusGirthConstraint.evaluate(parcel);
 
         // assert
-        assertTrue(actual.satisfied(), actual.reason());
+        assertTrue(actual.isSatisfied(), actual.getReason());
     }
 
     @Test
@@ -63,6 +63,6 @@ class MaxLengthPlusGirthConstraintTest {
         var actual = maxLengthPlusGirthConstraint.evaluate(parcel);
 
         // assert
-        assertFalse(actual.satisfied(), actual.reason());
+        assertFalse(actual.isSatisfied(), actual.getReason());
     }
 }

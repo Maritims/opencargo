@@ -5,11 +5,9 @@ import no.clueless.opencargo.domain.physical.Weight;
 
 import java.util.Objects;
 
-public class MaxWeightConstraint implements Constraint {
-    private final Weight maxWeight;
-
+public class MaxWeightConstraint extends Weight implements Constraint {
     public MaxWeightConstraint(Weight maxWeight) {
-        this.maxWeight = Objects.requireNonNull(maxWeight);
+        super(maxWeight.getValue(), maxWeight.getUnit());
     }
 
     @Override
@@ -17,8 +15,8 @@ public class MaxWeightConstraint implements Constraint {
         var satisfied = parcel.getWeight()
                 .toKilograms()
                 .getValue()
-                .compareTo(maxWeight.toKilograms().getValue()) <= 0;
-        return satisfied ? Decision.satisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Weight %s exceeds the limit of %s", parcel.getWeight(), maxWeight));
+                .compareTo(this.toKilograms().getValue()) <= 0;
+        return satisfied ? Decision.isSatisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Weight %s exceeds the limit of %s", parcel.getWeight(), this));
     }
 
     @Override
@@ -27,6 +25,6 @@ public class MaxWeightConstraint implements Constraint {
                 .getWeight()
                 .toKilograms()
                 .getValue()
-                .compareTo(maxWeight.toKilograms().getValue()) <= 0;
+                .compareTo(this.toKilograms().getValue()) <= 0;
     }
 }

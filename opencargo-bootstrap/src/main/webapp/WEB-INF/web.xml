@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <display-name>OpenCargo API Engine</display-name>
+
+    <listener>
+        <listener-class>no.clueless.opencargo.infrastructure.web.ServiceLocatorInitializer</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>FreightProductServlet</servlet-name>
+        <servlet-class>no.clueless.opencargo.infrastructure.web.FreightProductApiServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FreightProductServlet</servlet-name>
+        <url-pattern>/api/v1/freight-product/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
