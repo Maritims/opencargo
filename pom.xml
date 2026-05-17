@@ -46,6 +46,7 @@
         <jackson-databind.version>2.20.1</jackson-databind.version>
         <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
         <logback-classic.version>1.5.27</logback-classic.version>
+        <pdfbox.version>2.0.36</pdfbox.version>
     </properties>
 
     <dependencyManagement>
@@ -75,6 +76,11 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson-databind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.pdfbox</groupId>
+                <artifactId>pdfbox</artifactId>
+                <version>${pdfbox.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
