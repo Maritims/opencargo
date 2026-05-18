@@ -11,14 +11,14 @@ OpenCargo is a library which tries to solve two fundamental problems in freight 
 
 ### Finding eligible products
 
-To find which freight products are capable of handling a shipment, the shipment's properties are checked against the
-defined rules.
+To find which freight products are capable of handling a parcel, the parcel's properties are checked against the
+defined constraints. Failure to satisfy any of the constraints will result in the freight product being excluded.
 
-#### Defining rules for eligibility
+#### Defining constraints
 
-The rule system is XML-based and is defined by an XSD file generated while building the `opencargo-infrastructure` project.
+The constraint system is XML-based and is defined by an XSD file generated while building the `opencargo-infrastructure` project.
 
-The following example shows how to define the rules for the Bring product "Pakke til bedrift" as described by [https://www.bring.no/tjenester/pakker-og-gods/bedrifter-nasjonalt/pakke-til-bedrift](https://www.bring.no/tjenester/pakker-og-gods/bedrifter-nasjonalt/pakke-til-bedrift).
+The following example shows how to define the constraints for the Bring product "Pakke til bedrift" as described by [https://www.bring.no/tjenester/pakker-og-gods/bedrifter-nasjonalt/pakke-til-bedrift](https://www.bring.no/tjenester/pakker-og-gods/bedrifter-nasjonalt/pakke-til-bedrift). Remember, failure to satisfy any of the constraints will result in the product being excluded.
 
 ```xml
 <!-- The id is typically the product number in the carrier's system. -->
