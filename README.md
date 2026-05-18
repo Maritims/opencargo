@@ -21,15 +21,20 @@ The rule system is XML-based and is defined by an XSD file generated while build
 The following example shows how to define the rules for the Bring product "Pakke til bedrift" as described by [https://www.bring.no/tjenester/pakker-og-gods/bedrifter-nasjonalt/pakke-til-bedrift](https://www.bring.no/tjenester/pakker-og-gods/bedrifter-nasjonalt/pakke-til-bedrift).
 
 ```xml
-
+<!-- The id is typically the product number in the carrier's system. -->
 <product id="5800">
     <name>Pakke til hentested</name>
     <constraints>
+        <!-- The parcel cannot exceed 35 kg in weight. -->
         <max-weight unit="KILOGRAM">35.0</max-weight>
+        <!-- The "any" constraint requires that the parcel matches any of its contained constraints, regardless of whether it's one, multiple or all. -->
         <any>
+            <!-- The parcel cannot exceed 240 cm in length. -->
             <max-length unit="CENTIMETER">240</max-length>
+            <!-- The parcel cannot exceed 360 cm in length plus its girth. -->
             <max-length-plus-girth unit="CENTIMETER">360</max-length-plus-girth>
         </any>
+        <!-- The min-dimensions constraint will rotate the parcel in every orientation to verify eligibility, even though we're using the terms width, length and height here -->
         <min-dimensions>
             <width unit="CENTIMETER">15</width>
             <length unit="CENTIMETER">10</length>
