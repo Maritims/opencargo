@@ -74,7 +74,7 @@ class FreightNetworkTest {
                 "9400,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,3,3,3,4,4,4,3,0,4,5",
                 "9510,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,5,4,4,5,5,5,4,4,0,3",
                 "9846,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,5,5,5,5,5,5,4,5,3,0"));
-        var undirectedMatrix = UndirectedMatrix.fromLines(lines, PostalCode::new);
+        var undirectedMatrix = UndirectedMatrix.fromLines(lines, PostalCode::new, true);
         var freightNetwork   = new FreightNetwork(undirectedMatrix, freightTerminals);
         var expected         = 5;
 

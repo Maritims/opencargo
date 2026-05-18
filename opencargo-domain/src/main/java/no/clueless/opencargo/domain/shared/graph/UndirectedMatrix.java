@@ -75,16 +75,17 @@ public class UndirectedMatrix<T> {
         return undirectedMatrix;
     }
 
-    public static <T> UndirectedMatrix<T> fromLines(List<String> lines, Function<String, T> vertexMapper) {
+    public static <T> UndirectedMatrix<T> fromLines(List<String> lines, Function<String, T> vertexMapper, boolean firstColumnIsVertexName) {
         if (lines == null || lines.isEmpty()) {
             throw new IllegalArgumentException("lines cannot be null or empty");
         }
 
         var headerTokens = lines.get(0).trim().split(",");
         var vertices     = new LinkedHashSet<T>();
+        var startColumn  = firstColumnIsVertexName ? 1 : 0;
 
         // Start at 1 because the first column is the vertex name.
-        for (var col = 1; col < headerTokens.length; col++) {
+        for (var col = startColumn; col < headerTokens.length; col++) {
             vertices.add(vertexMapper.apply(headerTokens[col]));
         }
 
@@ -113,5 +114,25 @@ public class UndirectedMatrix<T> {
         }
 
         return undirectedMatrix;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        UndirectedMatrix<?> that = (UndirectedMatrix<?>) o;
+        return Objects.equals(indexMap, that.indexMap) && Objects.deepEquals(storage, that.storage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(indexMap, Arrays.hashCode(storage));
+    }
+
+    @Override
+    public String toString() {
+        return "UndirectedMatrix{" +
+                "indexMap=" + indexMap +
+                ", storage=" + Arrays.toString(storage) +
+                '}';
     }
 }

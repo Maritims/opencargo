@@ -56,4 +56,24 @@ public class FreightNetwork {
 
         return Math.max(totalZones, 1);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        FreightNetwork that = (FreightNetwork) o;
+        return Objects.equals(mainZoneTable, that.mainZoneTable) && Objects.equals(freightTerminals, that.freightTerminals);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mainZoneTable, freightTerminals);
+    }
+
+    @Override
+    public String toString() {
+        return "FreightNetwork{" +
+                "mainZoneTable=" + mainZoneTable +
+                ", freightTerminals=" + freightTerminals +
+                '}';
+    }
 }
