@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <freight-products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:noNamespaceSchemaLocation="../../../../opencargo-infrastructure/target/generated-resources/schemagen/schema1.xsd">
-    <product id="5800">
+    <product id="5800" carrierId="Bring">
         <name>Pakke til hentested</name>
         <constraints>
             <max-weight unit="KILOGRAM">35.0</max-weight>

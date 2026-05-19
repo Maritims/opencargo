@@ -39,11 +39,11 @@ public class FindProductsQuery {
      */
     private final List<String> adrClassShortCodes;
     /**
-     * The list of acceptable carrier ids for the parcel.
+     * The list of acceptable carrier ids for the parcel. Overrides {@link #unacceptableCarrierIds} when both are set.
      */
     private final List<String> acceptableCarrierIds;
     /**
-     * The list of unacceptable carrier ids for the parcel. Overrides the acceptable carrier ids if there is an overlap.
+     * The list of unacceptable carrier ids for the parcel. Ignored when {@link #acceptableCarrierIds} is not empty.
      */
     private final List<String> unacceptableCarrierIds;
 

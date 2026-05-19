@@ -5,6 +5,7 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import no.clueless.opencargo.application.ports.output.FreightProductRepository;
 import no.clueless.opencargo.domain.criteria.*;
+import no.clueless.opencargo.domain.model.CarrierId;
 import no.clueless.opencargo.domain.model.FreightProduct;
 import no.clueless.opencargo.domain.model.FreightProductId;
 import no.clueless.opencargo.infrastructure.persistence.xml.*;
@@ -64,6 +65,7 @@ public class XmlFreightProductRepository implements FreightProductRepository {
 
         return new FreightProduct(
                 new FreightProductId(xmlProduct.getId()),
+                new CarrierId(xmlProduct.getCarrierId()),
                 xmlProduct.getName(),
                 mapToDomain(xmlProduct.getConstraints()),
                 xmlProduct.getPrice().toDomain()

@@ -21,6 +21,7 @@ public class InMemoryFreightProductRepository implements FreightProductRepositor
     public InMemoryFreightProductRepository() {
         products = List.of(
                 new FreightProduct(new FreightProductId("foo"),
+                        new CarrierId("Bring"),
                         "Standard Parcel",
                         List.of(new MaxWeightConstraint(new Weight(new BigDecimal("35.00"), WeightUnit.KILOGRAM))),
                         new FreightPrice(
@@ -30,6 +31,7 @@ public class InMemoryFreightProductRepository implements FreightProductRepositor
                         )
                 ),
                 new FreightProduct(new FreightProductId("bar"),
+                        new CarrierId("Bring"),
                         "Heavy Cargo",
                         List.of(new MaxWeightConstraint(new Weight(new BigDecimal("100.00"), WeightUnit.KILOGRAM))),new FreightPrice(
                         new Money(BigDecimal.valueOf(100), Currency.getInstance("NOK")),
@@ -38,6 +40,7 @@ public class InMemoryFreightProductRepository implements FreightProductRepositor
                 )
                 ),
                 new FreightProduct(new FreightProductId("baz"),
+                        new CarrierId("Bring"),
                         "Flexible Courier Service",
                         List.of(
                                 new MaxWeightConstraint(new Weight(new BigDecimal("10.00"), WeightUnit.KILOGRAM)),
@@ -54,7 +57,7 @@ public class InMemoryFreightProductRepository implements FreightProductRepositor
                 ),
                 // Basic Gas Transport: Only supports Class 2
                 new FreightProduct(
-                        new FreightProductId("gas"), "Basic Gas Transport",
+                        new FreightProductId("gas"), new CarrierId("Bring"), "Basic Gas Transport",
                         List.of(new AdrConstraint(Set.of(AdrClass.CLASS_2_GASES))),
                         new FreightPrice(
                                 new Money(BigDecimal.valueOf(100), Currency.getInstance("NOK")),
@@ -64,7 +67,7 @@ public class InMemoryFreightProductRepository implements FreightProductRepositor
                 ),
                 // Hazmat Premium: Supports both Gases and Flammable Liquids
                 new FreightProduct(
-                        new FreightProductId("hazmat"), "Hazmat Premium",
+                        new FreightProductId("hazmat"), new CarrierId("Bring"),"Hazmat Premium",
                         List.of(new AdrConstraint(Set.of(
                                 AdrClass.CLASS_2_GASES,
                                 AdrClass.CLASS_3_FLAMMABLE_LIQUIDS

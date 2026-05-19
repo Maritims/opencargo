@@ -6,6 +6,8 @@ import jakarta.xml.bind.annotation.*;
 public class XmlProduct {
     @XmlAttribute(required = true)
     private String         id;
+    @XmlAttribute(required = true)
+    private String         carrierId;
     @XmlElement(required = true)
     private String         name;
     private XmlConstraints constraints;
@@ -14,6 +16,10 @@ public class XmlProduct {
 
     public String getId() {
         return id;
+    }
+
+    public String getCarrierId() {
+        return carrierId;
     }
 
     public String getName() {

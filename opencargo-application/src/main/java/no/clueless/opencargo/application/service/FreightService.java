@@ -40,10 +40,17 @@ public class FreightService implements FindEligibleProductsUseCase, FindProducts
         var adrRatings = query.getAdrClassShortCodes() == null ? new HashSet<AdrClass>() : AdrClass.fromShortCodes(query.getAdrClassShortCodes());
         var parcel     = new Parcel(UUID.randomUUID(), dimensions, weight, adrRatings, new Destination(new CountryCode("NO"), "3241"));
 
-        return freightProductRepository.findAll()
+        var stream = freightProductRepository.findAll()
                 .stream()
-                .filter(freightProduct -> freightProduct.isEligible(parcel))
-                .collect(Collectors.toList());
+                .filter(freightProduct -> freightProduct.isEligible(parcel));
+
+        if (query.getAcceptableCarrierIds() != null && !query.getAcceptableCarrierIds().isEmpty()) {
+            stream = stream.filter(freightProduct -> query.getAcceptableCarrierIds().contains(freightProduct.getCarrierId().toString()));
+        } else if (query.getUnacceptableCarrierIds() != null && !query.getUnacceptableCarrierIds().isEmpty()) {
+            stream = stream.filter(freightProduct -> !query.getUnacceptableCarrierIds().contains(freightProduct.getCarrierId().toString()));
+        }
+
+        return stream.collect(Collectors.toList());
     }
 
     @Override

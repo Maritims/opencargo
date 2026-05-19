@@ -13,14 +13,19 @@ import java.util.stream.Collectors;
 public class FreightProduct {
     private static final Logger                  log = LoggerFactory.getLogger(FreightProduct.class);
     private final        FreightProductId        id;
+    private final        CarrierId               carrierId;
     private final        String                  name;
     private final        Map<String, Constraint> constraints;
     private final        FreightPrice            freightPrice;
 
-    public FreightProduct(FreightProductId id, String name, List<Constraint> constraints, FreightPrice freightPrice) {
-        this.id          = Objects.requireNonNull(id);
-        this.name        = Objects.requireNonNull(name);
-        this.constraints = constraints == null ? Map.of() : constraints.stream().collect(Collectors.toMap(
+    public FreightProduct(FreightProductId id, CarrierId carrierId, String name, List<Constraint> constraints, FreightPrice freightPrice) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("name cannot be null or empty");
+        }
+        this.id           = Objects.requireNonNull(id, "id cannot be null");
+        this.carrierId    = Objects.requireNonNull(carrierId, "carrierId cannot be null");
+        this.name         = name;
+        this.constraints  = constraints == null ? Map.of() : constraints.stream().collect(Collectors.toMap(
                 (Constraint constraint) -> {
                     var key = constraint.getClass().getSimpleName().replace("Constraint", "");
                     key = key.substring(0, 1).toLowerCase() + key.substring(1);
@@ -51,6 +56,10 @@ public class FreightProduct {
 
     public FreightProductId getId() {
         return id;
+    }
+
+    public CarrierId getCarrierId() {
+        return carrierId;
     }
 
     public String getName() {
