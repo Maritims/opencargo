@@ -5,6 +5,7 @@ import no.clueless.opencargo.domain.physical.Weight;
 import no.clueless.opencargo.domain.physical.WeightUnit;
 import no.clueless.opencargo.domain.shared.Money;
 import no.clueless.opencargo.domain.shared.PostalCode;
+import no.clueless.opencargo.infrastructure.shared.PdfVerticalOffsetFinder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

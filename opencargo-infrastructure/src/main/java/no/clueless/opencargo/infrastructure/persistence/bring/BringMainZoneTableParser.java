@@ -2,6 +2,8 @@ package no.clueless.opencargo.infrastructure.persistence.bring;
 
 import no.clueless.opencargo.domain.shared.PostalCode;
 import no.clueless.opencargo.domain.shared.graph.UndirectedMatrix;
+import no.clueless.opencargo.infrastructure.shared.OffsetAwarePDFTextStripper;
+import no.clueless.opencargo.infrastructure.shared.PdfVerticalOffsetFinder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;

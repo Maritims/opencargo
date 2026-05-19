@@ -1,5 +1,6 @@
 package no.clueless.opencargo.infrastructure.persistence.bring;
 
+import no.clueless.opencargo.infrastructure.shared.PdfVerticalOffsetFinder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

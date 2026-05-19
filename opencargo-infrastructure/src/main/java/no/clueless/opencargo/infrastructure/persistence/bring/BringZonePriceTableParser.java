@@ -4,6 +4,8 @@ import no.clueless.opencargo.domain.model.FreightZonePrice;
 import no.clueless.opencargo.domain.physical.Weight;
 import no.clueless.opencargo.domain.physical.WeightUnit;
 import no.clueless.opencargo.domain.shared.Money;
+import no.clueless.opencargo.infrastructure.shared.OffsetAwarePDFTextStripper;
+import no.clueless.opencargo.infrastructure.shared.PdfVerticalOffsetFinder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package no.clueless.opencargo.infrastructure.persistence.bring;
+package no.clueless.opencargo.infrastructure.shared;
 
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
