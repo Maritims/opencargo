@@ -6,23 +6,57 @@ import no.clueless.opencargo.domain.physical.WeightUnit;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * The query object for finding products.
+ */
 public class FindProductsQuery {
+    /**
+     * The weight of the parcel.
+     */
     private final BigDecimal   weight;
+    /**
+     * The unit of the weight.
+     */
     private final WeightUnit   weightUnit;
+    /**
+     * The width of the parcel.
+     */
     private final BigDecimal   width;
+    /**
+     * The length of the parcel.
+     */
     private final BigDecimal   length;
+    /**
+     * The height of the parcel.
+     */
     private final BigDecimal   height;
+    /**
+     * The unit of the distance.
+     */
     private final DistanceUnit distanceUnit;
+    /**
+     * The list of adr class short codes.
+     */
     private final List<String> adrClassShortCodes;
+    /**
+     * The list of acceptable carrier ids for the parcel.
+     */
+    private final List<String> acceptableCarrierIds;
+    /**
+     * The list of unacceptable carrier ids for the parcel. Overrides the acceptable carrier ids if there is an overlap.
+     */
+    private final List<String> unacceptableCarrierIds;
 
-    public FindProductsQuery(BigDecimal weight, WeightUnit weightUnit, BigDecimal width, BigDecimal length, BigDecimal height, DistanceUnit distanceUnit, List<String> adrClassShortCodes) {
-        this.weight             = weight;
-        this.weightUnit         = weightUnit;
-        this.width              = width;
-        this.length             = length;
-        this.height             = height;
-        this.distanceUnit       = distanceUnit;
-        this.adrClassShortCodes = adrClassShortCodes;
+    public FindProductsQuery(BigDecimal weight, WeightUnit weightUnit, BigDecimal width, BigDecimal length, BigDecimal height, DistanceUnit distanceUnit, List<String> adrClassShortCodes, List<String> acceptableCarrierIds, List<String> unacceptableCarrierIds) {
+        this.weight                 = weight;
+        this.weightUnit             = weightUnit;
+        this.width                  = width;
+        this.length                 = length;
+        this.height                 = height;
+        this.distanceUnit           = distanceUnit;
+        this.adrClassShortCodes     = adrClassShortCodes;
+        this.acceptableCarrierIds   = acceptableCarrierIds;
+        this.unacceptableCarrierIds = unacceptableCarrierIds;
     }
 
     public BigDecimal getWeight() {
@@ -51,5 +85,13 @@ public class FindProductsQuery {
 
     public List<String> getAdrClassShortCodes() {
         return adrClassShortCodes;
+    }
+
+    public List<String> getAcceptableCarrierIds() {
+        return acceptableCarrierIds;
+    }
+
+    public List<String> getUnacceptableCarrierIds() {
+        return unacceptableCarrierIds;
     }
 }
