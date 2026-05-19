@@ -13,9 +13,8 @@ public class MaxWeightConstraint extends Weight implements Constraint {
     @Override
     public Decision evaluate(Parcel parcel) {
         var satisfied = parcel.getWeight()
-                .toKilograms()
-                .getValue()
-                .compareTo(this.toKilograms().getValue()) <= 0;
+                .toBaseUnit()
+                .compareTo(this.toBaseUnit()) <= 0;
         return satisfied ? Decision.satisfied(getClass().getSimpleName()) : Decision.unsatisfied(getClass().getSimpleName(), String.format("Weight %s exceeds the limit of %s", parcel.getWeight(), this));
     }
 
@@ -23,8 +22,7 @@ public class MaxWeightConstraint extends Weight implements Constraint {
     public boolean isSatisfiedBy(Parcel parcel) {
         return Objects.requireNonNull(parcel)
                 .getWeight()
-                .toKilograms()
-                .getValue()
-                .compareTo(this.toKilograms().getValue()) <= 0;
+                .toBaseUnit()
+                .compareTo(this.toBaseUnit()) <= 0;
     }
 }

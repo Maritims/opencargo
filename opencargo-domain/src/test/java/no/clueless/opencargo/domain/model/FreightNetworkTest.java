@@ -28,7 +28,7 @@ class FreightNetworkTest {
     void getTotalZonesBetween() {
         // arrange
         var undirectedMatrix = UndirectedMatrix.of(Set.of(new UndirectedEdge<>(new PostalCode("3200"), new PostalCode("6401"), 4)));
-        var freightNetwork   = new FreightNetwork(undirectedMatrix, freightTerminals);
+        var freightNetwork   = new FreightNetwork(undirectedMatrix, freightTerminals, Map.of(new FreightProductId("5800"), Set.of()));
         var expected         = 5;
         var from             = new PostalCode("3110");
         var to               = new PostalCode("6409");
@@ -75,7 +75,7 @@ class FreightNetworkTest {
                 "9510,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,5,4,4,5,5,5,4,4,0,3",
                 "9846,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,5,5,5,5,5,5,4,5,3,0"));
         var undirectedMatrix = UndirectedMatrix.fromLines(lines, PostalCode::new, true);
-        var freightNetwork   = new FreightNetwork(undirectedMatrix, freightTerminals);
+        var freightNetwork   = new FreightNetwork(undirectedMatrix, freightTerminals, Map.of(new FreightProductId("5800"), Set.of()));
         var expected         = 5;
 
         // act
