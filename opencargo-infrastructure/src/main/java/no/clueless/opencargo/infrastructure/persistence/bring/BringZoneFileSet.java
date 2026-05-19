@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class BringZoneFileSet {
-    private final File                  mainZoneTableFile;
+    private final File                        mainZoneTableFile;
     private final File                        localZoneTableFile;
     private final Map<FreightProductId, File> zonePriceTableFileMap;
     private final Set<FreightProductId>       coveredFreightProductIds;
