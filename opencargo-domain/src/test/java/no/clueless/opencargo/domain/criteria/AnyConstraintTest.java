@@ -28,14 +28,16 @@ class AnyConstraintTest {
                         mock(),
                         new Weight(BigDecimal.valueOf(30), WeightUnit.KILOGRAM),
                         Set.of(),
-                        mock()
+                        mock(),
+                        Set.of()
                 )),
                 Arguments.of(new Parcel(
                         UUID.randomUUID(),
                         mock(),
                         mock(),
                         Set.of(AdrClass.CLASS_1_EXPLOSIVES),
-                        mock()
+                        mock(),
+                        Set.of()
                 ))
         );
     }
@@ -52,7 +54,7 @@ class AnyConstraintTest {
     @MethodSource("provideParcelBelow35KgOrParcelContainingExplosive")
     void a_parcel_matching_any_contained_constraint_should_satisfy_the_constraint() {
         // arrange
-        var parcel = new Parcel(UUID.randomUUID(), mock(), new Weight(BigDecimal.valueOf(35), WeightUnit.KILOGRAM), Set.of(), mock());
+        var parcel = new Parcel(UUID.randomUUID(), mock(), new Weight(BigDecimal.valueOf(35), WeightUnit.KILOGRAM), Set.of(), mock(), Set.of());
 
         // act
         var actual = anyConstraint.evaluate(parcel);
@@ -64,7 +66,7 @@ class AnyConstraintTest {
     @Test
     void a_parcel_not_matching_any_contained_constraint_should_not_satisfy_the_constraint() {
         // arrange
-        var parcel = new Parcel(UUID.randomUUID(), mock(), new Weight(BigDecimal.valueOf(36), WeightUnit.KILOGRAM), Set.of(AdrClass.CLASS_2_GASES), mock());
+        var parcel = new Parcel(UUID.randomUUID(), mock(), new Weight(BigDecimal.valueOf(36), WeightUnit.KILOGRAM), Set.of(AdrClass.CLASS_2_GASES), mock(), Set.of());
 
         // act
         var actual = anyConstraint.evaluate(parcel);

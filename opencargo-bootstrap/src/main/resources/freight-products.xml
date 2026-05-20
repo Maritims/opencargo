@@ -15,6 +15,15 @@
                 <height unit="CENTIMETER">1</height>
             </min-dimensions>
         </constraints>
+        <capabilities>
+            <handling-directives>
+                <directive>FRAGILE</directive>
+                <directive>THIS_WAY_UP</directive>
+                <directive>STACKING_LIMIT_BY_MASS</directive>
+                <directive>STACKING_LIMIT_BY_NUMBER</directive>
+                <directive>DO_NOT_STACK</directive>
+            </handling-directives>
+        </capabilities>
         <price>
             <base-price currency="NOK">142</base-price>
             <surcharges>
@@ -99,7 +108,7 @@
             <constraints/>
         </price>
     </product>
-    <product id="0344">
+    <product id="0344" carrierId="Bring">
         <name>Pakke til pakkeboks</name>
         <constraints>
             <max-weight unit="KILOGRAM">10</max-weight>
@@ -114,6 +123,7 @@
                 <height unit="CENTIMETER">1</height>
             </min-dimensions>
         </constraints>
+        <capabilities/>
         <price>
             <base-price currency="NOK">100</base-price>
             <constraints/>

@@ -38,7 +38,8 @@ class MinDimensionsConstraintTest {
                 ),
                 mock(),
                 Set.of(),
-                mock()
+                mock(),
+                Set.of()
         );
 
         // act
@@ -60,7 +61,8 @@ class MinDimensionsConstraintTest {
                 ),
                 mock(),
                 Set.of(),
-                mock()
+                mock(),
+                Set.of()
         );
 
         // act

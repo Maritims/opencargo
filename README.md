@@ -41,5 +41,15 @@ The following example shows how to define the constraints for the Bring product 
             <height unit="CENTIMETER">1</height>
         </min-dimensions>
     </constraints>
+    <capabilities>
+        <!-- The freight product can handle the following directives defined in the ISO 780 standard. -->
+        <handling-directives>
+            <directive>FRAGILE</directive>
+            <directive>THIS_WAY_UP</directive>
+            <directive>STACKING_LIMIT_BY_MASS</directive>
+            <directive>STACKING_LIMIT_BY_NUMBER</directive>
+            <directive>DO_NOT_STACK</directive>
+        </handling-directives>
+    </capabilities>
 </product>
 ```

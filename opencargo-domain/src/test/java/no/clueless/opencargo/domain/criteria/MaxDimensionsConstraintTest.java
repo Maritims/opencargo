@@ -39,7 +39,8 @@ class MaxDimensionsConstraintTest {
                 ),
                 mock(),
                 Set.of(),
-                mock()
+                mock(),
+                Set.of()
         );
 
         // act
@@ -61,7 +62,8 @@ class MaxDimensionsConstraintTest {
                 ),
                 mock(),
                 Set.of(),
-                mock()
+                mock(),
+                Set.of()
         );
 
         // act

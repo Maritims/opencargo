@@ -29,7 +29,8 @@ class MaxWeightConstraintTest {
                 mock(),
                 new Weight(BigDecimal.valueOf(30), WeightUnit.KILOGRAM),
                 Set.of(),
-                mock()
+                mock(),
+                Set.of()
         );
 
         // act
@@ -47,7 +48,8 @@ class MaxWeightConstraintTest {
                 mock(),
                 new Weight(BigDecimal.valueOf(36), WeightUnit.KILOGRAM),
                 Set.of(),
-                mock()
+                mock(),
+                Set.of()
         );
 
         // act

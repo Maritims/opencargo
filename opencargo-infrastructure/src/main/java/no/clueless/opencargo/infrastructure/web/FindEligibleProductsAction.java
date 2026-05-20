@@ -23,16 +23,29 @@ public class FindEligibleProductsAction extends ServletAction {
             throw new IllegalArgumentException("request must not be null");
         }
 
-        var weightParamValue       = getValidConvertedParamOrThrow(request, "weight", BigDecimalValidator::validate);
-        var weightUnit             = getValidConvertedParamOrThrow(request, "weightUnit", WeightUnitValidator::validate);
-        var width                  = getValidConvertedParamOrThrow(request, "width", BigDecimalValidator::validate);
-        var length                 = getValidConvertedParamOrThrow(request, "length", BigDecimalValidator::validate);
-        var height                 = getValidConvertedParamOrThrow(request, "height", BigDecimalValidator::validate);
-        var distanceUnit           = getValidConvertedParamOrThrow(request, "distanceUnit", DistanceUnitValidator::validate);
-        var adrClassShortCodes     = getValidConvertedParamOrThrow(request, "adrClassShortCodes", CommaSeparatedStringValidator::validate);
-        var acceptableCarrierIds   = getValidConvertedParamOrThrow(request, "acceptableCarrierIds", CommaSeparatedStringValidator::validate);
-        var unacceptableCarrierIds = getValidConvertedParamOrThrow(request, "unacceptableCarrierIds", CommaSeparatedStringValidator::validate);
-        return new FindProductsQuery(weightParamValue, weightUnit, width, length, height, distanceUnit, adrClassShortCodes, acceptableCarrierIds, unacceptableCarrierIds);
+        var weightParamValue           = getValidConvertedParamOrThrow(request, "weight", BigDecimalValidator::validate);
+        var weightUnit                 = getValidConvertedParamOrThrow(request, "weightUnit", WeightUnitValidator::validate);
+        var width                      = getValidConvertedParamOrThrow(request, "width", BigDecimalValidator::validate);
+        var length                     = getValidConvertedParamOrThrow(request, "length", BigDecimalValidator::validate);
+        var height                     = getValidConvertedParamOrThrow(request, "height", BigDecimalValidator::validate);
+        var distanceUnit               = getValidConvertedParamOrThrow(request, "distanceUnit", DistanceUnitValidator::validate);
+        var adrClassShortCodes         = getValidConvertedParamOrThrow(request, "adrClassShortCodes", CommaSeparatedStringValidator::validate);
+        var acceptableCarrierIds       = getValidConvertedParamOrThrow(request, "acceptableCarrierIds", CommaSeparatedStringValidator::validate);
+        var unacceptableCarrierIds     = getValidConvertedParamOrThrow(request, "unacceptableCarrierIds", CommaSeparatedStringValidator::validate);
+        var requiredHandlingDirectives = getValidConvertedParamOrThrow(request, "requiredHandlingDirectives", CommaSeparatedStringValidator::validate);
+
+        return new FindProductsQuery(
+                weightParamValue,
+                weightUnit,
+                width,
+                length,
+                height,
+                distanceUnit,
+                adrClassShortCodes,
+                acceptableCarrierIds,
+                unacceptableCarrierIds,
+                requiredHandlingDirectives
+        );
     }
 
     @Override

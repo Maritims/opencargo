@@ -34,7 +34,8 @@ class MaxLengthPlusGirthConstraintTest {
                 ),
                 mock(),
                 Set.of(),
-                mock()
+                mock(),
+                Set.of()
         );
 
         // act
@@ -56,7 +57,8 @@ class MaxLengthPlusGirthConstraintTest {
                 ),
                 mock(),
                 Set.of(),
-                mock()
+                mock(),
+                Set.of()
         );
 
         // act

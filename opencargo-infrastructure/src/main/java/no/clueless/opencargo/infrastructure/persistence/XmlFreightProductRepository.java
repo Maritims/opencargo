@@ -68,7 +68,8 @@ public class XmlFreightProductRepository implements FreightProductRepository {
                 new CarrierId(xmlProduct.getCarrierId()),
                 xmlProduct.getName(),
                 mapToDomain(xmlProduct.getConstraints()),
-                xmlProduct.getPrice().toDomain()
+                xmlProduct.getPrice().toDomain(),
+                xmlProduct.getCapabilities().toDomain().getCapabilities()
         );
     }
 

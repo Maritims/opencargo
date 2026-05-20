@@ -1,5 +1,6 @@
 package no.clueless.opencargo.domain.model;
 
+import no.clueless.opencargo.domain.criteria.Capability;
 import no.clueless.opencargo.domain.criteria.Constraint;
 import no.clueless.opencargo.domain.criteria.Decision;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FreightProduct {
     private static final Logger                  log = LoggerFactory.getLogger(FreightProduct.class);
@@ -17,8 +19,9 @@ public class FreightProduct {
     private final        String                  name;
     private final        Map<String, Constraint> constraints;
     private final        FreightPrice            freightPrice;
+    private final        Map<String, Capability> capabilities;
 
-    public FreightProduct(FreightProductId id, CarrierId carrierId, String name, List<Constraint> constraints, FreightPrice freightPrice) {
+    public FreightProduct(FreightProductId id, CarrierId carrierId, String name, List<Constraint> constraints, FreightPrice freightPrice, List<Capability> capabilities) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("name cannot be null or empty");
         }
@@ -34,15 +37,31 @@ public class FreightProduct {
                 entry -> entry
         ));
         this.freightPrice = Objects.requireNonNull(freightPrice, "freightPrice cannot be null");
+        this.capabilities = capabilities == null ? Map.of() : capabilities.stream().collect(Collectors.toMap(
+                (Capability capability) -> {
+                    var key = capability.getClass().getSimpleName().replace("Capability", "");
+                    key = key.substring(0, 1).toLowerCase() + key.substring(1);
+                    return key;
+                },
+                entry -> entry
+        ));
     }
 
     public boolean isEligible(Parcel parcel) {
         if (parcel == null) {
             throw new IllegalArgumentException("parcel cannot be null");
         }
-        var decisions = constraints.values()
+        var constraintDecisions = constraints.values()
                 .stream()
                 .map(constraint -> constraint.evaluate(parcel))
+                .collect(Collectors.toList());
+        var capabilityDecisions = capabilities.values()
+                .stream()
+                .map(capability -> capability.canHandle(parcel))
+                .collect(Collectors.toList());
+
+        var decisions = Stream.of(constraintDecisions, capabilityDecisions)
+                .flatMap(List::stream)
                 .collect(Collectors.toList());
 
         log.info("Decisions: {}", decisions.stream()
@@ -72,5 +91,9 @@ public class FreightProduct {
 
     public FreightPrice getFreightPrice() {
         return freightPrice;
+    }
+
+    public Map<String, Capability> getCapabilities() {
+        return capabilities;
     }
 }

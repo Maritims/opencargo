@@ -38,7 +38,7 @@ public class FreightService implements FindEligibleProductsUseCase, FindProducts
         var dimensions = new Dimensions(width, height, length);
         var weight     = new Weight(query.getWeight(), query.getWeightUnit());
         var adrRatings = query.getAdrClassShortCodes() == null ? new HashSet<AdrClass>() : AdrClass.fromShortCodes(query.getAdrClassShortCodes());
-        var parcel     = new Parcel(UUID.randomUUID(), dimensions, weight, adrRatings, new Destination(new CountryCode("NO"), "3241"));
+        var parcel     = new Parcel(UUID.randomUUID(), dimensions, weight, adrRatings, new Destination(new CountryCode("NO"), "3241"), null);
 
         var stream = freightProductRepository.findAll()
                 .stream()
